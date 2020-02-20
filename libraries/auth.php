@@ -8,7 +8,7 @@
 	session_name('EventManagerSession');
 	session_start();
 	
-	require_once '../database/pdo.class.php';
+	require_once '../database/dbaccess_common.class.php';
 
 	function login() {
 		$db = new DBAccess();

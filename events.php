@@ -10,4 +10,3 @@
 	
 	// Move the if session auth is true and else logic to MyUtils as a a static function MyUtils::ISLOGGEDIN
 ?>
-

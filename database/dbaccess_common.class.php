@@ -1,7 +1,7 @@
 <?php	
 	
 	class DBAccess {
-		private $dbholder;
+		protected $dbholder;
 		
 		function __construct() {
 			try {
@@ -28,9 +28,11 @@
 			} // End catch
 		}
 		
-		// TODO: Check if username exists...
 		function createAttendee($newUserName, $newUserPassword) {
 			try {
+				// Check if user exists (under development)
+				$this->getUser($newUserName);
+				
 				$data = array();
 				$statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,3)");
 				$statement->execute(array("username"=>$newUserName,"password"=>$newUserPassword));
