@@ -6,6 +6,8 @@
 	
 	Author: Thomas Margosian
 	Date created: 2/20/20
+	
+	Test of git branch
 	*/
 
 	session_name('EventManagerSession');
