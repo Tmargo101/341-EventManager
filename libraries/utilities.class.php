@@ -1,7 +1,17 @@
 <?php
+	/*
+	These are static functions which can be called from any page.
+	IMPORTANT: Only functions which any user level should have access to should be here
+		
+	Author: Thomas Margosian, Brian French (original html_header and html_footer)
+	Date created: 2/20/20	
+	*/
 
-class Utilities{
 
+	class Utilities{
+	
+	// 	HTML Headers & Footers
+	
 	static function html_header($title="Untitled"){
 		$string = <<<END
 		<?php
@@ -28,20 +38,25 @@ class Utilities{
 </head>
 <body class="text-center">\n
 END;
-	return $string;
-}
-
-	static function body() {
-		return "<h1>Hello</h1>";
-	}
-
-
-	static function html_footer($text=""){
-		$string ="\n$text\n</body>\n</html>";
-		return $string;
-	}
-
-} // end class
-
-
+			echo $string;
+		} // End html_header()
+	
+	
+		static function html_footer($text=""){
+			$string ="\n$text\n</body>\n</html>";
+			return $string;
+		}// End html_footer()
+	
+		static function isLoggedIn() {
+			if ($_SESSION['auth']['authCorrect'] != "true") {
+				if (!isset($_SESSION['auth'])) {
+					$_SESSION['auth'] = array();
+				}
+				$_SESSION['auth']['authCorrect'] = "";
+	// 			header("Location: index.php");
+				echo "<div class='container col-md-4 mt-5 mb-5'><h1>Not logged in</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>OOPSIE WOOPSIE!! You made a fucky wucky!!</h3>  <h4>Please login to access this page.</h4><div class='container col-md-4 mt-5 mb-5'><a href='index.php' class='btn btn-primary'>Go to Login</a></div>";
+				die();
+			}// End if(authCorrect!=true)
+		} // End isLoggedIn()
+	} // end class
 ?>

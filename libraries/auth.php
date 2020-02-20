@@ -57,6 +57,8 @@
 	function register() {
 		$db = new DBAccess();
 		$db->createAttendee($_POST['usernameInput'], password_hash($_POST['passwordInput'], PASSWORD_DEFAULT));
+		login();
+// 		echo "<div class='container col-md-4 mt-5 mb-5'><h1>Account Created!</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Please log in again</h3><div class='container col-md-4 mt-5 mb-5'><a href='index.php' class='btn btn-primary'>Go to Login</a></div>"
 
 	}
 
