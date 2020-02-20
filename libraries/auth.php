@@ -1,18 +1,17 @@
 <?php
+/*
+	All authentication functions are handled in this file
+	
+	Author: Thomas Margosian
+	Date created: 2/20/20
+*/
 	session_name('EventManagerSession');
 	session_start();
 	
 	require_once '../database/pdo.class.php';
-	$db = new DBAccess();
 
-	// If the register button was pressed instead of submit, create a new attendee with the username / password specified
-	if (isset($_POST['register'])) {	
-		$db->createAttendee($_POST['usernameInput'], password_hash($_POST['passwordInput'], PASSWORD_DEFAULT));
-		
-		
-	// If the register button was not pressed, begin the login action
-	} else {
-		
+	function login() {
+		$db = new DBAccess();
 		// Get user from the attendee table
 		$attendeeDataArray = $db->getUser($_POST['usernameInput']);
 		
@@ -48,4 +47,32 @@
 		}
 
 	}
+	
+	function logout() {
+		session_unset();
+		session_destroy();
+		header('Location: ../index.php');
+	}
+	
+	function register() {
+		$db = new DBAccess();
+		$db->createAttendee($_POST['usernameInput'], password_hash($_POST['passwordInput'], PASSWORD_DEFAULT));
+
+	}
+
+	$_SESSION['auth']['username'] = $_POST['usernameInput'];	
+	if (isset($_POST['authButton'])) {
+		switch ($_POST['authButton']){
+			case "register":
+				register();
+				break;
+			case "login":
+				login();
+				break;
+			case "logout":
+				logout();
+				break;
+		}
+	}
+		
 ?>

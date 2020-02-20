@@ -1,9 +1,13 @@
 <?php
 
-class MyUtils{
+class Utilities{
 
 	static function html_header($title="Untitled"){
 		$string = <<<END
+		<?php
+			session_name('EventManagerSession');
+			session_start();
+		?>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
