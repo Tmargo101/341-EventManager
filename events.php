@@ -1,12 +1,22 @@
 <?php
 	include_once 'phpHead.php';
+	Elements::html_header("Events","/assets/css/style.css");
+	Auth::isLoggedIn();
+	Elements::nav();
 	
-	Utilities::html_header("Events","/assets/css/style.css");
-	Utilities::isLoggedIn();
+		echo "<h1>Events Portal</h1>";
+// 		echo "<form action='index.php' method='post'><button type='submit' class='btn btn-primary' name='authButton' value='logout'>Logout</button></form>";
 	
-		echo "<h1>Welcome to the {$_SESSION['auth']['role']} portal</h1>";
-		echo "<form action='libraries/auth.php' method='post'><button type='submit' class='btn btn-primary' name='authButton' value='logout'>Logout</button></form>";
-		var_dump($_SESSION);
-	
-	// Move the if session auth is true and else logic to MyUtils as a a static function MyUtils::ISLOGGEDIN
+		
+?>
+
+<div class='mt-5'>
+	<div class='container col-sm-4 bg-light'>
+		<h1>All Events</h1>
+	</div>
+</div>
+
+
+<?php
+	Elements::html_footer();
 ?>

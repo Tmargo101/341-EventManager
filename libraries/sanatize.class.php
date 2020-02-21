@@ -3,7 +3,7 @@
 
 	class Sanatize {
 		static function sanatizeString($inString) {
-			return $inString;
+			return strip_tags(htmlspecialchars($inString));
 		}
 	}
 ?>

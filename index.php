@@ -6,28 +6,46 @@
 	
 	Author: Thomas Margosian
 	Date created: 2/20/20
-
-	XXX
-	
 	*/
+// 	var_dump($_POST); //DOES NOT WORK (POST ARRAY EMPTY)
+// 	var_dump($_SESSION); //WORKS 
 
-	require_once('phpHead.php');	
-	
-	
+	require_once('phpHead.php');
+	Elements::html_header("Login","/assets/css/style.css");
+		// If we are processing a login POST, set the auth - username variable to the POST usernameInput
+	if (isset($_POST['usernameInput'])) {
+// 		$_POST['usernameInput'] = Sanatize::sanatizeString($_POST['usernameInput']);
+		$_SESSION['auth']['username'] = $_POST['usernameInput'];
+	}
+
+	// Depending on the authButton status, process the auth action appropriately.
+	if (isset($_POST['authButton'])) {
+		switch ($_POST['authButton']){
+			case "register":
+				Auth::register($_POST['usernameInput'], $_POST['passwordInput']);
+				break;
+			case "login":
+				Auth::login($_POST['usernameInput'], $_POST['passwordInput']);
+				break;
+			case "logout":
+				Auth::logout();
+				break;
+		}
+	}
+
 	if(isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
 		header('Location: events.php');
 	}
 	
-	require_once 'libraries/utilities.class.php';
-	Utilities::html_header("Login","/assets/css/style.css");
+	Elements::nav();
 ?>
 <div class=''>
-	<div class="container col-md-4 mt-5 mb-5">
+	<div class="container col-md-4 my-5">
 			<h1>Event Manager</h1>
 	</div>
-	<div class="container col-md-4 mt-5 bg-light">
+	<div class="container col-md-4 my-5 py-3 px-2 bg-light">
 		<h2>Login</h2>
-		<form action="libraries/auth.php" method="post">
+		<form action="index.php" method="post">
 			<div class="form-group">
 <!-- 				<label class="control-label" for="usernameInput"><b>Username</b></label> -->
 				<input type="text" class="form-control" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['auth']['username'].'" autofocus';}?> >
@@ -52,5 +70,5 @@
 </div>
 
 <?php
-	echo Utilities::html_footer();	
+	echo Elements::html_footer();	
 ?>
