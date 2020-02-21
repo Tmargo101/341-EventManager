@@ -7,11 +7,13 @@
 	Author: Thomas Margosian
 	Date created: 2/20/20
 	*/
-// 	var_dump($_POST); //DOES NOT WORK (POST ARRAY EMPTY)
-// 	var_dump($_SESSION); //WORKS
 
 	require_once('phpHead.php');
-	Elements::html_header("Login","/assets/css/style.css");
+
+// 	var_dump($_POST); //DOES NOT WORK (POST ARRAY EMPTY)
+//  var_dump($_SESSION); //WORKS
+
+Elements::html_header("Login","/assets/css/style.css");
 		// If we are processing a login POST, set the auth - username variable to the POST usernameInput
 	if (isset($_POST['usernameInput'])) {
 // 		$_POST['usernameInput'] = Sanitize::sanitizeString($_POST['usernameInput']);
