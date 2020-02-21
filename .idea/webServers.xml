@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="80572be9-d0b2-4c9b-9a54-d7828c79ff7c" name="Serenity-341-Project1" url="http://serenity.ist.rit.edu/~txm5483/341/project1">
+        <fileTransfer host="serenity.ist.rit.edu" port="22" rootFolder="/home/MAIN/txm5483/Sites/341/project1" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
