@@ -8,13 +8,13 @@
 	Date created: 2/20/20
 	*/
 // 	var_dump($_POST); //DOES NOT WORK (POST ARRAY EMPTY)
-// 	var_dump($_SESSION); //WORKS 
+// 	var_dump($_SESSION); //WORKS
 
 	require_once('phpHead.php');
 	Elements::html_header("Login","/assets/css/style.css");
 		// If we are processing a login POST, set the auth - username variable to the POST usernameInput
 	if (isset($_POST['usernameInput'])) {
-// 		$_POST['usernameInput'] = Sanatize::sanatizeString($_POST['usernameInput']);
+// 		$_POST['usernameInput'] = Sanitize::sanitizeString($_POST['usernameInput']);
 		$_SESSION['auth']['username'] = $_POST['usernameInput'];
 	}
 
@@ -47,13 +47,13 @@
 		<h2>Login</h2>
 		<form action="index.php" method="post">
 			<div class="form-group">
-<!-- 				<label class="control-label" for="usernameInput"><b>Username</b></label> -->
-				<input type="text" class="form-control" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['auth']['username'].'" autofocus';}?> >
-			</div>
+ 				<label class="control-label" for="usernameInput"><b>Username</b></label>
+                <input type="text" class="form-control" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['auth']['username'].'" autofocus';}?> >
+            </div>
 			<div class="form-group">
-<!-- 				<label for="passwordInput"><b>Password</b></label> -->
-				<input type="password" class="form-control" name="passwordInput" placeholder="Enter Password">
-			</div>
+ 				<label for="passwordInput"><b>Password</b></label>
+                    <input type="password" class="form-control" name="passwordInput" placeholder="Enter Password">
+            </div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary" name='authButton' value='login'>Login</button>
 	<!-- 			<button type="submit" name="register" class="btn btn-primary">Register</button> -->
@@ -70,5 +70,5 @@
 </div>
 
 <?php
-	echo Elements::html_footer();	
-?>
+	echo Elements::html_footer();
+7?>

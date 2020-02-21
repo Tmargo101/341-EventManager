@@ -30,7 +30,7 @@
 		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
 			try {
 				// Check if event exists (under development)
-				$this->getUser($newUserName);
+//				$this->getUser($newUserName);
 				
 				$data = array();
 				

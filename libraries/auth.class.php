@@ -56,7 +56,7 @@
 		static function register($inUsername, $inPassword) {
 			$db = new DBAccess();
 			if ($db->createAttendee($inUsername, password_hash($inPassword, PASSWORD_DEFAULT)) != false) {
-				$this->login($inUsername, $inPassword);	
+//				$this->login($inUsername, $inPassword);
 			} else {
 				return "Cannot register user.";
 			}
