@@ -69,6 +69,7 @@ END;
 				$nav .= <<<END
 						</ul>
 						<ul class='navbar-nav'>
+							<li class='navbar-brand mt-2'>Logged in as: {$_SESSION['auth']['username']}</li>
 							<li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
 END;
 			}	

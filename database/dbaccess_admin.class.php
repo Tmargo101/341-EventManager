@@ -7,40 +7,61 @@
 			parent::__construct();
 		}
 		
-		
-/*
-		function getUser($inUserName) {
-			try {	
-				
+		function getAllAttendees() {
+			try {
 				$data = array();
-				$statement = $this->dbholder->prepare("SELECT * FROM attendee WHERE name = :username");
-				$statement->execute(array("username"=>$inUserName));
 				
-				$data = $statement->fetchAll();					
+				include_once "objects/user.class.php";
+				
+				$statement = $this->dbholder->prepare("SELECT * FROM attendee");
+				$statement->execute();
+				
+				$statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
+				
+				$data = $statement->fetchAll();
 				
 				return $data;
 			} catch (PDOException $exception) {
 				echo $exception->getMessage();
 				return array();
-			} // End catch
+			}
 		}
 		
-		function createAttendee($newUserName, $newUserPassword) {
+		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
 			try {
-				// Check if user exists (under development)
+				// Check if event exists (under development)
 				$this->getUser($newUserName);
 				
 				$data = array();
-				$statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,3)");
-				$statement->execute(array("username"=>$newUserName,"password"=>$newUserPassword));
+				
+				$statement = $this->dbholder->prepare("INSERT into event (name,datestart,dateend,numberallowed,venue) VALUES (:name,:datestart,:dateend,:numberallowed,:venue)");
+				$statement->execute(array("name"=>$inName,"datestart"=>$inDateStart,"dateend"=>$inDateEnd,"numberallowed"=>$inNumberAllowed,"venue"=>$inVenue));
 				return $this->dbholder->lastInsertId();
 				
 			} catch (PDOException $exception) {
 				echo $exception->getMessage();
 				return -1;
 			}
-		}
-*/
+		} // End createEvent()
 		
+		function getAllEvents() {
+			try {
+				$data = array();
+				
+				include_once "objects/event.class.php";
+				
+				$statement = $this->dbholder->prepare("SELECT * FROM event");
+				$statement->execute();
+				
+				$statement->setFetchMode(PDO::FETCH_CLASS,"Event");
+				
+				$data = $statement->fetchAll();
+				
+				return $data;
+			} catch (PDOException $exception) {
+				echo $exception->getMessage();
+				return array();
+			}
+		} // End getAllEvents()	
 	}	
 ?>

@@ -1,4 +1,10 @@
 <?php	
+/*
+	This is the superclass for DBAccess.  Functions in this class can be called from anywhere in the site, including the login page.
+	
+	Author: Thomas Margosian
+	Date created: 2/20/20
+*/
 	
 	class DBAccess {
 		protected $dbholder;
@@ -12,9 +18,8 @@
 			} 
 		}
 		
-		function getUser($inUserName) {
+		function getAttendee($inUserName) {
 			try {	
-				
 				$data = array();
 				$statement = $this->dbholder->prepare("SELECT * FROM attendee WHERE name = :username");
 				$statement->execute(array("username"=>$inUserName));
@@ -29,18 +34,19 @@
 		}
 		
 		function createAttendee($newUserName, $newUserPassword) {
-			try {
 				// Check if user exists (under development)
-				$this->getUser($newUserName);
-				
-				$data = array();
-				$statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,3)");
-				$statement->execute(array("username"=>$newUserName,"password"=>$newUserPassword));
-				return $this->dbholder->lastInsertId();
-				
-			} catch (PDOException $exception) {
-				echo $exception->getMessage();
-				return -1;
+				$previousUserArray = $this->getAttendee($newUserName);
+				if (!isset($previousUserArray[0])) {
+					try {
+						$data = array();
+						$statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,3)");
+						$statement->execute(array("username"=>$newUserName,"password"=>$newUserPassword));
+						return $this->dbholder->lastInsertId();
+						
+					} catch (PDOException $exception) {
+						echo $exception->getMessage();
+						return -1;
+					}
 			}
 		}
 		
