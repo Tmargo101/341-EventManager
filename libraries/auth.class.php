@@ -5,7 +5,6 @@
 	Author: Thomas Margosian
 	Date created: 2/20/20
 */
-//	require_once 'database/dbaccess_common.class.php';
 
 	class AuthDBAccess {
         protected $dbholder;
@@ -25,9 +24,7 @@
                 $statement = $this->dbholder->prepare("SELECT * FROM attendee WHERE name = :username");
                 $statement->execute(array("username"=>$inUserName));
 
-                $data = $statement->fetchAll();
-
-                return $data;
+                return $statement->fetchAll();
             } catch (PDOException $exception) {
                 echo $exception->getMessage();
                 return array();
@@ -42,6 +39,7 @@
 //                    $data = array();
                     $statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,3)");
                     $statement->execute(array("username"=>$newUserName,"password"=>$newUserPassword));
+                    $_SESSION['auth']['authCorrect'] = "newUserRegistered";
                     return $this->dbholder->lastInsertId();
 
                 } catch (PDOException $exception) {
@@ -57,13 +55,15 @@
 	class Auth {
 		
 		static function login($inUsername, $inPassword) {
+
 			$db = new AuthDBAccess();
 			// Get user from the attendee table
 			$attendeeDataArray = $db->getUser($inUsername);
 			
 			// Check if the attendeeDataArray has values.  If it is empty, the user does not exist.
-			if (isset($attendeeDataArray[0])) {			
-				
+			if (isset($attendeeDataArray[0])) {
+                $_SESSION['auth']['username'] = $inUsername;
+
 				// Verify password hash.  If correct, determine user role and pass to events page.
 				if (password_verify($inPassword, $attendeeDataArray[0]['password'])){
 					switch ($attendeeDataArray[0]['role']){
@@ -122,7 +122,8 @@
 					$_SESSION['auth'] = array();
 				}
 				$_SESSION['auth']['authCorrect'] = "";
-				echo "<div class='container col-md-4 mt-5 mb-5'><h1>Not logged in</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Must have made a wrong turn...</h3>  <h4>Please login to access this page.</h4><div class='container col-md-4 my-5'><h5>Redirecting you to Login automatically in 5 seconds...</h5></div><div class='container col-md-4 mt-5 mb-5'><a href='index.php' class='btn btn-primary'>Login now</a></div>";
+				echo "<!--suppress ALL -->
+<div class='container col-md-4 mt-5 mb-5'><h1>Not logged in</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Must have made a wrong turn...</h3>  <h4>Please login to access this page.</h4><div class='container col-md-4 my-5'><h5>Redirecting you to Login automatically in 5 seconds...</h5></div><div class='container col-md-4 mt-5 mb-5'><a href='index.php' class='btn btn-primary'>Login now</a></div>";
 //				header("Refresh:5; url=index.php");
                 header("Refresh:5; Location: index.php");
 				die();
@@ -131,7 +132,8 @@
 		
 		static function isAdmin() {
 			if ($_SESSION['auth']['role'] != "admin") {
-				echo "<div class='container col-md-4 mt-5 mb-5'><h1>Unauthorized</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Must have made a wrong turn...</h3><h4>Please login as admin to access this page.</h4><div class='container my-5'><h5>Redirecting you to your events portal automatically in 5 seconds...</h5></div><div class='container my-5'><a href='index.php' class='btn btn-primary'>Go now</a></div>";
+				echo "<!--suppress ALL -->
+<div class='container col-md-4 mt-5 mb-5'><h1>Unauthorized</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Must have made a wrong turn...</h3><h4>Please login as admin to access this page.</h4><div class='container my-5'><h5>Redirecting you to your events portal automatically in 5 seconds...</h5></div><div class='container my-5'><a href='index.php' class='btn btn-primary'>Go now</a></div>";
 				header("Refresh:5; Location: index.php");
 				die();
 
@@ -139,4 +141,3 @@
 		}
 	} // End Auth class
 		
-?>

@@ -79,4 +79,3 @@
 		}
 
 	} // End adminDB
-?>

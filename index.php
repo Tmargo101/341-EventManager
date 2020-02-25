@@ -10,26 +10,20 @@
 
 	require_once('phpHead.php');
 
-// 	var_dump($_POST); //DOES NOT WORK (POST ARRAY EMPTY)
-//  var_dump($_SESSION); //WORKS
-
-    HTMLElements::html_header("Login");
-
-    // If we are processing a login POST, set the auth - username variable to the POST usernameInput
-	if (isset($_POST['usernameInput'])) {
-// 		$_POST['usernameInput'] = Sanitize::sanitizeString($_POST['usernameInput']);
-		$_SESSION['auth']['username'] = $_POST['usernameInput'];
-	}
+    // Move $_POST values into a session array $_SESSION['authPOST'] to deal with whatever redirect bug exists
+    if(!isset($_SESSION['authPOST'])) {$_SESSION['POST'] = array();}
+    foreach ($_POST as $key => $value) {
+        $_SESSION['authPOST'][$key] = Sanitize::sanatizeString($value);
+    }
 
 	// Depending on the authButton status, process the auth action appropriately.
 	if (isset($_POST['authButton'])) {
 		switch ($_POST['authButton']){
 			case "register":
-				Auth::register($_POST['usernameInput'], $_POST['passwordInput']);
+				Auth::register($_SESSION['authPOST']['usernameInput'], $_SESSION['authPOST']['passwordInput']);
 				break;
 			case "login":
-			    // How does this work if we cannot echo out the POST array???
-                Auth::login($_POST['usernameInput'], $_POST['passwordInput']);
+                Auth::login($_SESSION['authPOST']['usernameInput'], $_SESSION['authPOST']['passwordInput']);
 				break;
 			case "logout":
 				Auth::logout();
@@ -40,7 +34,7 @@
 	if(isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
 		header('Location: events.php');
 	}
-	
+    HTMLElements::html_header("Login");
 	HTMLElements::nav();
 ?>
 <div class=''>
@@ -53,13 +47,13 @@
 			<div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="usernameInput"><b>Username</b></label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="usernameInput" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['auth']['username'].'" autofocus';}?> >
+                    <input type="text" class="form-control" id="usernameInput" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['authPOST']['usernameInput'].'"';}?> >
                 </div>
             </div>
 			<div class="form-group row">
  				<label class="col-sm-3 col-form-label" for="passwordInput"><b>Password</b></label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Enter Password">
+                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Enter Password" <?php if(isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'autofocus';}?>>
                 </div>
             </div>
 			<div class="form-group">
@@ -68,10 +62,10 @@
 			</div>
 			<div class="form-group">
 			<?php
-				if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "noUserFound") {echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong> User does not exist. Would you like to create a new attendee account with these credentials?.<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";}
-				if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "badPass") {echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong> Password for user was incorrect. Please try again.</div>";}
-				if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "unauthorized") {echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong> You need to login or register to access this page<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";}
-	
+				if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "noUserFound") {echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>User '{$_SESSION['authPOST']['usernameInput']}' does not exist.<br><br>If you would like to create a new attendee account with these credentials, enter the new account's password in the password field and click the button below.<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";}
+				if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "badPass") {echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Password for user '{$_SESSION['authPOST']['usernameInput']}' was incorrect. Please try again.</div>";}
+				if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "unauthorized") {echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong>You need to login or register to access this page<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";}
+                if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "newUserRegistered") {echo "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Created:</strong><br> Account '{$_SESSION['authPOST']['usernameInput']}' has been created.  Please login again with the same credentials.</div>";}
 			?></div>
 		</form>
 	</div>

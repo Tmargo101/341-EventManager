@@ -17,10 +17,8 @@
 				$statement->execute();
 				
 				$statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
-				
-				$data = $statement->fetchAll();
-				
-				return $data;
+
+                return $statement->fetchAll();
 			} catch (PDOException $exception) {
 				echo $exception->getMessage();
 				return array();
@@ -54,14 +52,11 @@
 				$statement->execute();
 				
 				$statement->setFetchMode(PDO::FETCH_CLASS,"Event");
-				
-				$data = $statement->fetchAll();
-				
-				return $data;
+
+                return $statement->fetchAll();
 			} catch (PDOException $exception) {
 				echo $exception->getMessage();
 				return array();
 			}
 		} // End getAllEvents()	
 	}	
-?>

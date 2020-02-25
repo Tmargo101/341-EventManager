@@ -50,13 +50,16 @@ END;
 END;
 			if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
 				$nav .= <<<END
-							<li class='nav-item mx-5'><a class='nav-link' href='events.php'>Events</a></li>
-							<li class='nav-item mx-5'><a class='nav-link' href='registration.php'>Registration</a></li>
+							<!--suppress ALL -->
+<li class='nav-item mx-5'><a class='nav-link' href='events.php'>Events</a></li>
+							<li c<!--suppress HtmlUnknownTarget -->
+lass='nav-item mx-5'><a class='nav-link' href='registration.php'>Registration</a></li>
 
 END;
 			}
 			if (isset($_SESSION['auth']['authCorrect']) && isset($_SESSION['auth']['role']) && $_SESSION['auth']['role'] == "admin") {
-				$nav .= "<li class='nav-item mx-5'><a class='nav-link' href='admin.php'>Admin Portal</a></li>";
+				$nav .= "<!--suppress HtmlUnknownTarget -->
+<li class='nav-item mx-5'><a class='nav-link' href='admin.php'>Admin Portal</a></li>";
 			}
 
 			if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
@@ -77,4 +80,3 @@ END;
 		}
 	} //End HTMLElements Class
 
-?>

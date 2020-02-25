@@ -11,4 +11,3 @@
 		$_SESSION['auth'] = array();
 	}
 
-?>
