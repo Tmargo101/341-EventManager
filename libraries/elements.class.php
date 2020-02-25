@@ -38,8 +38,7 @@ END;
 	
 		
 		static function html_footer($text=""){
-			$string ="\n$text\n</body>\n</html>";
-			return $string;
+			return "\n$text\n</body>\n</html>";
 		}// End html_footer()
 
 		static function nav() {

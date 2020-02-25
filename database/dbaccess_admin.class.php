@@ -11,7 +11,7 @@
 			try {
 				$data = array();
 				
-				include_once "objects/user.class.php";
+				include_once "objects/Attendee.class.php";
 				
 				$statement = $this->dbholder->prepare("SELECT * FROM attendee");
 				$statement->execute();
@@ -48,7 +48,7 @@
 			try {
 				$data = array();
 				
-				include_once "objects/event.class.php";
+				include_once "objects/Event.class.php";
 				
 				$statement = $this->dbholder->prepare("SELECT * FROM event");
 				$statement->execute();

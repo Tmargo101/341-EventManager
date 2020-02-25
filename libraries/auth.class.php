@@ -57,6 +57,7 @@
 			$db = new DBAccess();
 			if ($db->createAttendee($inUsername, password_hash($inPassword, PASSWORD_DEFAULT)) != false) {
 //				$this->login($inUsername, $inPassword);
+                return "User Registered";
 			} else {
 				return "Cannot register user.";
 			}
