@@ -9,9 +9,9 @@
 		
 		function getAllAttendees() {
 			try {
-				$data = array();
+//				$data = array();
 				
-				include_once "objects/Attendee.class.php";
+				include_once "model/Attendee.class.php";
 				
 				$statement = $this->dbholder->prepare("SELECT * FROM attendee");
 				$statement->execute();
@@ -27,28 +27,28 @@
 			}
 		}
 		
-		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
-			try {
-				// Check if event exists (under development)
-//				$this->getUser($newUserName);
-				
-				$data = array();
-				
-				$statement = $this->dbholder->prepare("INSERT into event (name,datestart,dateend,numberallowed,venue) VALUES (:name,:datestart,:dateend,:numberallowed,:venue)");
-				$statement->execute(array("name"=>$inName,"datestart"=>$inDateStart,"dateend"=>$inDateEnd,"numberallowed"=>$inNumberAllowed,"venue"=>$inVenue));
-				return $this->dbholder->lastInsertId();
-				
-			} catch (PDOException $exception) {
-				echo $exception->getMessage();
-				return -1;
-			}
-		} // End createEvent()
+//		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
+//			try {
+//				// Check if event exists (under development)
+////				$this->getUser($newUserName);
+//
+//				$data = array();
+//
+//				$statement = $this->dbholder->prepare("INSERT into event (name,datestart,dateend,numberallowed,venue) VALUES (:name,:datestart,:dateend,:numberallowed,:venue)");
+//				$statement->execute(array("name"=>$inName,"datestart"=>$inDateStart,"dateend"=>$inDateEnd,"numberallowed"=>$inNumberAllowed,"venue"=>$inVenue));
+//				return $this->dbholder->lastInsertId();
+//
+//			} catch (PDOException $exception) {
+//				echo $exception->getMessage();
+//				return -1;
+//			}
+//		} // End createEvent()
 		
 		function getAllEvents() {
 			try {
-				$data = array();
+//				$data = array();
 				
-				include_once "objects/Event.class.php";
+				include_once "model/Event.class.php";
 				
 				$statement = $this->dbholder->prepare("SELECT * FROM event");
 				$statement->execute();

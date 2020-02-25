@@ -8,14 +8,14 @@
 	
 	*/
 	
-	class Elements {
+	class HTMLElements {
 	// 	HTML Headers & Footers
 	
 		static function html_header($title="Untitled"){
 			$string = <<<END
 	<!DOCTYPE html>
 	
-	<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>$title</title>
@@ -75,6 +75,6 @@ END;
 END;
 		echo $nav;
 		}
-	} //End Elements Class
+	} //End HTMLElements Class
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 	/*
-	This is the default page for the EventManger
+	This is the login page for the EventManger
 	If the user has already authenticated, they will be passed to the events page.
 	If the user has not authenticated, they will be prompted to authenticate or register
 	
@@ -13,8 +13,9 @@
 // 	var_dump($_POST); //DOES NOT WORK (POST ARRAY EMPTY)
 //  var_dump($_SESSION); //WORKS
 
-Elements::html_header("Login","/assets/css/style.css");
-		// If we are processing a login POST, set the auth - username variable to the POST usernameInput
+    HTMLElements::html_header("Login");
+
+    // If we are processing a login POST, set the auth - username variable to the POST usernameInput
 	if (isset($_POST['usernameInput'])) {
 // 		$_POST['usernameInput'] = Sanitize::sanitizeString($_POST['usernameInput']);
 		$_SESSION['auth']['username'] = $_POST['usernameInput'];
@@ -27,7 +28,8 @@ Elements::html_header("Login","/assets/css/style.css");
 				Auth::register($_POST['usernameInput'], $_POST['passwordInput']);
 				break;
 			case "login":
-				Auth::login($_POST['usernameInput'], $_POST['passwordInput']);
+			    // How does this work if we cannot echo out the POST array???
+                Auth::login($_POST['usernameInput'], $_POST['passwordInput']);
 				break;
 			case "logout":
 				Auth::logout();
@@ -39,7 +41,7 @@ Elements::html_header("Login","/assets/css/style.css");
 		header('Location: events.php');
 	}
 	
-	Elements::nav();
+	HTMLElements::nav();
 ?>
 <div class=''>
 	<div class="container col-md-4 my-5">
@@ -48,16 +50,20 @@ Elements::html_header("Login","/assets/css/style.css");
 	<div class="container col-md-4 my-5 py-3 px-2 bg-light">
 		<h2>Login</h2>
 		<form action="index.php" method="post">
-			<div class="form-group">
- 				<label class="control-label" for="usernameInput"><b>Username</b></label>
-                <input type="text" class="form-control" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['auth']['username'].'" autofocus';}?> >
+			<div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="usernameInput"><b>Username</b></label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="usernameInput" name="usernameInput" placeholder="Enter Username" <?php if(isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['auth']['username']) && $_SESSION['auth']['authCorrect'] == "noUserFound"){echo 'value="'.$_SESSION['auth']['username'].'" autofocus';}?> >
+                </div>
+            </div>
+			<div class="form-group row">
+ 				<label class="col-sm-3 col-form-label" for="passwordInput"><b>Password</b></label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Enter Password">
+                </div>
             </div>
 			<div class="form-group">
- 				<label for="passwordInput"><b>Password</b></label>
-                    <input type="password" class="form-control" name="passwordInput" placeholder="Enter Password">
-            </div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary" name='authButton' value='login'>Login</button>
+				<button type="submit" class="btn btn-primary btn-lg" name='authButton' value='login'>Login</button>
 	<!-- 			<button type="submit" name="register" class="btn btn-primary">Register</button> -->
 			</div>
 			<div class="form-group">
@@ -72,5 +78,5 @@ Elements::html_header("Login","/assets/css/style.css");
 </div>
 
 <?php
-	echo Elements::html_footer();
-7?>
+	echo HTMLElements::html_footer();
+?>

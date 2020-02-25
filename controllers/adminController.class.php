@@ -2,9 +2,9 @@
 	
 	require_once 'database/dbaccess_admin.class.php';
 
-	class AdminDB {
+	class AdminController {
 		
-		static function getAllUsersTable() {
+		public static function getAllUsersTable() {
 			$db = new DBAccess_Admin();
 			$data = $db->getAllAttendees();
 			$numRecords = count($data);
@@ -40,7 +40,7 @@
 			return $userTableOutput;
 		}
 		
-		static function getAllEventsTable() {
+		public static function getAllEventsTable() {
 			$db = new DBAccess_Admin();
 			$data = $db->getAllEvents();
 			$numRecords = count($data);

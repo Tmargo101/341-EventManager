@@ -3,7 +3,8 @@
 	session_start();
 	
 	foreach (glob("libraries/*.class.php") as $filename) {
-		require_once ($filename);
+        /** @noinspection PhpIncludeInspection */
+        require_once ($filename);
 	}
 	
 	if (!isset($_SESSION['auth'])) {

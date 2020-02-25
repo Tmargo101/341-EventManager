@@ -1,8 +1,8 @@
 <?php
 	include_once 'phpHead.php';
-	Elements::html_header("Events","/assets/css/style.css");
+	HTMLElements::html_header("Events");
 	Auth::isLoggedIn();
-	Elements::nav();
+	HTMLElements::nav();
 	
 		echo "<h1>Events Portal</h1>";
 // 		echo "<form action='index.php' method='post'><button type='submit' class='btn btn-primary' name='authButton' value='logout'>Logout</button></form>";
@@ -18,5 +18,5 @@
 
 
 <?php
-	Elements::html_footer();
+	HTMLElements::html_footer();
 ?>
