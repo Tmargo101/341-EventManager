@@ -41,6 +41,40 @@ END;
 			return "\n$text\n</body>\n</html>";
 		}// End html_footer()
 
+        static function notLoggedIn() {
+            echo "<!--suppress ALL -->
+            <div class='container col-md-4 mt-5 mb-5'>
+                <h1>Not logged in</h1>
+            </div>
+            <div class='container col-md-4 mt-5 mb-5'>
+                <h3>Must have made a wrong turn...</h3>
+                <h4>Please login to access this page.</h4>
+            </div>
+            <div class='container my-5'>
+                <h5>Redirecting you to Login automatically in 5 seconds...</h5>
+            </div>
+            <div class='container col-md-4 mt-5 mb-5'>
+                <a href='index.php' class='btn btn-primary'>Login now</a>
+            </div>";
+        }
+
+        static function notAdmin() {
+            echo "<!--suppress ALL -->
+                <div class='container col-md-4 mt-5 mb-5'>
+                    <h1>Unauthorized</h1>
+                </div>
+                <div class='container col-md-4 mt-5 mb-5'>
+                    <h3>Must have made a wrong turn...</h3>
+                    <h4>Please login as admin to access this page.</h4>
+                </div>
+                <div class='container my-5'>
+                    <h5>Redirecting you to your events portal automatically in 5 seconds...</h5>
+                </div>
+                <div class='container my-5'>
+                    <a href='index.php' class='btn btn-primary'>Go now</a>
+                </div>";
+        }
+
 		static function nav() {
 			$nav = <<<END
 				<div class='mb-5'>
@@ -53,7 +87,7 @@ END;
 							<!--suppress ALL -->
 <li class='nav-item mx-5'><a class='nav-link' href='events.php'>Events</a></li>
 							<li c<!--suppress HtmlUnknownTarget -->
-lass='nav-item mx-5'><a class='nav-link' href='registration.php'>Registration</a></li>
+<li class='nav-item mx-5'><a class='nav-link' href='registration.php'>Registration</a></li>
 
 END;
 			}

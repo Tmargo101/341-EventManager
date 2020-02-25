@@ -2,29 +2,8 @@
 	include_once 'dbaccess_common.class.php';
 	
 	class DBAccess_Admin extends DBAccess {
-		
-		function __construct() {
-			parent::__construct();
-		}
-		
-		function getAllAttendees() {
-			try {
-//				$data = array();
-				
-				include_once "model/Attendee.class.php";
-				
-				$statement = $this->dbholder->prepare("SELECT * FROM attendee");
-				$statement->execute();
-				
-				$statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
 
-                return $statement->fetchAll();
-			} catch (PDOException $exception) {
-				echo $exception->getMessage();
-				return array();
-			}
-		}
-		
+
 //		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
 //			try {
 //				// Check if event exists (under development)
@@ -41,22 +20,23 @@
 //				return -1;
 //			}
 //		} // End createEvent()
-		
-		function getAllEvents() {
-			try {
-//				$data = array();
-				
-				include_once "model/Event.class.php";
-				
-				$statement = $this->dbholder->prepare("SELECT * FROM event");
-				$statement->execute();
-				
-				$statement->setFetchMode(PDO::FETCH_CLASS,"Event");
 
-                return $statement->fetchAll();
-			} catch (PDOException $exception) {
-				echo $exception->getMessage();
-				return array();
-			}
-		} // End getAllEvents()	
-	}	
+//		function getAllEvents() {
+//			try {
+////				$data = array();
+//
+//				include_once "model/Event.class.php";
+//
+//				$statement = $this->dbholder->prepare("SELECT * FROM event");
+//				$statement->execute();
+//
+//				$statement->setFetchMode(PDO::FETCH_CLASS,"Event");
+//
+//                return $statement->fetchAll();
+//			} catch (PDOException $exception) {
+//				echo $exception->getMessage();
+//				return array();
+//			}
+//		} // End getAllEvents()
+//	}
+}

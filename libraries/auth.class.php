@@ -122,22 +122,19 @@
 					$_SESSION['auth'] = array();
 				}
 				$_SESSION['auth']['authCorrect'] = "";
-				echo "<!--suppress ALL -->
-<div class='container col-md-4 mt-5 mb-5'><h1>Not logged in</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Must have made a wrong turn...</h3>  <h4>Please login to access this page.</h4><div class='container col-md-4 my-5'><h5>Redirecting you to Login automatically in 5 seconds...</h5></div><div class='container col-md-4 mt-5 mb-5'><a href='index.php' class='btn btn-primary'>Login now</a></div>";
-//				header("Refresh:5; url=index.php");
-                header("Refresh:5; Location: index.php");
+				HTMLElements::notLoggedIn();
+                header("Refresh:5; url=index.php");
 				die();
 			}// End if(authCorrect!=true)
 		} // End isLoggedIn()
 		
 		static function isAdmin() {
 			if ($_SESSION['auth']['role'] != "admin") {
-				echo "<!--suppress ALL -->
-<div class='container col-md-4 mt-5 mb-5'><h1>Unauthorized</h1></div><div class='container col-md-4 mt-5 mb-5'><h3>Must have made a wrong turn...</h3><h4>Please login as admin to access this page.</h4><div class='container my-5'><h5>Redirecting you to your events portal automatically in 5 seconds...</h5></div><div class='container my-5'><a href='index.php' class='btn btn-primary'>Go now</a></div>";
-				header("Refresh:5; Location: index.php");
+			    HTMLElements::notAdmin();
+				header("Refresh:5; url=index.php");
 				die();
 
 			}
-		}
+		} // End isAdmin()
 	} // End Auth class
 		

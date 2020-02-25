@@ -1,7 +1,7 @@
 <?php
 
 
-class session
+class Session
 {
     private $idsession, $name, $numberallowed,$event, $startdate, $endDate;
 

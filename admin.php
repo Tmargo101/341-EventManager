@@ -16,7 +16,7 @@
 <div class='container col-sm-4 my-5 bg-light'>
 	<div class=''>
 		<h1>Users</h1>
-
+        <?php AdminController::getAllAttendees();?>
 	</div>
 </div>
 

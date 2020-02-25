@@ -18,23 +18,59 @@
 			}
 		}
 
-//		function getItem($inColumns, $inTable, $inType, $inQuery) {
-//            try {
-//                include_once "objects/Attendee.class.php";
-//                $data = array();
-//                $statement = $this->dbholder->prepare("SELECT :columns FROM :tab WHERE :id = :query");
-//                $statement->execute(array("columns"=>$inColumns,"tab"=>$inTable,"id"=>$inType,"query"=>$inQuery));
+		function getItem($inColumns, $inTable, $inType, $inQuery) {
+            try {
+                include_once "model/Attendee.class.php";
+                $statement = $this->dbholder->prepare("SELECT :columns FROM :tab WHERE :id = :query");
+                $statement->execute(array("columns"=>$inColumns,"tab"=>$inTable,"id"=>$inType,"query"=>$inQuery));
+                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
+                $data = $statement->fetchAll();
+
+                return $data;
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return array();
+            }
+        }
+
+//        function getAllItems($inColumns, $inTable, $inType) {
+//		    try {
+//                include_once "model/{$inType}.class.php";
+//                $statement = $this->dbholder->prepare("SELECT :columnQuery FROM :tableQuery");
+//                $statement->execute(array("columnQuery"=>$inColumns,"tableQuery"=>$inTable));
 //                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
 //                $data = $statement->fetchAll();
-//
 //                return $data;
+//
 //            } catch (PDOException $exception) {
 //                echo $exception->getMessage();
 //                return array();
 //            }
 //        }
 
+        function getAllRowsFromTable($inColumns, $inTable) {
+            try {
+                // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
+                $inType = ucfirst($inTable);
+
+                include_once "model/{$inType}.class.php";
+
+                // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                $query = "SELECT {$inColumns} FROM {$inTable}";
+                $statement = $this->dbholder->prepare($query);
+                $statement->execute();
+                $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
+                $data = $statement->fetchAll();
+                return $data;
+
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return array();
+            }
+        }
 
 
 
-	}
+
+
+    }
