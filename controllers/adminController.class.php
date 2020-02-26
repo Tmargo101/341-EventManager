@@ -8,10 +8,15 @@
             $db = new DBAccess_Admin();
             $data = $db->getAllRowsFromTable("*","attendee");
             if (count($data) > 0) {
+//                echo "from AdminController \$data looks like this";
+                Table::createEventTable($data);
+
 //                var_dump($data);
-                Table::createHeader($data[0]);
-                Table::createRows($data);
-                Table::end();
+//                echo "<hr>";
+//                foreach ($data as $row) {
+//                    var_dump($row);
+//                    echo $row->getName()."<hr>";
+//                }
             }
         }
 
