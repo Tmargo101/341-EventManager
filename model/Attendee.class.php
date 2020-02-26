@@ -59,7 +59,14 @@
             $this->role = $role;
         }
 
-
+        public function getTableHeader() {
+			$row = "
+				<th>Attendee ID</th>
+				<th>Name</th>
+				<th>Role</th>
+			";
+            return $row;
+        }
 
 //
 //		public function returnColumns() {
