@@ -11,7 +11,7 @@ class Table {
 //                    $tableDiv .= "<h3>" . $data[$i]->getName() . "</h3>";
                 $table .= Table::createRow($data[$i]);
             }
-            $table .= Table::end($data[0]);
+            $table .= Table::end();
         }
         return $table;
 
