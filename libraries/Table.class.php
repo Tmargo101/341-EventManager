@@ -1,8 +1,5 @@
 <?php /** @noinspection PhpUndefinedMethodInspection */
 
-//session_name('EventManagerSession');
-//session_start();
-
 class Table {
 
     public static function createTable($controller, $getSomething) {
@@ -60,6 +57,9 @@ class Table {
             default:
                 $tableHeader .= "";
         }
+        if ($_SESSION['auth']['role'] == "admin") {
+            $tableHeader .= "<div class='pull-right my-2'><form action='crud.php' method='get'><button class='btn btn-outline-success' name='add' value='{$data->getType()}'>Add {$data->getType()}</button></form></div>";
+        }
         $tableHeader .= "</tr></thead>\n";
         return $tableHeader;
     }
@@ -72,8 +72,12 @@ class Table {
                     <td>".$data->getName()."</td>
                     <td>".$data->getRole()."</td>
                     ";
-                if ($_SESSION['auth']['role'] == 'admin') {
+                if ($_SESSION['auth']['role'] == 'admin' && $data->getName() != "admin") {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdattendee()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdattendee()}'>Delete</button></form></td>";
+                } else if ($data->getName() != "admin") {
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdattendee()}'>Register</button></form></td>";
+                } else {
+                    $row .= "<td></td>";
                 }
                 $row .= "</tr>";
                 break;
@@ -83,10 +87,13 @@ class Table {
                     <td>".$data->getName()."</td>
                     <td>".$data->getCapacity()."</td>
                     ";
-                if ($_SESSION['auth']['role'] == 'admin') {
+                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdvenue()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdvenue()}'>Delete</button></form></td>";
+                } else if ($data->getName() != "admin") {
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdvenue()}'>Register</button></form></td>";
+                } else {
+                    $row .= "<td></td>";
                 }
-                $row .= "</tr>";
                 break;
             case "Event":
                 $row = "<tr>
@@ -97,10 +104,13 @@ class Table {
                     <td>".substr($data->getDateend(), 0, 10)."</td>
                     <td>".$data->getNumberallowed()."</td>
                     ";
-                if ($_SESSION['auth']['role'] == 'admin') {
+                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdevent()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdevent()}'>Delete</button></form></td>";
+                } else if ($data->getName() != "admin") {
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdevent()}'>Register</button></form></td>";
+                } else {
+                    $row .= "<td></td>";
                 }
-                $row .= "</tr>";
                 break;
             case "Session":
                 $row = "<tr>
@@ -113,8 +123,11 @@ class Table {
                     ";
                 if ($_SESSION['auth']['role'] == 'admin') {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdsession()}'>Edit</button><button class='btn btn-danger'  name='delete{$data->getType()}' value='{$data->getIdsession()}'>Delete</button></form></td>";
+                } else if ($data->getName() != "admin") {
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdsession()}'>Register</button></form></td>";
+                } else {
+                    $row .= "<td></td>";
                 }
-                $row .= "</tr>";
                 break;
             default:
                 $row = "";
@@ -122,8 +135,8 @@ class Table {
         return $row;
     }
 
-    public static function end($data) {
-        return "<div class='pull-right'><form action='crud.php' method='get'><button class='btn btn-outline-success' name='add' value='{$data->getType()}'>Add</button></form></div></table></div>\n";
+    public static function end() {
+        return "</table></div>\n";
     }
 
 }
