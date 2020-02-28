@@ -2,7 +2,7 @@
 	
 	class Attendee {
 		private $idattendee, $name, $password, $role;
-        private $type = "Attendee";
+    private $type = "Attendee";
 
         /**
          * @return string

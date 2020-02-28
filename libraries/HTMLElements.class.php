@@ -112,7 +112,7 @@ END;
 END;
 		echo $nav;
 		}
-
+    
 		static function tableDiv($title, $controller, $getSomething) {
 		    $tableDiv = <<<END
 <div class='container col-sm-8 my-5 bg-light'>
@@ -127,6 +127,5 @@ END;
 END;
 		    echo $tableDiv;
         } //END tableDiv();
-
 	} //End HTMLElements Class
 

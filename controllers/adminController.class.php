@@ -118,5 +118,4 @@
 //
 //			return $eventTableOutputString;
 //		}
-
 	} // End adminDB

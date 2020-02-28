@@ -138,5 +138,4 @@ class Table {
     public static function end() {
         return "</table></div>\n";
     }
-
 }
