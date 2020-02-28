@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUndefinedMethodInspection */
 
 //session_name('EventManagerSession');
 //session_start();
@@ -14,7 +14,7 @@ class Table {
 //                    $tableDiv .= "<h3>" . $data[$i]->getName() . "</h3>";
                 $table .= Table::createRow($data[$i]);
             }
-            $table .= Table::end();
+            $table .= Table::end($data[0]);
         }
         return $table;
 
@@ -28,24 +28,24 @@ class Table {
                     <th>Attendee ID</th>
                     <th>Username</th>
                     <th>Role</th>
-                    <th>Controls</th>";
+                    <th style='width: 15%'></th>";
                 break;
             case "Venue":
                 $tableHeader .= "
                     <th>ID</th>
                     <th>Venue Name</th>
                     <th>Max Capacity</th>
-                    <th>Controls</th>";
+                    <th  style='width: 15%'></th>";
                 break;
             case "Event":
                 $tableHeader .= "
                     <th>ID</th>
                     <th>Event Name</th>
+                    <th>Venue</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Max Capacity</th>
-                    <th>Venue</th>
-                    <th>Controls</th>";
+                    <th style='width: 15%'></th>";
                 break;
             case "Session":
                 $tableHeader .= "
@@ -55,7 +55,7 @@ class Table {
                     <th>End Date</th>
                     <th>Max Capacity</th>
                     <th>Venue</th>
-                    <th>Controls</th>";
+                    <th style='width: 15%'></th>";
                 break;
             default:
                 $tableHeader .= "";
@@ -64,7 +64,6 @@ class Table {
         return $tableHeader;
     }
 
-    /** @noinspection PhpUndefinedVariableInspection */
     public static function createRow($data) {
         switch ($data->getType()) {
             case "Attendee":
@@ -74,7 +73,7 @@ class Table {
                     <td>".$data->getRole()."</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin') {
-                    $row .= "<td>Buttons go here</td>";
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdattendee()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdattendee()}'>Delete</button></form></td>";
                 }
                 $row .= "</tr>";
                 break;
@@ -85,7 +84,7 @@ class Table {
                     <td>".$data->getCapacity()."</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin') {
-                    $row .= "<td>Buttons go here</td>";
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdvenue()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdvenue()}'>Delete</button></form></td>";
                 }
                 $row .= "</tr>";
                 break;
@@ -93,13 +92,13 @@ class Table {
                 $row = "<tr>
                     <td>".$data->getIdevent()."</td>
                     <td>".$data->getName()."</td>
-                    <td>".$data->getDatestart()."</td>
-                    <td>".$data->getDateend()."</td>
-                    <td>".$data->getNumberallowed()."</td>
                     <td>".$data->getVenue()."</td>
+                    <td>".substr($data->getDatestart(), 0, 10)."</td>
+                    <td>".substr($data->getDateend(), 0, 10)."</td>
+                    <td>".$data->getNumberallowed()."</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin') {
-                    $row .= "<td>Buttons go here</td>";
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdevent()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdevent()}'>Delete</button></form></td>";
                 }
                 $row .= "</tr>";
                 break;
@@ -107,13 +106,13 @@ class Table {
                 $row = "<tr>
                     <td>".$data->getIdsession()."</td>
                     <td>".$data->getName()."</td>
-                    <td>".$data->getStartdate()."</td>
-                    <td>".$data->getEnddate()."</td>
+                    <td>".substr($data->getStartdate(), 0, 10)."</td>
+                    <td>".substr($data->getEnddate(), 0, 10)."</td>
                     <td>".$data->getNumberallowed()."</td>
                     <td>".$data->getEvent()."</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin') {
-                    $row .= "<td>Buttons go here</td>";
+                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdsession()}'>Edit</button><button class='btn btn-danger'  name='delete{$data->getType()}' value='{$data->getIdsession()}'>Delete</button></form></td>";
                 }
                 $row .= "</tr>";
                 break;
@@ -123,8 +122,8 @@ class Table {
         return $row;
     }
 
-    public static function end() {
-        return "</table></div>\n";
+    public static function end($data) {
+        return "<div class='pull-right'><form action='crud.php' method='get'><button class='btn btn-outline-success' name='add' value='{$data->getType()}'>Add</button></form></div></table></div>\n";
     }
 
 }

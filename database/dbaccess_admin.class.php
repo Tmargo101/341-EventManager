@@ -1,9 +1,10 @@
-<?php	
+<?php
 	include_once 'dbaccess_common.class.php';
 	
 	class DBAccess_Admin extends DBAccess {
 
-        function getAllRowsFromTable($inColumns, $inTable, $fetchType) {
+        /** @noinspection PhpInconsistentReturnPointsInspection */
+        function getAllRowsFromTable($inColumns, $inTable, $inQuery, $fetchType) {
             try {
                 // Decide if I am going to use a fetch class or an associative array
                 switch($fetchType) {
@@ -14,7 +15,7 @@
                         include_once "model/{$inType}.class.php";
 
                         // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
-                        $query = "SELECT $inColumns FROM $inTable";
+                        $query = "SELECT $inColumns FROM $inTable $inQuery";
                         $statement = $this->dbholder->prepare($query);
                         $statement->execute();
                         $statement->setFetchMode(PDO::FETCH_CLASS,$inType);

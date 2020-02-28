@@ -6,18 +6,9 @@
 
         public static function getAllAttendees() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","attendee","class");
+            $data = $db->getAllRowsFromTable("a.idattendee, a.name, r.name AS role","attendee","AS a LEFT JOIN role AS r ON a.role = r.idrole","class");
             if (count($data) > 0) {
                 return $data;
-//                echo "from AdminController \$data looks like this";
-//                Table::createEventTable($data);
-
-//                var_dump($data);
-//                echo "<hr>";
-//                foreach ($data as $row) {
-//                    var_dump($row);
-//                    echo $row->getName()."<hr>";
-//                }
             } else {
                 return null;
             }
@@ -25,7 +16,7 @@
 
         public static function getAllEvents() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","event","class");
+            $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue","event","AS e LEFT JOIN venue AS v ON v.idvenue = e.venue","class");
             if (count($data) > 0) {
                 return $data;
             } else {
@@ -35,7 +26,7 @@
 
         public static function getAllSessions() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","session","class");
+            $data = $db->getAllRowsFromTable("*","session","","class");
             if (count($data) > 0) {
                 return $data;
             } else {
@@ -45,7 +36,7 @@
 
         public static function getAllVenues() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","venue","class");
+            $data = $db->getAllRowsFromTable("*","venue","","class");
             if (count($data) > 0) {
                 return $data;
             } else {
