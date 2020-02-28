@@ -13,35 +13,13 @@
 	<h1>Admin Portal</h1>
 </div>
 
-<div class='container col-sm-8 my-5 bg-light'>
-	<div class=''>
-		<h1>Users</h1>
-        <?php AdminController::getAllAttendees();?>
-	</div>
-</div>
+<?php HTMLElements::tableDiv("Users","AdminController","getAllAttendees");?>
 
-<div class='container col-sm-8 my-5 bg-light'>
-	<div class=''>
-		<h1>Venues</h1>
-        <?php AdminController::getAllVenues();?>
-	</div>
-</div>
+<?php HTMLElements::tableDiv("Venues","AdminController","getAllVenues");?>
 
-<div class='container col-sm-8 my-5 bg-light'>
-    <div class=''>
-        <h1>Events</h1>
-        <?php AdminController::getAllEvents();?>
+<?php HTMLElements::tableDiv("Events","AdminController","getAllEvents");?>
 
-    </div>
-</div>
-
-<div class='container col-sm-8 my-5 bg-light'>
-    <div class=''>
-        <h1>Sessions</h1>
-        <?php AdminController::getAllSessions();?>
-    </div>
-</div>
-
+<?php HTMLElements::tableDiv("Sessions","AdminController","getAllSessions");?>
 
 <?php
 	HTMLElements::html_footer();

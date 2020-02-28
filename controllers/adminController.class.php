@@ -6,9 +6,9 @@
 
         public static function getAllAttendees() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","attendee");
+            $data = $db->getAllRowsFromTable("*","attendee","class");
             if (count($data) > 0) {
-                var_dump($data);
+                return $data;
 //                echo "from AdminController \$data looks like this";
 //                Table::createEventTable($data);
 
@@ -18,30 +18,38 @@
 //                    var_dump($row);
 //                    echo $row->getName()."<hr>";
 //                }
+            } else {
+                return null;
             }
         }
 
         public static function getAllEvents() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","event");
+            $data = $db->getAllRowsFromTable("*","event","class");
             if (count($data) > 0) {
-                var_dump($data);
+                return $data;
+            } else {
+                return null;
             }
         }
 
         public static function getAllSessions() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","session");
+            $data = $db->getAllRowsFromTable("*","session","class");
             if (count($data) > 0) {
-                var_dump($data);
+                return $data;
+            } else {
+                return null;
             }
         }
 
         public static function getAllVenues() {
             $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","venue");
+            $data = $db->getAllRowsFromTable("*","venue","class");
             if (count($data) > 0) {
-                var_dump($data);
+                return $data;
+            } else {
+                return null;
             }
         }
 

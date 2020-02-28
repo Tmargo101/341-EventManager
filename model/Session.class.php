@@ -3,7 +3,22 @@
 
 class Session
 {
-    private $idsession, $name, $numberallowed,$event, $startdate, $endDate;
+    private $idsession, $name, $numberallowed, $event, $startdate, $enddate;
+    private $type = "Session";
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type) {
+        $this->type = $type;
+    }
 
     /**
      * @return mixed
@@ -78,15 +93,15 @@ class Session
     /**
      * @return mixed
      */
-    public function getEndDate() {
-        return $this->endDate;
+    public function getEnddate() {
+        return $this->enddate;
     }
 
     /**
-     * @param mixed $endDate
+     * @param mixed $enddate
      */
-    public function setEndDate($endDate) {
-        $this->endDate = $endDate;
+    public function setEnddate($enddate) {
+        $this->enddate = $enddate;
     }
 
 

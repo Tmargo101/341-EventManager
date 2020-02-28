@@ -123,7 +123,8 @@
 				}
 				$_SESSION['auth']['authCorrect'] = "";
 				HTMLElements::notLoggedIn();
-                header("Refresh:5; url=index.php");
+                // TODO: Find out how to pass 401 code and still refresh the page after 5 seconds
+                header("HTTP/1.0 401 Unauthorized; Refresh:5; url=index.php");
 				die();
 			}// End if(authCorrect!=true)
 		} // End isLoggedIn()
@@ -131,9 +132,11 @@
 		static function isAdmin() {
 			if ($_SESSION['auth']['role'] != "admin") {
 			    HTMLElements::notAdmin();
-				header("Refresh:5; url=index.php");
-				die();
-
+//				header("Refresh:5; url=index.php");
+//				die();
+                // TODO: Find out how to pass 401 code and still refresh the page after 5 seconds
+                header("HTTP/1.0 401 Unauthorized; Refresh=5; url=index.php");
+                die();
 			}
 		} // End isAdmin()
 	} // End Auth class

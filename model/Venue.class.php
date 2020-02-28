@@ -3,6 +3,21 @@
 
 class Venue {
     private $idvenue, $name, $capacity;
+    private $type = "Venue";
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type) {
+        $this->type = $type;
+    }
 
     /**
      * @return mixed
@@ -45,5 +60,4 @@ class Venue {
     public function setCapacity($capacity) {
         $this->capacity = $capacity;
     }
-
 }

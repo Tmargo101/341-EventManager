@@ -3,15 +3,45 @@
 	
 	class DBAccess_Admin extends DBAccess {
 
-        function getAllRowsFromTable($inColumns, $inTable) {
+        function getAllRowsFromTable($inColumns, $inTable, $fetchType) {
             try {
+                // Decide if I am going to use a fetch class or an associative array
+                switch($fetchType) {
+                    case "class":
+                        // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
+                        $inType = ucfirst($inTable);
+
+                        include_once "model/{$inType}.class.php";
+
+                        // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                        $query = "SELECT $inColumns FROM $inTable";
+                        $statement = $this->dbholder->prepare($query);
+                        $statement->execute();
+                        $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
+                        $data = $statement->fetchAll();
+                        return $data;
+                        break;
+                    case "array":
+                        break;
+
+                }
+
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return array();
+            }
+        }
+
+        function getRowsFromTable($inColumns, $inQuery) {
+            try {
+                // TODO: If inQuery is
                 // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
-                $inType = ucfirst($inTable);
+                $inType = ucfirst($inQuery);
 
                 include_once "model/{$inType}.class.php";
 
                 // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
-                $query = "SELECT {$inColumns} FROM {$inTable}";
+                $query = "SELECT $inColumns FROM $inQuery";
                 $statement = $this->dbholder->prepare($query);
                 $statement->execute();
                 $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
@@ -23,7 +53,6 @@
                 return array();
             }
         }
-
 
 //		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
 //			try {
