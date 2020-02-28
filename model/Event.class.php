@@ -2,6 +2,21 @@
 	
 	class Event {
 		private $idevent, $name, $datestart, $dateend, $numberallowed, $venue;
+		private $type = "Event";
+
+        /**
+         * @return string
+         */
+        public function getType() {
+            return $this->type;
+        }
+
+        /**
+         * @param string $type
+         */
+        public function setType($type) {
+            $this->type = $type;
+        }
 
         /**
          * @return mixed

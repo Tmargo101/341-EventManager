@@ -100,7 +100,7 @@ END;
 				$nav .= <<<END
 						</ul>
 						<ul class='navbar-nav'>
-							<li class='navbar-brand mt-2'>Logged in as: {$_SESSION['auth']['username']}</li>
+							<li class='navbar-brand mt-2'><i>Logged in as:</i> {$_SESSION['auth']['username']}</li>
 							<li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
 END;
 			}	
@@ -112,5 +112,20 @@ END;
 END;
 		echo $nav;
 		}
+    
+		static function tableDiv($title, $controller, $getSomething) {
+		    $tableDiv = <<<END
+<div class='container col-sm-8 my-5 bg-light'>
+	<div class=''>
+		<h1>$title</h1>
+END;
+		    $tableDiv .= Table::createTable($controller, $getSomething);
+/*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
+		    $tableDiv .= <<<END
+	</div>
+</div>
+END;
+		    echo $tableDiv;
+        } //END tableDiv();
 	} //End HTMLElements Class
 

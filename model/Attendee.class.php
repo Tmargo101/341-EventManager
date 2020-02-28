@@ -2,6 +2,21 @@
 	
 	class Attendee {
 		private $idattendee, $name, $password, $role;
+    private $type = "Attendee";
+
+        /**
+         * @return string
+         */
+        public function getType() {
+            return $this->type;
+        }
+
+        /**
+         * @param string $type
+         */
+        public function setType($type) {
+            $this->type = $type;
+        }
 
         /**
          * @return mixed
@@ -57,15 +72,6 @@
          */
         public function setRole($role) {
             $this->role = $role;
-        }
-
-        public function getTableHeader() {
-			$row = "
-				<th>Attendee ID</th>
-				<th>Name</th>
-				<th>Role</th>
-			";
-            return $row;
         }
 
 //

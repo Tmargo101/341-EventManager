@@ -20,8 +20,7 @@
 
 		function getItem($inColumns, $inTable, $inType, $inQuery) {
             try {
-                include_once "objects/Attendee.class.php";
-                $data = array();
+                include_once "model/Attendee.class.php";
                 $statement = $this->dbholder->prepare("SELECT :columns FROM :tab WHERE :id = :query");
                 $statement->execute(array("columns"=>$inColumns,"tab"=>$inTable,"id"=>$inType,"query"=>$inQuery));
                 $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
@@ -34,39 +33,55 @@
             }
         }
 
+        /** @noinspection PhpInconsistentReturnPointsInspection */
+        function getAllRowsFromTable($inColumns, $inTable, $inQuery, $fetchType) {
+            try {
+                // Decide if I am going to use a fetch class or an associative array
+                switch($fetchType) {
+                    case "class":
+                        // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
+                        $inType = ucfirst($inTable);
+
+                        include_once "model/{$inType}.class.php";
+
+                        // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                        $query = "SELECT $inColumns FROM $inTable $inQuery";
+                        $statement = $this->dbholder->prepare($query);
+                        $statement->execute();
+                        $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
+                        $data = $statement->fetchAll();
+                        return $data;
+                        break;
+                    case "array":
+                        break;
+
+                }
+
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return array();
+            }
+        }
 
 
-		function getAttendee($inUserName) {
-			try {
-				$data = array();
-				$statement = $this->dbholder->prepare("SELECT * FROM attendee WHERE name = :username");
-				$statement->execute(array("username"=>$inUserName));
+//        function getAllItems($inColumns, $inTable, $inType) {
+//		    try {
+//                include_once "model/{$inType}.class.php";
+//                $statement = $this->dbholder->prepare("SELECT :columnQuery FROM :tableQuery");
+//                $statement->execute(array("columnQuery"=>$inColumns,"tableQuery"=>$inTable));
+//                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
+//                $data = $statement->fetchAll();
+//                return $data;
+//
+//            } catch (PDOException $exception) {
+//                echo $exception->getMessage();
+//                return array();
+//            }
+//        }
 
-				$data = $statement->fetchAll();
 
-				return $data;
-			} catch (PDOException $exception) {
-				echo $exception->getMessage();
-				return array();
-			} // End catch
-		}
 
-		function createAttendee($newUserName, $newUserPassword) {
-				// Check if user exists (under development)
-				$previousUserArray = $this->getAttendee($newUserName);
-				if (!isset($previousUserArray[0])) {
-					try {
-						$data = array();
-						$statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,3)");
-						$statement->execute(array("username"=>$newUserName,"password"=>$newUserPassword));
-						return $this->dbholder->lastInsertId();
 
-					} catch (PDOException $exception) {
-						echo $exception->getMessage();
-						return -1;
-					}
-			}
-		}
 
-	}
-?>
+
+    }

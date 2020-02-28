@@ -6,4 +6,3 @@
 			return strip_tags(htmlspecialchars($inString));
 		}
 	}
-?>

@@ -3,6 +3,7 @@
     <words>
       <w>dateend</w>
       <w>datestart</w>
+      <w>dbholder</w>
       <w>idattendee</w>
       <w>idevent</w>
       <w>numberallowed</w>
