@@ -1,5 +1,5 @@
 <?php
-	
+/** @noinspection PhpUnused */
 	class Attendee {
 		private $idattendee, $name, $password, $role;
     private $type = "Attendee";

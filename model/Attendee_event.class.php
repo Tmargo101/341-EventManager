@@ -1,6 +1,6 @@
 <?php
 
-
+/** @noinspection PhpUnused */
 class Attendee_event {
     private $event, $attendee, $paid;
 

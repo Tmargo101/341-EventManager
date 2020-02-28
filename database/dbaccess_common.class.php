@@ -1,6 +1,6 @@
 <?php
 /*
-	This is the superclass for DBAccess.  Functions in this class can be called from anywhere in the site, including the login page.
+	This is the superclass for the Database Layer.  Functions in this class can be called from any of the userLevel controllers.
 	
 	Author: Thomas Margosian
 	Date created: 2/20/20
@@ -18,22 +18,27 @@
 			}
 		}
 
-		function getItem($inColumns, $inTable, $inType, $inQuery) {
-            try {
-                include_once "model/Attendee.class.php";
-                $statement = $this->dbholder->prepare("SELECT :columns FROM :tab WHERE :id = :query");
-                $statement->execute(array("columns"=>$inColumns,"tab"=>$inTable,"id"=>$inType,"query"=>$inQuery));
-                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
-                $data = $statement->fetchAll();
+//		function getItem($inColumns, $inTable, $inType, $inQuery) {
+//            try {
+//                include_once "model/Attendee.class.php";
+//                $statement = $this->dbholder->prepare("SELECT :columns FROM :tab WHERE :id = :query");
+//                $statement->execute(array("columns"=>$inColumns,"tab"=>$inTable,"id"=>$inType,"query"=>$inQuery));
+//                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
+//                return $statement->fetchAll();
+//            } catch (PDOException $exception) {
+//                echo $exception->getMessage();
+//                return array();
+//            }
+//        }
 
-                return $data;
-            } catch (PDOException $exception) {
-                echo $exception->getMessage();
-                return array();
-            }
-        }
-
-        /** @noinspection PhpInconsistentReturnPointsInspection */
+        /** @noinspection PhpInconsistentReturnPointsInspection
+         * @noinspection PhpIncludeInspection
+         * @param $inColumns
+         * @param $inTable
+         * @param $inQuery
+         * @param $fetchType
+         * @return array
+         */
         function getAllRowsFromTable($inColumns, $inTable, $inQuery, $fetchType) {
             try {
                 // Decide if I am going to use a fetch class or an associative array
@@ -49,8 +54,7 @@
                         $statement = $this->dbholder->prepare($query);
                         $statement->execute();
                         $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
-                        $data = $statement->fetchAll();
-                        return $data;
+                        return $statement->fetchAll();
                         break;
                     case "array":
                         break;
@@ -62,23 +66,6 @@
                 return array();
             }
         }
-
-
-//        function getAllItems($inColumns, $inTable, $inType) {
-//		    try {
-//                include_once "model/{$inType}.class.php";
-//                $statement = $this->dbholder->prepare("SELECT :columnQuery FROM :tableQuery");
-//                $statement->execute(array("columnQuery"=>$inColumns,"tableQuery"=>$inTable));
-//                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
-//                $data = $statement->fetchAll();
-//                return $data;
-//
-//            } catch (PDOException $exception) {
-//                echo $exception->getMessage();
-//                return array();
-//            }
-//        }
-
 
 
 

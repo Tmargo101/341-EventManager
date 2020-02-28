@@ -1,6 +1,6 @@
 <?php
 
-
+/** @noinspection PhpUnused */
 class Attendee_session {
     private $session, $attendee;
 

@@ -1,9 +1,13 @@
-<?php
-	
-	require_once 'database/dbaccess_admin.class.php';
 
+
+<?php
+
+require_once 'database/dbaccess_admin.class.php';
+
+/** @noinspection PhpUnused EntryPoints */
 	class AdminController {
 
+        /** @noinspection PhpUnused */
         public static function getAllAttendees() {
             $db = new DBAccess_Admin();
             $data = $db->getAllRowsFromTable("a.idattendee, a.name, r.name AS role","attendee","AS a LEFT JOIN role AS r ON a.role = r.idrole","class");
@@ -13,7 +17,7 @@
                 return null;
             }
         }
-
+        /** @noinspection PhpUnused */
         public static function getAllEvents() {
             $db = new DBAccess_Admin();
             $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue","event","AS e LEFT JOIN venue AS v ON v.idvenue = e.venue","class");
@@ -24,6 +28,7 @@
             }
         }
 
+        /** @noinspection PhpUnused */
         public static function getAllSessions() {
             $db = new DBAccess_Admin();
             $data = $db->getAllRowsFromTable("*","session","","class");
@@ -34,6 +39,7 @@
             }
         }
 
+        /** @noinspection PhpUnused */
         public static function getAllVenues() {
             $db = new DBAccess_Admin();
             $data = $db->getAllRowsFromTable("*","venue","","class");

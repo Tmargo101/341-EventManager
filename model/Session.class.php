@@ -1,6 +1,6 @@
 <?php
 
-
+/** @noinspection PhpUnused */
 class Session
 {
     private $idsession, $name, $numberallowed, $event, $startdate, $enddate;

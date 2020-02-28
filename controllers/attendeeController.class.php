@@ -2,6 +2,7 @@
 
 require_once 'database/dbaccess_common.class.php';
 
+/** @noinspection PhpUnused */
 class AttendeeController {
     public static function getAllEvents() {
         $db = new DBAccess();

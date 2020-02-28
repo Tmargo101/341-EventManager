@@ -1,7 +1,7 @@
 <?php
 	include_once 'dbaccess_common.class.php';
-	
-	class DBAccess_Admin extends DBAccess {
+/** @noinspection PhpUnused */
+class DBAccess_Admin extends DBAccess {
 
 
         function getRowsFromTable($inColumns, $inQuery) {
@@ -10,6 +10,7 @@
                 // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
                 $inType = ucfirst($inQuery);
 
+                /** @noinspection PhpIncludeInspection */
                 include_once "model/{$inType}.class.php";
 
                 // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
@@ -17,8 +18,7 @@
                 $statement = $this->dbholder->prepare($query);
                 $statement->execute();
                 $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
-                $data = $statement->fetchAll();
-                return $data;
+                return $statement->fetchAll();
 
             } catch (PDOException $exception) {
                 echo $exception->getMessage();

@@ -1,6 +1,7 @@
 <?php
-	
-	class Event {
+
+/** @noinspection PhpUnused */
+class Event {
 		private $idevent, $name, $datestart, $dateend, $numberallowed, $venue;
 		private $type = "Event";
 
