@@ -1,54 +1,54 @@
-
-
 <?php
 
 require_once 'database/dbaccess_admin.class.php';
 
 /** @noinspection PhpUnused EntryPoints */
-	class AdminController {
 
-        /** @noinspection PhpUnused */
-        public static function getAllAttendees() {
-            $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("a.idattendee, a.name, r.name AS role","attendee","AS a LEFT JOIN role AS r ON a.role = r.idrole","class");
-            if (count($data) > 0) {
-                return $data;
-            } else {
-                return null;
-            }
-        }
-        /** @noinspection PhpUnused */
-        public static function getAllEvents() {
-            $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue","event","AS e LEFT JOIN venue AS v ON v.idvenue = e.venue","class");
-            if (count($data) > 0) {
-                return $data;
-            } else {
-                return null;
-            }
-        }
+class AdminController {
 
-        /** @noinspection PhpUnused */
-        public static function getAllSessions() {
-            $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","session","","class");
-            if (count($data) > 0) {
-                return $data;
-            } else {
-                return null;
-            }
+    /** @noinspection PhpUnused */
+    public static function getAllAttendees() {
+        $db = new DBAccess_Admin();
+        $data = $db->getAllRowsFromTable("a.idattendee, a.name, r.name AS role", "attendee", "AS a LEFT JOIN role AS r ON a.role = r.idrole", "class");
+        if (count($data) > 0) {
+            return $data;
+        } else {
+            return null;
         }
+    }
 
-        /** @noinspection PhpUnused */
-        public static function getAllVenues() {
-            $db = new DBAccess_Admin();
-            $data = $db->getAllRowsFromTable("*","venue","","class");
-            if (count($data) > 0) {
-                return $data;
-            } else {
-                return null;
-            }
+    /** @noinspection PhpUnused */
+    public static function getAllEvents() {
+        $db = new DBAccess_Admin();
+        $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue", "event", "AS e LEFT JOIN venue AS v ON v.idvenue = e.venue", "class");
+        if (count($data) > 0) {
+            return $data;
+        } else {
+            return null;
         }
+    }
+
+    /** @noinspection PhpUnused */
+    public static function getAllSessions() {
+        $db = new DBAccess_Admin();
+        $data = $db->getAllRowsFromTable("*", "session", "", "class");
+        if (count($data) > 0) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
+
+    /** @noinspection PhpUnused */
+    public static function getAllVenues() {
+        $db = new DBAccess_Admin();
+        $data = $db->getAllRowsFromTable("*", "venue", "", "class");
+        if (count($data) > 0) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
 
 
 //        public static function getAllUsersTable() {
@@ -124,4 +124,4 @@ require_once 'database/dbaccess_admin.class.php';
 //
 //			return $eventTableOutputString;
 //		}
-	} // End adminDB
+} // End adminDB

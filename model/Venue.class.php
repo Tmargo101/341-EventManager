@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpUnused */
+
 class Venue {
     private $idvenue, $name, $capacity;
     private $type = "Venue";

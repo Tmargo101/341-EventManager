@@ -68,9 +68,9 @@ class Table {
         switch ($data->getType()) {
             case "Attendee":
                 $row = "<tr>
-                    <td>".$data->getIdattendee()."</td>
-                    <td>".$data->getName()."</td>
-                    <td>".$data->getRole()."</td>
+                    <td>" . $data->getIdattendee() . "</td>
+                    <td>" . $data->getName() . "</td>
+                    <td>" . $data->getRole() . "</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin' && $data->getName() != "admin") {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdattendee()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdattendee()}'>Delete</button></form></td>";
@@ -83,9 +83,9 @@ class Table {
                 break;
             case "Venue":
                 $row = "<tr>
-                    <td>".$data->getIdvenue()."</td>
-                    <td>".$data->getName()."</td>
-                    <td>".$data->getCapacity()."</td>
+                    <td>" . $data->getIdvenue() . "</td>
+                    <td>" . $data->getName() . "</td>
+                    <td>" . $data->getCapacity() . "</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdvenue()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdvenue()}'>Delete</button></form></td>";
@@ -97,12 +97,12 @@ class Table {
                 break;
             case "Event":
                 $row = "<tr>
-                    <td>".$data->getIdevent()."</td>
-                    <td>".$data->getName()."</td>
-                    <td>".$data->getVenue()."</td>
-                    <td>".substr($data->getDatestart(), 0, 10)."</td>
-                    <td>".substr($data->getDateend(), 0, 10)."</td>
-                    <td>".$data->getNumberallowed()."</td>
+                    <td>" . $data->getIdevent() . "</td>
+                    <td>" . $data->getName() . "</td>
+                    <td>" . $data->getVenue() . "</td>
+                    <td>" . substr($data->getDatestart(), 0, 10) . "</td>
+                    <td>" . substr($data->getDateend(), 0, 10) . "</td>
+                    <td>" . $data->getNumberallowed() . "</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdevent()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdevent()}'>Delete</button></form></td>";
@@ -114,12 +114,12 @@ class Table {
                 break;
             case "Session":
                 $row = "<tr>
-                    <td>".$data->getIdsession()."</td>
-                    <td>".$data->getName()."</td>
-                    <td>".substr($data->getStartdate(), 0, 10)."</td>
-                    <td>".substr($data->getEnddate(), 0, 10)."</td>
-                    <td>".$data->getNumberallowed()."</td>
-                    <td>".$data->getEvent()."</td>
+                    <td>" . $data->getIdsession() . "</td>
+                    <td>" . $data->getName() . "</td>
+                    <td>" . substr($data->getStartdate(), 0, 10) . "</td>
+                    <td>" . substr($data->getEnddate(), 0, 10) . "</td>
+                    <td>" . $data->getNumberallowed() . "</td>
+                    <td>" . $data->getEvent() . "</td>
                     ";
                 if ($_SESSION['auth']['role'] == 'admin') {
                     $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdsession()}'>Edit</button><button class='btn btn-danger'  name='delete{$data->getType()}' value='{$data->getIdsession()}'>Delete</button></form></td>";

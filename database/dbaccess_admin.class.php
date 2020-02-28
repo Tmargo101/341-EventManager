@@ -1,30 +1,32 @@
 <?php
-	include_once 'dbaccess_common.class.php';
+include_once 'dbaccess_common.class.php';
+
 /** @noinspection PhpUnused */
+
 class DBAccess_Admin extends DBAccess {
 
 
-        function getRowsFromTable($inColumns, $inQuery) {
-            try {
-                // TODO: If inQuery is
-                // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
-                $inType = ucfirst($inQuery);
+    function getRowsFromTable($inColumns, $inQuery) {
+        try {
+            // TODO: If inQuery is
+            // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
+            $inType = ucfirst($inQuery);
 
-                /** @noinspection PhpIncludeInspection */
-                include_once "model/{$inType}.class.php";
+            /** @noinspection PhpIncludeInspection */
+            include_once "model/{$inType}.class.php";
 
-                // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
-                $query = "SELECT $inColumns FROM $inQuery";
-                $statement = $this->dbholder->prepare($query);
-                $statement->execute();
-                $statement->setFetchMode(PDO::FETCH_CLASS,$inType);
-                return $statement->fetchAll();
+            // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+            $query = "SELECT $inColumns FROM $inQuery";
+            $statement = $this->dbholder->prepare($query);
+            $statement->execute();
+            $statement->setFetchMode(PDO::FETCH_CLASS, $inType);
+            return $statement->fetchAll();
 
-            } catch (PDOException $exception) {
-                echo $exception->getMessage();
-                return array();
-            }
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
         }
+    }
 
 //		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
 //			try {

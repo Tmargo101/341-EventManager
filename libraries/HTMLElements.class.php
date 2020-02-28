@@ -1,18 +1,18 @@
 <?php
-	/*
-	These are static functions which can be called from any page.
-	IMPORTANT: Only functions which any user level should have access to should be here
-		
-	Author: Thomas Margosian, Brian French (original html_header and html_footer)
-	Date created: 2/20/20	
-	
-	*/
-	
-	class HTMLElements {
-	// 	HTML Headers & Footers
-	
-		static function html_header($title="Untitled"){
-			$string = <<<END
+/*
+These are static functions which can be called from any page.
+IMPORTANT: Only functions which any user level should have access to should be here
+
+Author: Thomas Margosian, Brian French (original html_header and html_footer)
+Date created: 2/20/20
+
+*/
+
+class HTMLElements {
+    // 	HTML Headers & Footers
+
+    static function html_header($title = "Untitled") {
+        $string = <<<END
 	<!DOCTYPE html>
 	
 	<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -33,16 +33,16 @@
 	</head>
 	<body class="text-center">\n
 END;
-			echo $string;
-		} // End html_header()
-	
-		
-		static function html_footer($text=""){
-			return "\n$text\n</body>\n</html>";
-		}// End html_footer()
+        echo $string;
+    } // End html_header()
 
-        static function notLoggedIn() {
-            echo "<!--suppress ALL -->
+
+    static function html_footer($text = "") {
+        return "\n$text\n</body>\n</html>";
+    }// End html_footer()
+
+    static function notLoggedIn() {
+        echo "<!--suppress ALL -->
             <div class='container col-md-4 mt-5 mb-5'>
                 <h1>Not logged in</h1>
             </div>
@@ -56,10 +56,10 @@ END;
             <div class='container col-md-4 mt-5 mb-5'>
                 <a href='index.php' class='btn btn-primary'>Login now</a>
             </div>";
-        }
+    }
 
-        static function notAdmin() {
-            echo "<!--suppress ALL -->
+    static function notAdmin() {
+        echo "<!--suppress ALL -->
                 <div class='container col-md-4 mt-5 mb-5'>
                     <h1>Unauthorized</h1>
                 </div>
@@ -73,59 +73,59 @@ END;
                 <div class='container my-5'>
                     <a href='index.php' class='btn btn-primary'>Go now</a>
                 </div>";
-        }
+    }
 
-		static function nav() {
-			$nav = <<<END
+    static function nav() {
+        $nav = <<<END
 				<div class='mb-5'>
 					<nav class='navbar navbar-expand-sm bg-dark navbar-dark'>
 						<a class="navbar-brand" href="#">Event Manager</a>
 						<ul class="navbar-nav ml-auto mr-auto">
 END;
-			if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
-				$nav .= <<<END
+        if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
+            $nav .= <<<END
 							<!--suppress ALL -->
 <li class='nav-item mx-5'><a class='nav-link' href='events.php'>Events</a></li>
 							<li c<!--suppress HtmlUnknownTarget -->
 <li class='nav-item mx-5'><a class='nav-link' href='registration.php'>Registration</a></li>
 
 END;
-			}
-			if (isset($_SESSION['auth']['authCorrect']) && isset($_SESSION['auth']['role']) && $_SESSION['auth']['role'] == "admin") {
-				$nav .= "<!--suppress HtmlUnknownTarget -->
+        }
+        if (isset($_SESSION['auth']['authCorrect']) && isset($_SESSION['auth']['role']) && $_SESSION['auth']['role'] == "admin") {
+            $nav .= "<!--suppress HtmlUnknownTarget -->
 <li class='nav-item mx-5'><a class='nav-link' href='admin.php'>Admin Portal</a></li>";
-			}
+        }
 
-			if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
-				$nav .= <<<END
+        if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
+            $nav .= <<<END
 						</ul>
 						<ul class='navbar-nav'>
 							<li class='navbar-brand mt-2'><i>Logged in as:</i> {$_SESSION['auth']['username']}</li>
 							<li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
 END;
-			}	
+        }
 
-			$nav .= <<<END
+        $nav .= <<<END
 						</ul>
 					</nav>
 				</div>
 END;
-		echo $nav;
-		}
-    
-		static function tableDiv($title, $controller, $getSomething) {
-		    $tableDiv = <<<END
+        echo $nav;
+    }
+
+    static function tableDiv($title, $controller, $getSomething) {
+        $tableDiv = <<<END
 <div class='container col-sm-8 my-5 bg-light'>
 	<div class=''>
 		<h1>$title</h1>
 END;
-		    $tableDiv .= Table::createTable($controller, $getSomething);
-/*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
-		    $tableDiv .= <<<END
+        $tableDiv .= Table::createTable($controller, $getSomething);
+        /*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
+        $tableDiv .= <<<END
 	</div>
 </div>
 END;
-		    echo $tableDiv;
-        } //END tableDiv();
-	} //End HTMLElements Class
+        echo $tableDiv;
+    } //END tableDiv();
+} //End HTMLElements Class
 

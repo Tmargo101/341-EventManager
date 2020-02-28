@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpUnused */
+
 class Role {
     private $idrole, $name;
 

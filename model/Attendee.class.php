@@ -1,78 +1,80 @@
 <?php
+
 /** @noinspection PhpUnused */
-	class Attendee {
-		private $idattendee, $name, $password, $role;
+
+class Attendee {
+    private $idattendee, $name, $password, $role;
     private $type = "Attendee";
 
-        /**
-         * @return string
-         */
-        public function getType() {
-            return $this->type;
-        }
+    /**
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
+    }
 
-        /**
-         * @param string $type
-         */
-        public function setType($type) {
-            $this->type = $type;
-        }
+    /**
+     * @param string $type
+     */
+    public function setType($type) {
+        $this->type = $type;
+    }
 
-        /**
-         * @return mixed
-         */
-        public function getIdattendee() {
-            return $this->idattendee;
-        }
+    /**
+     * @return mixed
+     */
+    public function getIdattendee() {
+        return $this->idattendee;
+    }
 
-        /**
-         * @param mixed $idattendee
-         */
-        public function setIdattendee($idattendee) {
-            $this->idattendee = $idattendee;
-        }
+    /**
+     * @param mixed $idattendee
+     */
+    public function setIdattendee($idattendee) {
+        $this->idattendee = $idattendee;
+    }
 
-        /**
-         * @return mixed
-         */
-        public function getName() {
-            return $this->name;
-        }
+    /**
+     * @return mixed
+     */
+    public function getName() {
+        return $this->name;
+    }
 
-        /**
-         * @param mixed $name
-         */
-        public function setName($name) {
-            $this->name = $name;
-        }
+    /**
+     * @param mixed $name
+     */
+    public function setName($name) {
+        $this->name = $name;
+    }
 
-        /**
-         * @return mixed
-         */
-        public function getPassword() {
-            return $this->password;
-        }
+    /**
+     * @return mixed
+     */
+    public function getPassword() {
+        return $this->password;
+    }
 
-        /**
-         * @param mixed $password
-         */
-        public function setPassword($password) {
-            $this->password = $password;
-        }
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password) {
+        $this->password = $password;
+    }
 
-        /**
-         * @return mixed
-         */
-        public function getRole() {
-            return $this->role;
-        }
+    /**
+     * @return mixed
+     */
+    public function getRole() {
+        return $this->role;
+    }
 
-        /**
-         * @param mixed $role
-         */
-        public function setRole($role) {
-            $this->role = $role;
-        }
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role) {
+        $this->role = $role;
+    }
 
 //
 //		public function returnColumns() {
@@ -92,4 +94,4 @@
 //
 //			return $row;
 //		}
-	}
+}

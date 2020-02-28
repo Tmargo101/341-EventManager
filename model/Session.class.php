@@ -1,8 +1,8 @@
 <?php
 
 /** @noinspection PhpUnused */
-class Session
-{
+
+class Session {
     private $idsession, $name, $numberallowed, $event, $startdate, $enddate;
     private $type = "Session";
 
@@ -103,7 +103,6 @@ class Session
     public function setEnddate($enddate) {
         $this->enddate = $enddate;
     }
-
 
 
 }

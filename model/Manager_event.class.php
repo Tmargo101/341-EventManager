@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpUnused */
+
 class Manager_event {
     private $event, $manager;
 
