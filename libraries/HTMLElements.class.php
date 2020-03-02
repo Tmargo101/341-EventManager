@@ -138,41 +138,57 @@ END;
     static function addDialog($inPOSTValues) {
         switch ($inPOSTValues['type']) {
             case "Attendee":
-                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Add Attendee</h1>";
-                $crudDialog .= "<!--suppress HtmlUnknownTarget -->
-<form action='admin.php' method='post'>
-    <input type='hidden' name='action' value='submit'>
-    <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
-    <div class='form-group row'>
-        <input class='form-control' type='text' name='newUserName' placeholder='Enter New Username Here'>
-    </div>
-    <div class='form-group row'>
-        <input class='form-control' type='text' name='newPassword' placeholder='Enter New Password Here'>
-    </div>
-    <div class='form-group'>
-        <label for='newRole'>Select role for new user:</label>
-        <select class='form-control' name='newRole' id='newRole'>
-            <option value='3' selected>Attendee</option>
-            <option value='2'>Manager</option>
-            <option value='1'>Admin</option>
-        </select>
-    </div>
-    <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New User</button>
-</form>";
-                $crudDialog .= "</div>";
-                break;
-            case "Venue":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-sm-8 my-5 py-5 bg-light'>
-    <h1>Add Venue</h1>
+<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+    <h2>Add Attendee</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
-            <input class='form-control' type='text' name='newVenueName' placeholder='Enter New Venue Name Here'>
+            <label class='col-sm-3 col-form-label' for='newUserName'><b>Username</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control com-sm-8' type='text' id='newUserName' name='newUserName' placeholder='Enter New Username Here'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='number' name='newVenueCapacity' placeholder='Enter Venue Capacity'>
+            <label class='col-sm-3 col-form-label' for='newPassword'><b>Password</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control com-sm-8' type='text' id='newPassword' name='newPassword' placeholder='Enter New Password Here'>
+            </div>    
+        </div>
+        <div class='form-group row'>
+            <label class='col-sm-3 col-form-label' for='newRole'><b>Role</b></label>
+            <div class='col-sm-4'>
+                <select class='form-control' name='newRole' id='newRole'>
+                    <option value='3' selected>Attendee</option>
+                    <option value='2'>Manager</option>
+                    <option value='1'>Admin</option>
+                </select>
+            </div>
+        </div>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New User</button>
+    </form>
+</div>";
+                $crudDialog .= "</div>";
+                break;
+            case "Venue":
+                $crudDialog = "<!--suppress HtmlUnknownTarget -->
+<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+    <h2>Add Venue</h2>
+    <form action='admin.php' method='post'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
+        <div class='form-group row'>
+            <label class='col-sm-3 col-form-label' for='newVenueName'><b>Venue Name</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control com-sm-8' type='text' id='newVenueName' name='newVenueName' placeholder='Enter New Venue Name Here'>
+            </div>    
+        </div>
+        <div class='form-group row'>
+            <label class='col-sm-3 col-form-label' for='newVenueCapacity'><b>Venue Capacity</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='number' id='newVenueCapacity' name='newVenueCapacity' placeholder='Enter Venue Capacity'>
+            </div>    
         </div>
         <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Venue</button>
     </form>
@@ -180,55 +196,88 @@ END;
                 break;
             case "Event":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-sm-8 my-5 py-5 bg-light'>
-    <h1>Add Event</h1>
+<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+    <h2>Add Event</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
-            <input class='form-control' type='text' name='newEventName' placeholder='Enter Event Name'>
+            <label class='col-sm-3 col-form-label' for='newEventName'><b>Event Name</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control com-sm-8' type='text' id='newEventName' name='newEventName' placeholder='Enter New Event Name Here'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='date' name='newEventStartDate' placeholder='Enter Event Start Date'>
+            <label class='col-sm-3 col-form-label' for='newEventStartDate'><b>Start Date</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='date' id='newEventStartDate' name='newEventStartDate' placeholder='Enter Event Start Date'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='date' name='newEventEndDate' placeholder='Enter Event End Date'>
+            <label class='col-sm-3 col-form-label' for='newEventEndDate'><b>End Date</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='date' id='newEventEndDate' name='newEventEndDate' placeholder='Enter Event End Date'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='number' name='newEventNumberAllowed' placeholder='Enter Number Allowed'>
+            <label class='col-sm-3 col-form-label' for='newEventNumberAllowed'><b>Max Attendees</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='number' id='newEventNumberAllowed' name='newEventNumberAllowed' placeholder='Enter Maximum number of Attendees'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='number' name='newEventVenue' placeholder='Enter Venue ID where this event will take place (Found below)'>
+            <label class='col-sm-3 col-form-label' for='newEventVenue'><b>Event Venue</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='number' id='newEventVenue' name='newEventVenue' placeholder='Enter Venue ID (Found below)'>
+            </div>    
         </div>
         <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Event</button>
     </form>
 </div>";
+
                 break;
             case "Session":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-sm-8 my-5 py-5 bg-light'>
-    <h1>Add Session</h1>
+<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+    <h2>Add Session</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
-            <input class='form-control' type='text' name='newSessionName' placeholder='Enter Session Name'>
+            <label class='col-sm-3 col-form-label' for='newSessionName'><b>Event Name</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control com-sm-8' type='text' id='newSessionName' name='newSessionName' placeholder='Enter New Session Name Here'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='date' name='newSessionStartDate' placeholder='Enter Event Start Date'>
+            <label class='col-sm-3 col-form-label' for='newSessionStartDate'><b>Start Date</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='date' id='newSessionStartDate' name='newSessionStartDate' placeholder='Enter Session Start Date'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='date' name='newSessionEndDate' placeholder='Enter Event End Date'>
+            <label class='col-sm-3 col-form-label' for='newSessionEndDate'><b>End Date</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='date' id='newSessionEndDate' name='newSessionEndDate' placeholder='Enter Session End Date'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='number' name='newSessionNumberAllowed' placeholder='Enter Number Allowed'>
+            <label class='col-sm-3 col-form-label' for='newSessionNumberAllowed'><b>Max Attendees</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='number' id='newSessionNumberAllowed' name='newSessionNumberAllowed' placeholder='Enter Maximum number of Attendees'>
+            </div>    
         </div>
         <div class='form-group row'>
-            <input class='form-control' type='number' name='newSessionEvent' placeholder='Enter Event ID where this session will take place (Found below)'>
+            <label class='col-sm-3 col-form-label' for='newSessionEvent'><b>Event</b></label>
+            <div class='col-sm-8'>
+                <input class='form-control' type='number' id='newSessionEvent' name='newSessionEvent' placeholder='Enter Event ID (Found below)'>
+            </div>    
         </div>
-        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Event</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Session</button>
     </form>
-</div>";                break;
+</div>";
+
+                break;
 
             default:
                 $crudDialog = "<h1>Nothing to Add.</h1>";
