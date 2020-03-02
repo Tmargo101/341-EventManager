@@ -3,6 +3,11 @@
 class Table {
 
     // Called from HTMLElements::CreateDiv, which is called from the view (admin.php, events.php, registration.php)
+    /**
+     * @param $controller
+     * @param $getSomething
+     * @return string
+     */
     public static function createTable($controller, $getSomething) {
         $table = "";
 
@@ -22,6 +27,10 @@ class Table {
 
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public static function createHeader($data) {
         $tableHeader = "<div class='pb-2'><table class='table table-striped'>\n<thead class='thead-dark'><tr>";
 
@@ -70,7 +79,7 @@ class Table {
         }
 
         // If the user is authenticated as an admin or a manager, draw the Add button.
-        if ($_SESSION['auth']['role'] == "admin" || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+        if ($_SESSION['auth']['role'] == "admin" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
             $tableHeader .= Table::addButton($data->getType());
         }
         $tableHeader .= "</tr></thead>\n";
@@ -79,6 +88,11 @@ class Table {
         return $tableHeader;
     }
 
+    /**
+     * @param $data
+     * @param $controller
+     * @return string
+     */
     public static function createRow($data, $controller) {
         // Creates the appropriate Table row based on the passed object's ($data) getType method (String which is in all classes in the model).
         switch ($data->getType()) {
@@ -165,6 +179,11 @@ class Table {
         return $row;
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return string
+     */
     private static function editDeleteButtons($type, $id) {
         return "
 <td>
@@ -178,6 +197,10 @@ class Table {
 </td>";
     }
 
+    /**
+     * @param $type
+     * @return string
+     */
     private static function addButton($type) {
         return "
 <div class='pull-right my-2'>
@@ -190,6 +213,12 @@ class Table {
 </div>";
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @param $controller
+     * @return string
+     */
     private static function registerButton($type, $id, $controller) {
         if ($type == "Event" && $controller::checkIfRegisteredEvent($id, $_SESSION['auth']['id']) == true || $type == "Session" && $controller::checkIfRegisteredSession($id, $_SESSION['auth']['id']) == true){
             return "
@@ -214,10 +243,11 @@ class Table {
 </td>";
 
         }
-
     }
 
-
+    /**
+     * @return string
+     */
     public static function end() {
         return "</table></div>\n";
     }
