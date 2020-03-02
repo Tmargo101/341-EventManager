@@ -16,13 +16,13 @@ Auth::isAdmin();
 if ($_GET != null) {
     CRUD::whatToDo($_GET);
 } else {
-    HTMLElements::tableDiv("Users", $currentUserLevelController, "getAllAttendees");
+    HTMLElements::tableDiv("All Users", $currentUserLevelController, "getAllAttendees");
 
-    HTMLElements::tableDiv("Venues", $currentUserLevelController, "getAllVenues");
+    HTMLElements::tableDiv("All Venues", $currentUserLevelController, "getAllVenues");
 
-    HTMLElements::tableDiv("Events", $currentUserLevelController, "getAllEvents");
+    HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
 
-    HTMLElements::tableDiv("Sessions", $currentUserLevelController, "getAllSessions");
+    HTMLElements::tableDiv("All Sessions", $currentUserLevelController, "getAllSessions");
 
 }
 ?>

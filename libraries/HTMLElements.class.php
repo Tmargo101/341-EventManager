@@ -96,6 +96,12 @@ END;
 <li class='nav-item mx-5'><a class='nav-link' href='admin.php'>Admin Portal</a></li>";
         }
 
+        if (isset($_SESSION['auth']['authCorrect']) && isset($_SESSION['auth']['role']) && $_SESSION['auth']['role'] == "manager") {
+            $nav .= "<!--suppress HtmlUnknownTarget -->
+<li class='nav-item mx-5'><a class='nav-link' href='manager.php'>Manage Your Events</a></li>";
+        }
+
+
         if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
             $nav .= <<<END
 <!--suppress HtmlUnknownTarget -->
