@@ -5,6 +5,7 @@ HTMLElements::html_header("Events");
 Auth::isLoggedIn();
 HTMLElements::nav();
 
+
 ?>
 
 <div class='container col-sm-4 my-5'>
@@ -15,9 +16,10 @@ HTMLElements::nav();
 if ($_POST != null) {
     CRUD::whatToDo($_POST, $currentUserLevelController);
 }
-    HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
 
-    HTMLElements::tableDiv("All Sessions", $currentUserLevelController, "getAllSessions");
+echo HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
+
+echo HTMLElements::tableDiv("All Sessions", $currentUserLevelController, "getAllSessions");
 
 ?>
 

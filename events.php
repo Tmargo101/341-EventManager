@@ -4,6 +4,8 @@ include_once 'phpHead.php';
 HTMLElements::html_header("Events");
 Auth::isLoggedIn();
 HTMLElements::nav();
+
+
 ?>
 
 <div class='container col-sm-4 my-5'>
@@ -11,11 +13,14 @@ HTMLElements::nav();
 </div>
 
 <?php
+//var_dump($_POST);
 if ($_POST != null) {
     CRUD::whatToDo($_POST, $currentUserLevelController);
 }
 
-HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
+echo HTMLElements::tableDiv("Events I am attending", $currentUserLevelController, "getEventsAttending");
+
+echo HTMLElements::tableDiv("Sessions I am attending", $currentUserLevelController, "getSessionsAttending");
 
 ?>
 

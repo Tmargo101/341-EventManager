@@ -37,11 +37,17 @@ class CRUD {
                 case "unregister":
                     if ($inPOSTValues['type'] == "Event") {
                         $controller::unregisterEvent($inPOSTValues['id'], $_SESSION['auth']['id']);
-
                     }
                     if ($inPOSTValues['type'] == "Session") {
                         $controller::unregisterSession($inPOSTValues['id'], $_SESSION['auth']['id']);
                     }
+                    if ($inPOSTValues['type'] == "Attendee_event") {
+                        $controller::unregisterEvent($inPOSTValues['id'], $_SESSION['auth']['id']);
+                    }
+                    if ($inPOSTValues['type'] == "Attendee_session") {
+                        $controller::unregisterSession($inPOSTValues['id'], $_SESSION['auth']['id']);
+                    }
+
                     break;
 
             }
