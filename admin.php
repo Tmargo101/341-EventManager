@@ -1,6 +1,5 @@
 <?php
 include_once 'phpHead.php';
-include_once "controllers/adminController.class.php";
 
 HTMLElements::html_header("Admin Portal");
 Auth::isLoggedIn();
@@ -13,13 +12,20 @@ Auth::isAdmin();
     <h1>Admin Portal</h1>
 </div>
 
-<?php HTMLElements::tableDiv("Users", "AdminController", "getAllAttendees"); ?>
+<?php
+if ($_GET != null) {
+    CRUD::whatToDo($_GET);
+} else {
+    HTMLElements::tableDiv("Users", $currentUserLevelController, "getAllAttendees");
 
-<?php HTMLElements::tableDiv("Venues", "AdminController", "getAllVenues"); ?>
+    HTMLElements::tableDiv("Venues", $currentUserLevelController, "getAllVenues");
 
-<?php HTMLElements::tableDiv("Events", "AdminController", "getAllEvents"); ?>
+    HTMLElements::tableDiv("Events", $currentUserLevelController, "getAllEvents");
 
-<?php HTMLElements::tableDiv("Sessions", "AdminController", "getAllSessions"); ?>
+    HTMLElements::tableDiv("Sessions", $currentUserLevelController, "getAllSessions");
+
+}
+?>
 
 <?php
 HTMLElements::html_footer();

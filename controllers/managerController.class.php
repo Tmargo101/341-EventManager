@@ -1,11 +1,8 @@
 <?php
 
-require_once  'database/dbaccess_common.class.php';
+require_once "database/dbaccess_manager.class.php";
 
-/** @noinspection PhpUnused */
-
-class AttendeeController {
-
+class ManagerController {
     public static function getAllEvents() {
         $db = new DBAccess();
         $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue", "event", "AS e LEFT JOIN venue AS v ON v.idvenue = e.venue", "class");

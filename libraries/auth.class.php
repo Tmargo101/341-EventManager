@@ -139,5 +139,6 @@ class Auth {
             die();
         }
     } // End isAdmin()
+
 } // End Auth class
 		
