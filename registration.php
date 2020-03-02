@@ -12,8 +12,8 @@ HTMLElements::nav();
 </div>
 
 <?php
-if ($_GET != null) {
-    CRUD::whatToDo($_GET, $currentUserLevelController);
+if ($_POST != null) {
+    CRUD::whatToDo($_POST, $currentUserLevelController);
 }
     HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
 

@@ -135,13 +135,14 @@ END;
         echo $tableDiv;
     } //END tableDiv();
 
-    static function addDialog($inGETValues) {
-        switch (array_values($inGETValues)[0]) {
+    static function addDialog($inPOSTValues) {
+        switch ($inPOSTValues['type']) {
             case "Attendee":
                 $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Add Attendee</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'>
-    <input type='hidden' name='action' value='addAttendee'>
+    <input type='hidden' name='action' value='submit'>
+    <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
     <div class='form-group row'>
         <input class='form-control' type='text' name='newUserName' placeholder='Enter New Username Here'>
     </div>
@@ -156,7 +157,7 @@ END;
             <option value='1'>Admin</option>
         </select>
     </div>
-    <button type='submit' class='btn btn-lg btn-primary'>Create New User</button>
+    <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New User</button>
 </form>";
                 $crudDialog .= "</div>";
                 break;
@@ -165,14 +166,15 @@ END;
 <div class='container col-sm-8 my-5 py-5 bg-light'>
     <h1>Add Venue</h1>
     <form action='admin.php' method='post'>
-        <input type='hidden' name='action' value='addVenue'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
             <input class='form-control' type='text' name='newVenueName' placeholder='Enter New Venue Name Here'>
         </div>
         <div class='form-group row'>
             <input class='form-control' type='number' name='newVenueCapacity' placeholder='Enter Venue Capacity'>
         </div>
-        <button type='submit' class='btn btn-lg btn-primary'>Create New Venue</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Venue</button>
     </form>
 </div>";
                 break;
@@ -181,7 +183,8 @@ END;
 <div class='container col-sm-8 my-5 py-5 bg-light'>
     <h1>Add Event</h1>
     <form action='admin.php' method='post'>
-        <input type='hidden' name='action' value='addEvent'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
             <input class='form-control' type='text' name='newEventName' placeholder='Enter Event Name'>
         </div>
@@ -197,7 +200,7 @@ END;
         <div class='form-group row'>
             <input class='form-control' type='number' name='newEventVenue' placeholder='Enter Venue ID where this event will take place (Found below)'>
         </div>
-        <button type='submit' class='btn btn-lg btn-primary'>Create New Event</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Event</button>
     </form>
 </div>";
                 break;
@@ -206,7 +209,8 @@ END;
 <div class='container col-sm-8 my-5 py-5 bg-light'>
     <h1>Add Session</h1>
     <form action='admin.php' method='post'>
-        <input type='hidden' name='action' value='addSession'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
             <input class='form-control' type='text' name='newSessionName' placeholder='Enter Session Name'>
         </div>
@@ -222,7 +226,7 @@ END;
         <div class='form-group row'>
             <input class='form-control' type='number' name='newSessionEvent' placeholder='Enter Event ID where this session will take place (Found below)'>
         </div>
-        <button type='submit' class='btn btn-lg btn-primary'>Create New Event</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Event</button>
     </form>
 </div>";                break;
 
@@ -233,29 +237,29 @@ END;
 
     }
 
-    static function editDialog($inGETValues) {
+    static function editDialog($inPOSTValues) {
 //        var_dump($inGETValues);
-        switch (array_values($inGETValues)[0]) {
+        switch ($inPOSTValues['type']) {
             case "Attendee":
-                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Edit Attendee '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Edit Attendee '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
             case "Venue":
-                $crudDialog = "<div class=''><h1>Edit Venue '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class=''><h1>Edit Venue '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
             case "Event":
-                $crudDialog = "<div class=''><h1>Edit Event '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class=''><h1>Edit Event '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
             case "Session":
-                $crudDialog = "<div class=''><h1>Edit Session '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class=''><h1>Edit Session '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
@@ -268,36 +272,36 @@ END;
 
     }
 
-    static function deleteDialog($inGETValues) {
+    static function deleteDialog($inPOSTValues) {
 //        var_dump($inGETValues);
-        switch (array_values($inGETValues)[0]) {
+        switch ($inPOSTValues['type']) {
             case "Attendee":
-                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Delete Attendee '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Delete Attendee '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
             case "Venue":
-                $crudDialog = "<div class=''><h1>Delete Venue '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class=''><h1>Delete Venue '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
             case "Event":
-                $crudDialog = "<div class=''><h1>Delete Event '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class=''><h1>Delete Event '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
             case "Session":
-                $crudDialog = "<div class=''><h1>Delete Session '{$inGETValues['id']}'</h1>";
+                $crudDialog = "<div class=''><h1>Delete Session '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
                 break;
 
             default:
-                $crudDialog = "<h1>Nothing to Edit.</h1>";
+                $crudDialog = "<h1>Nothing to Delete.</h1>";
         }
         return $crudDialog;
 
