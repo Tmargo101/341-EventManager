@@ -5,21 +5,25 @@
 
 class CRUD {
     public static function whatToDo($inPOSTValues, $controller) {
-        var_dump($inPOSTValues);
+//        var_dump($inPOSTValues);
 
         if (isset($inPOSTValues['action']) && $inPOSTValues['action'] == "submit") {
             switch($inPOSTValues['button']) {
-                case "addAttendee":
-                    echo $controller::createNewAttendee($inPOSTValues);
-                    break;
-                case "addVenue":
-                    echo $controller::createNewVenue($inPOSTValues);
-                    break;
-                case "addEvent":
-                    echo $controller::createNewEvent($inPOSTValues);
-                    break;
-                case "addSession":
-                    echo $controller::createNewSession($inPOSTValues);
+                case "add":
+                    switch($inPOSTValues['type']) {
+                        case "Attendee":
+                            echo $controller::createNewAttendee($inPOSTValues);
+                            break;
+                        case "Venue":
+                            echo $controller::createNewVenue($inPOSTValues);
+                            break;
+                        case "Event":
+                            echo $controller::createNewEvent($inPOSTValues);
+                            break;
+                        case "Session":
+                            echo $controller::createNewSession($inPOSTValues);
+                            break;
+                    }
                     break;
                 case "register":
                     if ($inPOSTValues['type'] == "Event") {

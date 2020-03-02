@@ -141,7 +141,8 @@ END;
                 $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Add Attendee</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'>
-    <input type='hidden' name='action' value='addAttendee'>
+    <input type='hidden' name='action' value='submit'>
+    <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
     <div class='form-group row'>
         <input class='form-control' type='text' name='newUserName' placeholder='Enter New Username Here'>
     </div>
@@ -156,7 +157,7 @@ END;
             <option value='1'>Admin</option>
         </select>
     </div>
-    <button type='submit' class='btn btn-lg btn-primary'>Create New User</button>
+    <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New User</button>
 </form>";
                 $crudDialog .= "</div>";
                 break;
@@ -165,14 +166,15 @@ END;
 <div class='container col-sm-8 my-5 py-5 bg-light'>
     <h1>Add Venue</h1>
     <form action='admin.php' method='post'>
-        <input type='hidden' name='action' value='addVenue'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
             <input class='form-control' type='text' name='newVenueName' placeholder='Enter New Venue Name Here'>
         </div>
         <div class='form-group row'>
             <input class='form-control' type='number' name='newVenueCapacity' placeholder='Enter Venue Capacity'>
         </div>
-        <button type='submit' class='btn btn-lg btn-primary'>Create New Venue</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Venue</button>
     </form>
 </div>";
                 break;
@@ -181,7 +183,8 @@ END;
 <div class='container col-sm-8 my-5 py-5 bg-light'>
     <h1>Add Event</h1>
     <form action='admin.php' method='post'>
-        <input type='hidden' name='action' value='addEvent'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
             <input class='form-control' type='text' name='newEventName' placeholder='Enter Event Name'>
         </div>
@@ -197,7 +200,7 @@ END;
         <div class='form-group row'>
             <input class='form-control' type='number' name='newEventVenue' placeholder='Enter Venue ID where this event will take place (Found below)'>
         </div>
-        <button type='submit' class='btn btn-lg btn-primary'>Create New Event</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Event</button>
     </form>
 </div>";
                 break;
@@ -206,7 +209,8 @@ END;
 <div class='container col-sm-8 my-5 py-5 bg-light'>
     <h1>Add Session</h1>
     <form action='admin.php' method='post'>
-        <input type='hidden' name='action' value='addSession'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
             <input class='form-control' type='text' name='newSessionName' placeholder='Enter Session Name'>
         </div>
@@ -222,7 +226,7 @@ END;
         <div class='form-group row'>
             <input class='form-control' type='number' name='newSessionEvent' placeholder='Enter Event ID where this session will take place (Found below)'>
         </div>
-        <button type='submit' class='btn btn-lg btn-primary'>Create New Event</button>
+        <button type='submit' name='button' value='add' class='btn btn-lg btn-primary'>Create New Event</button>
     </form>
 </div>";                break;
 
