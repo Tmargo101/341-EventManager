@@ -70,14 +70,17 @@ class Auth {
                     case 1:
                         $_SESSION['auth']['authCorrect'] = "true";
                         $_SESSION['auth']['role'] = "admin";
+                        $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
                         break;
                     case 2:
                         $_SESSION['auth']['authCorrect'] = "true";
                         $_SESSION['auth']['role'] = "manager";
+                        $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
                         break;
                     case 3:
                         $_SESSION['auth']['authCorrect'] = "true";
                         $_SESSION['auth']['role'] = "attendee";
+                        $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
                         break;
                 }
                 header("Location: events.php");
@@ -139,5 +142,18 @@ class Auth {
             die();
         }
     } // End isAdmin()
+
+    static function isManager() {
+        if ($_SESSION['auth']['role'] != "manager") {
+            HTMLElements::notAdmin();
+//				header("Refresh:5; url=index.php");
+//				die();
+            // TODO: Find out how to pass 401 code and still refresh the page after 5 seconds
+            header("HTTP/1.0 401 Unauthorized; Refresh=5; url=index.php");
+            die();
+        }
+    } // End isAdmin()
+
+
 } // End Auth class
 		

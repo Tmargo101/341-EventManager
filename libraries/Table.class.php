@@ -8,12 +8,11 @@ class Table {
 
         // Uses the passed userLevel controller to get the requested data.
         $data = $controller::$getSomething();
-
         // If data is returned, create the table using the returned data array (objects or arrays).
         if ($data != null) {
             $table .= Table::createHeader($data[0]);
             for ($i = 0; $i < count($data); $i++) {
-                $table .= Table::createRow($data[$i]);
+                $table .= Table::createRow($data[$i], $controller);
             }
             $table .= Table::end();
         }
@@ -33,7 +32,7 @@ class Table {
                     <th>Attendee ID</th>
                     <th>Username</th>
                     <th>Role</th>
-                    <th style='width: 15%'></th>";
+                    <th style='width: 20%'></th>";
                 break;
 
             case "Venue":
@@ -70,9 +69,9 @@ class Table {
                 $tableHeader .= "";
         }
 
-        // If the user is authenticated as an admin, draw the Add button.
-        if ($_SESSION['auth']['role'] == "admin") {
-            $tableHeader .= "<div class='pull-right my-2'><form action='crud.php' method='get'><button class='btn btn-outline-success' name='add' value='{$data->getType()}'>Add {$data->getType()}</button></form></div>";
+        // If the user is authenticated as an admin or a manager, draw the Add button.
+        if ($_SESSION['auth']['role'] == "admin" || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+            $tableHeader .= Table::addButton($data->getType());
         }
         $tableHeader .= "</tr></thead>\n";
 
@@ -80,7 +79,7 @@ class Table {
         return $tableHeader;
     }
 
-    public static function createRow($data) {
+    public static function createRow($data, $controller) {
         // Creates the appropriate Table row based on the passed object's ($data) getType method (String which is in all classes in the model).
         switch ($data->getType()) {
             case "Attendee":
@@ -93,7 +92,7 @@ class Table {
                 // Draw the appropriate controls, based on the user level.
                 // If the user is an admin and the attendee name is NOT admin, draw the edit and delete buttons (cannot edit or delete admin).
                 if ($_SESSION['auth']['role'] == 'admin' && $data->getName() != "admin") {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdattendee()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdattendee()}'>Delete</button></form></td>";
+                    $row .= Table::editDeleteButtons($data->getType(), $data->getIdattendee());
                 } else {
                     $row .= "<td></td>";
                 }
@@ -110,9 +109,9 @@ class Table {
                 // Draw the appropriate controls, based on the user level.
                 // If the user is an admin and is currently viewing the attendee page, draw the edit and delete buttons (cannot edit or delete on non-admin pages).
                 if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdvenue()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdvenue()}'>Delete</button></form></td>";
+                    $row .= Table::editDeleteButtons($data->getType(), $data->getIdvenue());
                 } else if ($data->getName() != "admin") {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdvenue()}'>Register</button></form></td>";
+                    $row .= "<td></td>";
                 } else {
                     $row .= "<td></td>";
                 }
@@ -131,10 +130,10 @@ class Table {
                 // Draw the appropriate controls, based on the user level.
                 // If the user is an admin and is currently viewing the attendee page, draw the edit and delete buttons (cannot edit or delete on non-admin pages).
                 if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdevent()}'>Edit</button><button class='btn btn-danger' name='delete{$data->getType()}' value='{$data->getIdevent()}'>Delete</button></form></td>";
-                    // TODO: change this elseif from (if dataname is not admin) to (if you can register)
+                    $row .= Table::editDeleteButtons($data->getType(), $data->getIdevent());
+                    // TODO: change this elseif from (if getName is not admin) to (if you can register)
                 } else if ($data->getName() != "admin") {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdevent()}'>Register</button></form></td>";
+                    $row .= Table::registerButton($data->getType(), $data->getIdevent(), $controller);
                 } else {
                     $row .= "<td></td>";
                 }
@@ -151,10 +150,10 @@ class Table {
                     ";
 
                 // Draw the appropriate controls, based on the user level.
-                if ($_SESSION['auth']['role'] == 'admin') {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='edit{$data->getType()}' value='{$data->getIdsession()}'>Edit</button><button class='btn btn-danger'  name='delete{$data->getType()}' value='{$data->getIdsession()}'>Delete</button></form></td>";
+                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
+                    $row .= Table::editDeleteButtons($data->getType(), $data->getIdsession());
                 } else if ($data->getName() != "admin") {
-                    $row .= "<td><form action='crud.php' method='get'><button class='btn btn-primary mx-2' name='register{$data->getType()}' value='{$data->getIdsession()}'>Register</button></form></td>";
+                    $row .= Table::registerButton($data->getType(), $data->getIdsession(), $controller);
                 } else {
                     $row .= "<td></td>";
                 }
@@ -166,7 +165,53 @@ class Table {
         return $row;
     }
 
+    private static function editDeleteButtons($type, $id) {
+        return "
+<td>
+    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
+        <button class='btn btn-primary mx-2' name='edit' value='{$type}'>Edit</button>
+        <button class='btn btn-danger' name='delete' value='{$type}'>Delete</button>
+        <input name='id' type='hidden' value='{$id}'>
+    </form>
+</td>";
+    }
+
+    private static function registerButton($type, $id, $controller) {
+        if ($type == "Event" && $controller::checkIfRegisteredEvent($id, $_SESSION['auth']['id']) == true || $type == "Session" && $controller::checkIfRegisteredSession($id, $_SESSION['auth']['id']) == true){
+            return "
+<td>
+    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
+        <button class='btn btn-primary mx-2' name='unregister' value='{$type}'>Un-Register</button>
+        <input name='id' type='hidden' value='{$id}'>
+    </form>
+</td>";
+
+        } else {
+            return "
+<td>
+    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
+        <button class='btn btn-primary mx-2' name='register' value='{$type}'>Register</button>
+        <input name='id' type='hidden' value='{$id}'>
+
+    </form>
+</td>";
+
+        }
+
+    }
+
+    private static function addButton($type) {
+        return "
+<div class='pull-right my-2'>
+    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
+        <button class='btn btn-outline-success' name='add' value='{$type}'>Add {$type}</button>
+    </form>
+</div>";
+    }
+
     public static function end() {
         return "</table></div>\n";
     }
+
+
 }
