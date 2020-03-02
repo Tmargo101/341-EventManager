@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpUndefinedMethodInspection */
+<?php
 include_once 'phpHead.php';
 
 HTMLElements::html_header("Admin Portal");
@@ -17,29 +17,13 @@ if ($_POST != null) {
     CRUD::whatToDo($_POST, $currentUserLevelController);
 }
 
-//if ($_POST != null && $_POST['action'] == "addAttendee") {
-//    echo $currentUserLevelController::createNewAttendee($_POST);
-//}
-//
-//if ($_POST != null && $_POST['action'] == "addVenue") {
-//    echo $currentUserLevelController::createNewVenue($_POST);
-//}
-//
-//if ($_POST != null && $_POST['action'] == "addEvent") {
-//    echo $currentUserLevelController::createNewEvent($_POST);
-//}
-//
-//if ($_POST != null && $_POST['action'] == "addSession") {
-//    echo $currentUserLevelController::createNewSession($_POST);
-//}
+echo HTMLElements::tableDiv("All Users", $currentUserLevelController, "getAllAttendees");
 
-HTMLElements::tableDiv("All Users", $currentUserLevelController, "getAllAttendees");
+echo HTMLElements::tableDiv("All Venues", $currentUserLevelController, "getAllVenues");
 
-HTMLElements::tableDiv("All Venues", $currentUserLevelController, "getAllVenues");
+echo HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
 
-HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
-
-HTMLElements::tableDiv("All Sessions", $currentUserLevelController, "getAllSessions");
+echo HTMLElements::tableDiv("All Sessions", $currentUserLevelController, "getAllSessions");
 
 
 ?>

@@ -15,15 +15,16 @@ Auth::isManager();
 <?php
 if ($_POST != null) {
     CRUD::whatToDo($_POST, $currentUserLevelController);
-} else {
-
-    HTMLElements::tableDiv("Your Events", $currentUserLevelController, "getYourEvents");
-
-    HTMLElements::tableDiv("Your Event's Sessions", $currentUserLevelController, "getYourSessions");
-
-    HTMLElements::tableDiv("Your Attendees", $currentUserLevelController, "getYourAttendees");
-
 }
+
+echo HTMLElements::tableDiv("Your Events", $currentUserLevelController, "getYourEvents");
+
+echo HTMLElements::tableDiv("Your Event's Sessions", $currentUserLevelController, "getYourSessions");
+
+echo HTMLElements::tableDiv("Your Event's Attendees", $currentUserLevelController, "getYourEventAttendees");
+
+echo HTMLElements::tableDiv("Your Session's Attendees", $currentUserLevelController, "getYourSessionAttendees");
+
 ?>
 
 <?php

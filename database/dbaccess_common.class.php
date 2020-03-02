@@ -147,5 +147,45 @@ class DBAccess {
     //////////////////////////////////////// END REGISTRATION FUNCTIONS ////////////////////////////////////////
 
 
+    /** @noinspection PhpInconsistentReturnPointsInspection */
+    function getSomeRowsFromTable($inObjectReturnType, $inQuery, $inColumn, $id, $fetchType) {
+        try {
+            // Decide if I am going to use a fetch class or an associative array
+            switch ($fetchType) {
+                case "class":
+                    // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice
+
+                    /** @noinspection PhpIncludeInspection */
+                    include_once "model/{$inObjectReturnType}.class.php";
+
+                    // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                    $query = "$inQuery WHERE $inColumn = :id";
+                    $statement = $this->dbholder->prepare($query);
+                    $statement->execute(array("id"=>$id));
+                    $statement->setFetchMode(PDO::FETCH_CLASS, $inObjectReturnType);
+                    return $statement->fetchAll();
+                    break;
+
+                case "array":
+                    // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                    $query = "$inQuery where m_e.manager = :id";
+                    $statement = $this->dbholder->prepare($query);
+                    var_dump($statement);
+                    $statement->execute(array("id"=>$id));
+                    $statement->setFetchMode(PDO::FETCH_ASSOC);
+                    return $statement->fetchAll();
+                    break;
+
+                    break;
+
+            }
+
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
+
 
 }

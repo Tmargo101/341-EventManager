@@ -107,7 +107,7 @@ END;
 <!--suppress HtmlUnknownTarget -->
 						</ul>
 						<ul class='navbar-nav'>
-							<li class='navbar-brand mt-2'><i>Logged in as:</i> {$_SESSION['auth']['username']}</li>
+							<li class='navbar-brand mt-2'><i>Logged in as:</i> <b>{$_SESSION['auth']['username']}</b> (<i>ID:</i> <b>{$_SESSION['auth']['id']}</b>)</li>
 							<li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
 END;
         }
@@ -132,7 +132,7 @@ END;
 	</div>
 </div>
 END;
-        echo $tableDiv;
+        return $tableDiv;
     } //END tableDiv();
 
     static function addDialog($inPOSTValues) {
