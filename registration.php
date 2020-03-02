@@ -13,13 +13,12 @@ HTMLElements::nav();
 
 <?php
 if ($_GET != null) {
-    var_dump($_GET);
-    CRUD::whatToDo($_GET);
-} else {
+    CRUD::whatToDo($_GET, $currentUserLevelController);
+}
     HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
 
     HTMLElements::tableDiv("All Sessions", $currentUserLevelController, "getAllSessions");
-}
+
 ?>
 
 <?php

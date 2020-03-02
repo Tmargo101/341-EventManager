@@ -14,7 +14,7 @@ Auth::isAdmin();
 
 <?php
 if ($_GET != null) {
-    CRUD::whatToDo($_GET);
+    CRUD::whatToDo($_GET, $currentUserLevelController);
 }
 
 if ($_POST != null && $_POST['action'] == "addAttendee") {

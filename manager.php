@@ -14,7 +14,7 @@ Auth::isManager();
 
 <?php
 if ($_GET != null) {
-    CRUD::whatToDo($_GET);
+    CRUD::whatToDo($_GET, $currentUserLevelController);
 } else {
 
     HTMLElements::tableDiv("Your Events", $currentUserLevelController, "getYourEvents");

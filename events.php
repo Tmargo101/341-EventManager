@@ -12,11 +12,11 @@ HTMLElements::nav();
 
 <?php
 if ($_GET != null) {
-    var_dump($_GET);
-    CRUD::whatToDo($_GET);
-} else {
-    HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
+    CRUD::whatToDo($_GET, $currentUserLevelController);
 }
+
+HTMLElements::tableDiv("All Events", $currentUserLevelController, "getAllEvents");
+
 ?>
 
 <?php

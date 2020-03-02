@@ -67,5 +67,85 @@ class DBAccess {
         }
     }
 
+    //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
+    function registerEvent($eventId, $attendeeId) {
+        try {
+            $statement = $this->dbholder->prepare("INSERT into attendee_event (event,attendee) VALUES (:eventID,:attendeeID)");
+            $statement->execute(array("eventID" => $eventId, "attendeeID" => $attendeeId));
+            return $this->dbholder->lastInsertId();
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
+    function unregisterEvent($eventId, $attendeeId) {
+        try {
+            $statement = $this->dbholder->prepare("DELETE from attendee_event WHERE event = :eventID AND attendee = :attendeeID");
+            $statement->execute(array("eventID" => $eventId, "attendeeID" => $attendeeId));
+            return $this->dbholder->lastInsertId();
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
+    function registerSession($sessionId, $attendeeId) {
+        try {
+            $statement = $this->dbholder->prepare("INSERT into attendee_session (session,attendee) VALUES (:sessionID,:attendeeID)");
+            $statement->execute(array("sessionID" => $sessionId, "attendeeID" => $attendeeId));
+            return $this->dbholder->lastInsertId();
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
+    function unregisterSession($sessionId, $attendeeId) {
+        try {
+            $statement = $this->dbholder->prepare("DELETE from attendee_session WHERE session = :sessionID AND attendee = :attendeeID");
+            $statement->execute(array("sessionID" => $sessionId, "attendeeID" => $attendeeId));
+            return $this->dbholder->lastInsertId();
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
+
+    function checkIfRegisteredEvent($eventId, $attendeeId) {
+        try {
+            $statement = $this->dbholder->prepare("SELECT * from attendee_event WHERE event = :eventID AND attendee = :attendeeID");
+            $statement->execute(array("eventID" => $eventId, "attendeeID" => $attendeeId));
+            $data = $statement->fetchAll();
+            if (isset($data[0])) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
+    function checkIfRegisteredSession($sessionId, $attendeeId) {
+        try {
+            $statement = $this->dbholder->prepare("SELECT * from attendee_session WHERE session = :sessionID AND attendee = :attendeeID");
+            $statement->execute(array("sessionID" => $sessionId, "attendeeID" => $attendeeId));
+            $data = $statement->fetchAll();
+            if (isset($data[0])) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+    //////////////////////////////////////// END REGISTRATION FUNCTIONS ////////////////////////////////////////
+
+
 
 }

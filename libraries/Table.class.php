@@ -12,7 +12,7 @@ class Table {
         if ($data != null) {
             $table .= Table::createHeader($data[0]);
             for ($i = 0; $i < count($data); $i++) {
-                $table .= Table::createRow($data[$i]);
+                $table .= Table::createRow($data[$i], $controller);
             }
             $table .= Table::end();
         }
@@ -69,8 +69,8 @@ class Table {
                 $tableHeader .= "";
         }
 
-        // If the user is authenticated as an admin, draw the Add button.
-        if ($_SESSION['auth']['role'] == "admin" || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/events.php') {
+        // If the user is authenticated as an admin or a manager, draw the Add button.
+        if ($_SESSION['auth']['role'] == "admin" || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
             $tableHeader .= Table::addButton($data->getType());
         }
         $tableHeader .= "</tr></thead>\n";
@@ -79,7 +79,7 @@ class Table {
         return $tableHeader;
     }
 
-    public static function createRow($data) {
+    public static function createRow($data, $controller) {
         // Creates the appropriate Table row based on the passed object's ($data) getType method (String which is in all classes in the model).
         switch ($data->getType()) {
             case "Attendee":
@@ -111,7 +111,7 @@ class Table {
                 if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdvenue());
                 } else if ($data->getName() != "admin") {
-                    $row .= Table::registerButton($data->getType(), $data->getIdvenue());
+                    $row .= "<td></td>";
                 } else {
                     $row .= "<td></td>";
                 }
@@ -133,7 +133,7 @@ class Table {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdevent());
                     // TODO: change this elseif from (if getName is not admin) to (if you can register)
                 } else if ($data->getName() != "admin") {
-                    $row .= Table::registerButton($data->getType(), $data->getIdevent());
+                    $row .= Table::registerButton($data->getType(), $data->getIdevent(), $controller);
                 } else {
                     $row .= "<td></td>";
                 }
@@ -153,7 +153,7 @@ class Table {
                 if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdsession());
                 } else if ($data->getName() != "admin") {
-                    $row .= Table::registerButton($data->getType(), $data->getIdsession());
+                    $row .= Table::registerButton($data->getType(), $data->getIdsession(), $controller);
                 } else {
                     $row .= "<td></td>";
                 }
@@ -176,13 +176,28 @@ class Table {
 </td>";
     }
 
-    private static function registerButton($type, $id) {
-        return "
+    private static function registerButton($type, $id, $controller) {
+        if ($type == "Event" && $controller::checkIfRegisteredEvent($id, $_SESSION['auth']['id']) == true || $type == "Session" && $controller::checkIfRegisteredSession($id, $_SESSION['auth']['id']) == true){
+            return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='get'>
-        <button class='btn btn-primary mx-2' name='register{$type}' value='{$id}'>Register</button>
+        <button class='btn btn-primary mx-2' name='unregister' value='{$type}'>Un-Register</button>
+        <input name='id' type='hidden' value='{$id}'>
     </form>
 </td>";
+
+        } else {
+            return "
+<td>
+    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
+        <button class='btn btn-primary mx-2' name='register' value='{$type}'>Register</button>
+        <input name='id' type='hidden' value='{$id}'>
+
+    </form>
+</td>";
+
+        }
+
     }
 
     private static function addButton($type) {
