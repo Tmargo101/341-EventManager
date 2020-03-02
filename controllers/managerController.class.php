@@ -1,4 +1,8 @@
-<?php
+<?php /** @noinspection PhpUnused */
+/** @noinspection PhpUnused */
+/** @noinspection PhpUnused */
+/** @noinspection PhpUnused */
+/** @noinspection PhpUnused */
 
 require_once "database/dbaccess_manager.class.php";
 

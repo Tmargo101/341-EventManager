@@ -13,6 +13,7 @@ class DBAccess_Manager extends DBAccess {
                     // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice)
                     $inType = ucfirst($inTable);
 
+                    /** @noinspection PhpIncludeInspection */
                     include_once "model/{$inType}.class.php";
 
                     // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.

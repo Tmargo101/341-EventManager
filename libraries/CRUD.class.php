@@ -18,17 +18,4 @@ class CRUD {
         }
     } // End whatToDo
 
-    public static function deleteFromDB() {
-
-    }
-
-    public static function addToDB() {
-
-    }
-
-    public static function editDB() {
-
-    }
-
-
 }

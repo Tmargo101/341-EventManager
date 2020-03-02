@@ -28,6 +28,57 @@ class DBAccess_Admin extends DBAccess {
         }
     }
 
+    function addAttendee($newUserName, $newUserPassword, $newUserRole) {
+        // Check if user exists (under development)
+//        $previousUserArray = $this->getUser($newUserName);
+//        if (!isset($previousUserArray[0])) {
+            try {
+//                    $data = array();
+                $statement = $this->dbholder->prepare("INSERT into attendee (name,password,role) VALUES (:username,:password,:role)");
+                $statement->execute(array("username" => $newUserName, "password" => password_hash($newUserPassword, PASSWORD_DEFAULT),"role"=>$newUserRole));
+                return $this->dbholder->lastInsertId();
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return -1;
+            }
+//        }
+//        return null;
+    }
+
+		function addEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
+            try {
+                $statement = $this->dbholder->prepare("INSERT into event (name,datestart,dateend,numberallowed,venue) VALUES (:name,:datestart,:dateend,:numberallowed,:venue)");
+                $statement->execute(array("name" => $inName, "datestart" => $inDateStart,"dateend"=>$inDateEnd,"numberallowed"=>$inNumberAllowed,"venue"=>$inVenue));
+                return $this->dbholder->lastInsertId();
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return -1;
+            }
+        }
+
+        function addSession($inName, $inStartDate, $inEndDate, $inNumberAllowed, $inEvent) {
+            try {
+                $statement = $this->dbholder->prepare("INSERT into session (name,startdate,enddate,numberallowed,event) VALUES (:name,:startdate,:enddate,:numberallowed,:event)");
+                $statement->execute(array("name" => $inName, "startdate" => $inStartDate,"enddate"=>$inEndDate,"numberallowed"=>$inNumberAllowed,"event"=>$inEvent));
+                return $this->dbholder->lastInsertId();
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+                return -1;
+            }
+        }
+
+    function addVenue($newVenueName, $newVenueCapacity) {
+        try {
+            $statement = $this->dbholder->prepare("INSERT into venue (name,capacity) VALUES (:name,:capacity)");
+            $statement->execute(array("name" => $newVenueName, "capacity" => $newVenueCapacity));
+            return $this->dbholder->lastInsertId();
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return -1;
+        }
+    }
+
+
 //		function createEvent($inName, $inDateStart, $inDateEnd, $inNumberAllowed, $inVenue) {
 //			try {
 //				// Check if event exists (under development)

@@ -50,6 +50,112 @@ class AdminController {
         }
     }
 
+    public static function createNewAttendee($inPOSTValues) {
+        $db = new DBAccess_Admin();
+        $success = $db->addAttendee($inPOSTValues['newUserName'], $inPOSTValues['newPassword'], $inPOSTValues['newRole']);
+        if ($success != -1) {
+            echo "
+<div class='container col-md-4'>
+    <div class='alert alert-success'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <strong>Created:</strong><br>
+        User '{$inPOSTValues['newUserName']}' has been created.
+    </div>
+</div>";
+
+        } else {
+            echo "
+<div class='container col-md-4'>
+    <div class='alert alert-danger'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <strong>Error:</strong><br>
+        User '{$inPOSTValues['newUserName']}' was not created.
+    </div>
+</div>";
+        }
+    }
+
+    public static function createNewVenue($inPOSTValues) {
+        $db = new DBAccess_Admin();
+        $success = $db->addVenue($inPOSTValues['newVenueName'], $inPOSTValues['newVenueCapacity']);
+        if ($success != -1) {
+            echo "
+<div class='container col-md-4'>
+    <div class='alert alert-success'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <strong>Created:</strong><br>
+        Venue '{$inPOSTValues['newVenueName']}' has been created.
+    </div>
+</div>";
+        } else {
+            echo "
+<div class='alert alert-danger'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+    </button>
+    <strong>Error:</strong><br>
+    Venue '{$inPOSTValues['newVenueName']}' was not created.
+</div>";
+
+        }
+    }
+
+    public static function createNewEvent($inPOSTValues) {
+        $db = new DBAccess_Admin();
+        $success = $db->addEvent($inPOSTValues['newEventName'], $inPOSTValues['newEventStartDate'], $inPOSTValues['newEventEndDate'], $inPOSTValues['newEventNumberAllowed'], $inPOSTValues['newEventVenue']);
+        if ($success != -1) {
+            echo "
+<div class='container col-md-4'>
+    <div class='alert alert-success'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <strong>Created:</strong><br>
+        Event '{$inPOSTValues['newEventName']}' has been created.
+    </div>
+</div>";
+        } else {
+            echo "
+<div class='container col-md-4'>
+    <div class='alert alert-danger'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <strong>Error:</strong><br>
+        Event '{$inPOSTValues['newEventName']}' was not created.
+    </div>
+</div>";
+
+        }
+    }
+
+    public static function createNewSession($inPOSTValues) {
+        $db = new DBAccess_Admin();
+        $success = $db->addSession($inPOSTValues['newSessionName'], $inPOSTValues['newSessionStartDate'], $inPOSTValues['newSessionEndDate'], $inPOSTValues['newSessionNumberAllowed'], $inPOSTValues['newSessionEvent']);
+        if ($success != -1) {
+            echo "
+<div class='container col-md-4'>
+    <div class='alert alert-success'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <strong>Created:</strong><br>
+        Session '{$inPOSTValues['newSessionName']}' has been created.
+    </div>
+</div>";
+        } else {
+            echo "<h1>User {$inPOSTValues['newUserName']} Was not created.</h1>";
+        }
+    }
+
+
+
 
 //        public static function getAllUsersTable() {
 //			$db = new DBAccess_Admin();
