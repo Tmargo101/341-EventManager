@@ -32,7 +32,7 @@ class Table {
      * @return string
      */
     public static function createHeader($data) {
-        $tableHeader = "<div class='pb-2 container-sm-fluid'><table class='table table-striped'>\n<thead class='thead-dark'><tr>";
+        $tableHeader = "<div class='pb-2 container-sm-fluid'><table class='table table-responsive table-striped'>\n<thead class='thead-dark'><tr>";
 
         // Creates the appropriate Table header based on the first returned object's getType method (String which is in all classes in the model).
         switch ($data->getType()) {
