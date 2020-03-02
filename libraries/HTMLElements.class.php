@@ -43,17 +43,17 @@ END;
 
     static function notLoggedIn() {
         echo "<!--suppress HtmlUnknownTarget -->
-            <div class='container col-md-4 mt-5 mb-5'>
+            <div class='container-fluid col-md-4 mt-5 mb-5'>
                 <h1>Not logged in</h1>
             </div>
-            <div class='container col-md-4 mt-5 mb-5'>
+            <div class='container-fluid col-md-4 mt-5 mb-5'>
                 <h3>Must have made a wrong turn...</h3>
                 <h4>Please login to access this page.</h4>
             </div>
-            <div class='container my-5'>
+            <div class='container-fluid my-5'>
                 <h5>Redirecting you to Login automatically in 5 seconds...</h5>
             </div>
-            <div class='container col-md-4 mt-5 mb-5'>
+            <div class='container-fluid col-md-4 mt-5 mb-5'>
                 <a href='index.php' class='btn btn-primary'>Login now</a>
             </div>";
     }
@@ -61,17 +61,17 @@ END;
     static function notAdmin() {
         echo "<!--suppress HtmlUnknownTarget -->
 
-                <div class='container col-md-4 mt-5 mb-5'>
+                <div class='container-fluid col-md-4 mt-5 mb-5'>
                     <h1>Unauthorized</h1>
                 </div>
-                <div class='container col-md-4 mt-5 mb-5'>
+                <div class='container-fluid col-md-4 mt-5 mb-5'>
                     <h3>Must have made a wrong turn...</h3>
                     <h4>Please login as admin to access this page.</h4>
                 </div>
-                <div class='container my-5'>
+                <div class='container-fluid my-5'>
                     <h5>Redirecting you to your events portal automatically in 5 seconds...</h5>
                 </div>
-                <div class='container my-5'>
+                <div class='container-fluid my-5'>
                     <a href='index.php' class='btn btn-primary'>Go now</a>
                 </div>";
     }
@@ -79,41 +79,47 @@ END;
     static function nav() {
         $nav = <<<END
 				<div class='mb-5'>
-					<nav class='navbar navbar-expand-sm bg-dark navbar-dark'>
+					<nav class='navbar navbar-expand-lg bg-dark navbar-dark'>
 						<a class="navbar-brand" href="#">Event Manager</a>
-						<ul class="navbar-nav ml-auto mr-auto">
+						    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navBarToggler">
+						        <ul class="navbar-nav ml-auto mr-auto mt-2 mt-lg-0 mt-sm-4">
 END;
         if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
             $nav .= <<<END
 <!--suppress HtmlUnknownTarget -->
-<li class='nav-item mx-5'><a class='nav-link' href='events.php'>Events</a></li>
-<li class='nav-item mx-5'><a class='nav-link' href='registration.php'>Registration</a></li>
+<li class='nav-item mx-5 my-sm-2'><a class='nav-link' href='events.php'>Events</a></li>
+<li class='nav-item mx-5 my-sm-2'><a class='nav-link' href='registration.php'>Registration</a></li>
 
 END;
         }
         if (isset($_SESSION['auth']['authCorrect']) && isset($_SESSION['auth']['role']) && $_SESSION['auth']['role'] == "admin") {
             $nav .= "<!--suppress HtmlUnknownTarget -->
-<li class='nav-item mx-5'><a class='nav-link' href='admin.php'>Admin Portal</a></li>";
+<li class='nav-item mx-5 my-sm-2'><a class='nav-link' href='admin.php'>Admin Portal</a></li>";
         }
 
         if (isset($_SESSION['auth']['authCorrect']) && isset($_SESSION['auth']['role']) && $_SESSION['auth']['role'] == "manager") {
             $nav .= "<!--suppress HtmlUnknownTarget -->
-<li class='nav-item mx-5'><a class='nav-link' href='manager.php'>Manage Your Events</a></li>";
+<li class='nav-item mx-5 my-sm-2'><a class='nav-link' href='manager.php'>Manage Your Events</a></li>";
         }
 
 
         if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "true") {
             $nav .= <<<END
 <!--suppress HtmlUnknownTarget -->
-						</ul>
-						<ul class='navbar-nav'>
-							<li class='navbar-brand mt-2'><i>Logged in as:</i> <b>{$_SESSION['auth']['username']}</b> (<i>ID:</i> <b>{$_SESSION['auth']['id']}</b>)</li>
-							<li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
+						    </ul>
+						    <ul class='navbar-nav'>
+							    <li class='navbar-brand mt-2 my-sm-3 mr-sm-0'><i>Logged in as:</i> <b>{$_SESSION['auth']['username']}</b> (<i>ID:</i> <b>{$_SESSION['auth']['id']}</b>)</li>
+							    <li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
+                            </ul>
 END;
         }
 
         $nav .= <<<END
-						</ul>
+						    
+						</div>
 					</nav>
 				</div>
 END;
@@ -122,11 +128,17 @@ END;
 
     static function tableDiv($title, $controller, $getSomething) {
         $tableDiv = <<<END
-<div class='container col-sm-8 my-5 py-3 bg-light'>
+<div class='container-fluid col-sm-auto col-md-10 col-lg-8 my-5 py-3 bg-light'>
 	<div class=''>
-		<h1>$title</h1>
+		<h1 class='pb-3'>$title</h1>
 END;
-        $tableDiv .= Table::createTable($controller, $getSomething);
+        $table = Table::createTable($controller, $getSomething);
+        if ($table != null) {
+            $tableDiv .= $table;
+        } else {
+            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><strong>No Data found:</strong><br>User '{$_SESSION['authPOST']['usernameInput']}' Has no data.  Perhaps you need to register for an event?</div></div>";
+        }
+
         /*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
         $tableDiv .= <<<END
 	</div>
@@ -139,7 +151,7 @@ END;
         switch ($inPOSTValues['type']) {
             case "Attendee":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+<div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
     <h2>Add Attendee</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
@@ -173,7 +185,7 @@ END;
                 break;
             case "Venue":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+<div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
     <h2>Add Venue</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
@@ -196,7 +208,7 @@ END;
                 break;
             case "Event":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+<div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
     <h2>Add Event</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
@@ -238,7 +250,7 @@ END;
                 break;
             case "Session":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
-<div class='container col-md-4 my-5 py-3 px-2 bg-light'>
+<div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
     <h2>Add Session</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='action' value='submit'>
@@ -290,7 +302,7 @@ END;
 //        var_dump($inGETValues);
         switch ($inPOSTValues['type']) {
             case "Attendee":
-                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Edit Attendee '{$inPOSTValues['id']}'</h1>";
+                $crudDialog = "<div class='container-fluid col-sm-8 my-5 py-5 bg-light'><h1>Edit Attendee '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";
@@ -325,7 +337,7 @@ END;
 //        var_dump($inGETValues);
         switch ($inPOSTValues['type']) {
             case "Attendee":
-                $crudDialog = "<div class='container col-sm-8 my-5 py-5 bg-light'><h1>Delete Attendee '{$inPOSTValues['id']}'</h1>";
+                $crudDialog = "<div class='container-fluid col-sm-8 my-5 py-5 bg-light'><h1>Delete Attendee '{$inPOSTValues['id']}'</h1>";
                 $crudDialog .= "<!--suppress HtmlUnknownTarget -->
 <form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
                 $crudDialog .= "</div>";

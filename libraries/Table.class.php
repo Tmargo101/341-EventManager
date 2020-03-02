@@ -32,7 +32,7 @@ class Table {
      * @return string
      */
     public static function createHeader($data) {
-        $tableHeader = "<div class='pb-2'><table class='table table-striped'>\n<thead class='thead-dark'><tr>";
+        $tableHeader = "<div class='pb-2 container-sm-fluid'><table class='table table-striped'>\n<thead class='thead-dark'><tr>";
 
         // Creates the appropriate Table header based on the first returned object's getType method (String which is in all classes in the model).
         switch ($data->getType()) {
@@ -309,7 +309,7 @@ class Table {
      */
     private static function addButton($type) {
         return "
-<div class='pull-right my-2'>
+<div class='pull-right my-2 pb-3'>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
         <input name='action' type='hidden' value='dialog'>
         <button class='btn btn-outline-success' name='button' value='add'>Add {$type}</button>
