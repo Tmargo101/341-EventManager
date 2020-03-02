@@ -13,25 +13,25 @@ Auth::isAdmin();
 </div>
 
 <?php
-if ($_GET != null) {
-    CRUD::whatToDo($_GET, $currentUserLevelController);
+if ($_POST != null) {
+    CRUD::whatToDo($_POST, $currentUserLevelController);
 }
 
-if ($_POST != null && $_POST['action'] == "addAttendee") {
-    echo $currentUserLevelController::createNewAttendee($_POST);
-}
-
-if ($_POST != null && $_POST['action'] == "addVenue") {
-    echo $currentUserLevelController::createNewVenue($_POST);
-}
-
-if ($_POST != null && $_POST['action'] == "addEvent") {
-    echo $currentUserLevelController::createNewEvent($_POST);
-}
-
-if ($_POST != null && $_POST['action'] == "addSession") {
-    echo $currentUserLevelController::createNewSession($_POST);
-}
+//if ($_POST != null && $_POST['action'] == "addAttendee") {
+//    echo $currentUserLevelController::createNewAttendee($_POST);
+//}
+//
+//if ($_POST != null && $_POST['action'] == "addVenue") {
+//    echo $currentUserLevelController::createNewVenue($_POST);
+//}
+//
+//if ($_POST != null && $_POST['action'] == "addEvent") {
+//    echo $currentUserLevelController::createNewEvent($_POST);
+//}
+//
+//if ($_POST != null && $_POST['action'] == "addSession") {
+//    echo $currentUserLevelController::createNewSession($_POST);
+//}
 
 HTMLElements::tableDiv("All Users", $currentUserLevelController, "getAllAttendees");
 

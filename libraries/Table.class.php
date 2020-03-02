@@ -168,20 +168,36 @@ class Table {
     private static function editDeleteButtons($type, $id) {
         return "
 <td>
-    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
-        <button class='btn btn-primary mx-2' name='edit' value='{$type}'>Edit</button>
-        <button class='btn btn-danger' name='delete' value='{$type}'>Delete</button>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='action' type='hidden' value='dialog'>
+        <button class='btn btn-primary mx-2' name='button' value='edit'>Edit</button>
+        <button class='btn btn-danger' name='button' value='delete'>Delete</button>
+        <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>
     </form>
 </td>";
+    }
+
+    private static function addButton($type) {
+        return "
+<div class='pull-right my-2'>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='action' type='hidden' value='dialog'>
+        <button class='btn btn-outline-success' name='button' value='add'>Add {$type}</button>
+        <input name='type' type='hidden' value='{$type}'>
+
+    </form>
+</div>";
     }
 
     private static function registerButton($type, $id, $controller) {
         if ($type == "Event" && $controller::checkIfRegisteredEvent($id, $_SESSION['auth']['id']) == true || $type == "Session" && $controller::checkIfRegisteredSession($id, $_SESSION['auth']['id']) == true){
             return "
 <td>
-    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
-        <button class='btn btn-primary mx-2' name='unregister' value='{$type}'>Un-Register</button>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='action' type='hidden' value='submit'>
+        <button class='btn btn-primary mx-2' name='button' value='unregister'>Un-Register</button>
+        <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>
     </form>
 </td>";
@@ -189,10 +205,11 @@ class Table {
         } else {
             return "
 <td>
-    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
-        <button class='btn btn-primary mx-2' name='register' value='{$type}'>Register</button>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='action' type='hidden' value='submit'>
+        <button class='btn btn-primary mx-2' name='button' value='register'>Register</button>
+        <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>
-
     </form>
 </td>";
 
@@ -200,14 +217,6 @@ class Table {
 
     }
 
-    private static function addButton($type) {
-        return "
-<div class='pull-right my-2'>
-    <form action='{$_SERVER['REQUEST_URI']}' method='get'>
-        <button class='btn btn-outline-success' name='add' value='{$type}'>Add {$type}</button>
-    </form>
-</div>";
-    }
 
     public static function end() {
         return "</table></div>\n";

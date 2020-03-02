@@ -4,43 +4,54 @@
 
 
 class CRUD {
-    public static function whatToDo($inGETValues, $controller) {
-        if (isset($inGETValues['action'])) {
-            echo "Action";
-//            switch() {
-//                case "addAttendee":
-//                    break;
-//                case "editAttendee":
-//                    break;
-//            }
-        } else {
-            switch (array_keys($inGETValues)[0]) {
-                case "add":
-                    echo HTMLElements::addDialog($inGETValues);
+    public static function whatToDo($inPOSTValues, $controller) {
+        var_dump($inPOSTValues);
+
+        if (isset($inPOSTValues['action']) && $inPOSTValues['action'] == "submit") {
+            switch($inPOSTValues['button']) {
+                case "addAttendee":
+                    echo $controller::createNewAttendee($inPOSTValues);
                     break;
-                case "edit":
-                    echo HTMLElements::editDialog($inGETValues);
+                case "addVenue":
+                    echo $controller::createNewVenue($inPOSTValues);
                     break;
-                case "delete":
-                    echo HTMLElements::deleteDialog($inGETValues);
+                case "addEvent":
+                    echo $controller::createNewEvent($inPOSTValues);
+                    break;
+                case "addSession":
+                    echo $controller::createNewSession($inPOSTValues);
                     break;
                 case "register":
-                    if ($inGETValues['register'] == "Event") {
-                        $controller::registerEvent($inGETValues['id'], $_SESSION['auth']['id']);
+                    if ($inPOSTValues['type'] == "Event") {
+                        $controller::registerEvent($inPOSTValues['id'], $_SESSION['auth']['id']);
 
-                    } else if ($inGETValues['register'] == "Session") {
-                        $controller::registerSession($inGETValues['id'], $_SESSION['auth']['id']);
+                    } else if ($inPOSTValues['type'] == "Session") {
+                        $controller::registerSession($inPOSTValues['id'], $_SESSION['auth']['id']);
                     }
                     break;
 
                 case "unregister":
-                    if ($inGETValues['unregister'] == "Event") {
-                        $controller::unregisterEvent($inGETValues['id'], $_SESSION['auth']['id']);
+                    if ($inPOSTValues['type'] == "Event") {
+                        $controller::unregisterEvent($inPOSTValues['id'], $_SESSION['auth']['id']);
 
                     }
-                    if ($inGETValues['unregister'] == "Session") {
-                        $controller::unregisterSession($inGETValues['id'], $_SESSION['auth']['id']);
+                    if ($inPOSTValues['type'] == "Session") {
+                        $controller::unregisterSession($inPOSTValues['id'], $_SESSION['auth']['id']);
                     }
+                    break;
+
+            }
+
+        } else if (isset($inPOSTValues['action']) && $inPOSTValues['action'] == "dialog"){
+            switch ($inPOSTValues['button']) {
+                case "add":
+                    echo HTMLElements::addDialog($inPOSTValues);
+                    break;
+                case "edit":
+                    echo HTMLElements::editDialog($inPOSTValues);
+                    break;
+                case "delete":
+                    echo HTMLElements::deleteDialog($inPOSTValues);
                     break;
             }
         }
