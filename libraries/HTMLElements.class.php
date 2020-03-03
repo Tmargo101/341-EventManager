@@ -1,12 +1,11 @@
 <?php
-/*
-These are static functions which can be called from any page.
-IMPORTANT: Only functions which any user level should have access to should be here
-
-Author: Thomas Margosian, Brian French (original html_header and html_footer)
-Date created: 2/20/20
-
-*/
+/* Filename: HTMLElements.class.php
+ * Purpose: Draw any common elements to the page, using static functions which return strings.
+ * NOTE: Only functions which any user level should have access to should be here
+ *
+ * Author: Thomas Margosian, Brian French (original html_header and html_footer)
+ * Date: 2/20/20
+ */
 
 class HTMLElements {
     // 	HTML Headers & Footers
@@ -155,6 +154,7 @@ END;
 <div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
     <h2>Add Attendee</h2>
     <form action='admin.php' method='post'>
+        <input type='hidden' name='validationString' value='string,string,int'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>

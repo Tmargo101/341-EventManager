@@ -1,10 +1,11 @@
 <?php
-/*
-	All authentication functions are handled in this file
-	
-	Author: Thomas Margosian
-	Date created: 2/20/20
-*/
+/* Filename: auth.class.php
+ * Purpose: All authentication functions & authentication-related database access
+ * NOTE: Utilizes CONSTANTS defined in CONSTANTS.php
+ *
+ * Author: Tom Margosian
+ * Date: 2/20/20
+ */
 
 class AuthDBAccess {
     protected $dbholder;

@@ -1,4 +1,12 @@
 <?php
+/* Filename: CONSTANTS.php
+ * Purpose: Define program constants
+ * NOTE: This file excluded from deployment.  To make changes, edit on server.
+ *
+ * Author: Tom Margosian
+ * Date: 3/3/20
+ */
+
 
 // Change project-wide constants here
 $SET_APPLICATION_NAME = "Event Manager";

@@ -1,4 +1,12 @@
-<?php /** @noinspection PhpUndefinedMethodInspection */
+<?php
+/* Filename: Table.class.php
+ * Purpose: Creates all tables & table-adjacent HTML.
+ *
+ * Author: Tom Margosian
+ * Date: 2/26/20
+ */
+
+/** @noinspection PhpUndefinedMethodInspection */
 
 class Table {
 
@@ -314,6 +322,7 @@ class Table {
         return "
 <div class='pull-right my-2 pb-3'>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value=''>
         <input name='action' type='hidden' value='dialog'>
         <button class='btn btn-outline-success' name='button' value='add'>Add {$type}</button>
         <input name='type' type='hidden' value='{$type}'>
