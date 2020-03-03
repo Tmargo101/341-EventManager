@@ -2,11 +2,11 @@
 
 // Change project-wide constants here
 $SET_APPLICATION_NAME = "Event Manager";
-$SET_BASE_URL = "";
-$SET_DB_SERVER = "";
-$SET_DB_USER = "";
-$SET_DB_PASSWORD = "";
-$SET_DB_DATABASE = "";
+$SET_BASE_URL = "/~txm5483/341/project1/";
+$SET_DB_SERVER = "localhost";
+$SET_DB_USER = "txm5483";
+$SET_DB_PASSWORD = "hollandheld";
+$SET_DB_DATABASE = "txm5483";
 
 // Define system-wide constants for project use
 define("APPLICATION_NAME", $SET_APPLICATION_NAME);
