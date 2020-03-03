@@ -79,7 +79,7 @@ END;
     static function nav() {
         $nav = <<<END
 				<div class='mb-5'>
-					<nav class='navbar navbar-expand-lg bg-dark navbar-dark'>
+					<nav class='navbar navbar-expand-xl bg-dark navbar-dark'>
 						<a class="navbar-brand" href="#">Event Manager</a>
 						    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -112,7 +112,7 @@ END;
 						    </ul>
 						    <ul class='navbar-nav'>
 							    <li class='navbar-brand mt-2 my-sm-3 mr-sm-0'><i>Logged in as:</i> <b>{$_SESSION['auth']['username']}</b> (<i>ID:</i> <b>{$_SESSION['auth']['id']}</b>)</li>
-							    <li class='nav-item'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
+							    <li class='nav-item my-sm-2 ml-xl-3 mr-xl-2'><form class='nav-link' action='index.php' method='post'><button type='submit' class='btn btn-secondary' name='authButton' value='logout'>Logout</button></form></li>
                             </ul>
 END;
         }
@@ -128,9 +128,9 @@ END;
 
     static function tableDiv($title, $controller, $getSomething) {
         $tableDiv = <<<END
-<div class='container-fluid col-sm-auto col-md-10 col-lg-8 my-5 py-3 bg-light'>
+<div class='container-fluid col-sm-12 col-md-11 col-lg-10 col-xl-9 my-5 py-3 bg-light'>
 	<div class=''>
-		<h1 class='pb-3'>$title</h1>
+		<h2 class='pb-3'>$title</h2>
 END;
         $table = Table::createTable($controller, $getSomething);
         if ($table != null) {

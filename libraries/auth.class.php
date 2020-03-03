@@ -11,7 +11,13 @@ class AuthDBAccess {
 
     function __construct() {
         try {
-            $this->dbholder = new PDO("mysql:host={$_SERVER['DB_SERVER']};dbname={$_SERVER['DB']}", $_SERVER['DB_USER'], $_SERVER['DB_PASSWORD']);
+            // Set PDO access data from constants (Cannot call a constant within string interpolation)
+            $host = DB_SERVER;
+            $username = DB_USERNAME;
+            $password = DB_PASSWORD;
+            $database = DB_DATABASE;
+
+            $this->dbholder = new PDO("mysql:host={$host};dbname={$database}", $username, $password);
         } catch (PDOException $pdoException) {
             echo $pdoException->getMessage();
             die("<br>Bad Database");
