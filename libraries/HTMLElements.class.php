@@ -189,6 +189,7 @@ END;
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
     <h2>Add Venue</h2>
     <form action='admin.php' method='post'>
+        <input type='hidden' name='validationString' value='string,int'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>

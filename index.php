@@ -15,7 +15,7 @@ if (!isset($_SESSION['authPOST'])) {
     $_SESSION['POST'] = array();
 }
 foreach ($_POST as $key => $value) {
-    $_SESSION['authPOST'][$key] = Sanitize::sanatizeString($value);
+    $_SESSION['authPOST'][$key] = Sanitize::sanitizeString($value);
 }
 
 // Depending on the authButton status, process the auth action appropriately.

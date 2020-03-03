@@ -27,8 +27,8 @@ class CRUD {
 
         $cleanPOSTArray = Sanitize::validatePostArray($inPOSTValues);
 
-        if ($cleanPOSTArray['validationError'] != "None") {
-            echo "POST Not submitted.  Error: {$cleanPOSTArray['validationError']}";
+        if ($cleanPOSTArray['validationError'] != "") {
+            echo "<br><br>POST Not submitted.<br>{$cleanPOSTArray['validationError']}";
         } else {
 //        var_dump($inPOSTValues);
             if (isset($inPOSTValues['action']) && $inPOSTValues['action'] == "submit") {
