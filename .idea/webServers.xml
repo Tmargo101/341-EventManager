@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="a414fbb9-8b9b-40aa-810a-fcd05bfad174" name="MargosianNetworks" url="https://margosiannetworks.me/">
+        <fileTransfer host="10.20.0.210" port="22" rootFolder="/var/www/margosiannetworks/" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

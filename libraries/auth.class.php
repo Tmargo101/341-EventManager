@@ -19,8 +19,9 @@ class AuthDBAccess {
 
             $this->dbholder = new PDO("mysql:host={$host};dbname={$database}", $username, $password);
         } catch (PDOException $pdoException) {
-            echo $pdoException->getMessage();
-            die("<br>Bad Database");
+            echo "<div class=''></div><h1>Internal Server Error:</h1>";
+            echo "<h3>DB Error number: <i>".$pdoException->getCode()."</i></h3>";
+            die("</div><br>");
         }
     }
 

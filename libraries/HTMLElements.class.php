@@ -77,10 +77,11 @@ END;
     }
 
     static function nav() {
+        $APPLICATION_NAME = APPLICATION_NAME;
         $nav = <<<END
 				<div class='mb-5'>
 					<nav class='navbar navbar-expand-xl bg-dark navbar-dark'>
-						<a class="navbar-brand" href="#">Event Manager</a>
+						<a class="navbar-brand" href="#">{$APPLICATION_NAME}</a>
 						    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>

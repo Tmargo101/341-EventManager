@@ -41,7 +41,7 @@ HTMLElements::nav();
 ?>
 <div class=''>
     <div class="container col-md-4 my-5">
-        <h1>Event Manager</h1>
+        <?php $APPLICATION_NAME = APPLICATION_NAME; echo "<h1>{$APPLICATION_NAME}</h1>";?>
     </div>
     <div class="container col-xl-4 col-lg-6 col-md-8 col-sm-auto my-5 py-3 px-2 bg-light">
         <h2>Login</h2>
