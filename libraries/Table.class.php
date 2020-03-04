@@ -305,6 +305,7 @@ class Table {
         return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='dialog'>
         <button class='btn btn-primary mx-2' name='button' value='edit'>Edit</button>
         <button class='btn btn-danger' name='button' value='delete'>Delete</button>
@@ -322,11 +323,10 @@ class Table {
         return "
 <div class='pull-right my-2 pb-3'>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
-        <input name='validationString' type='hidden' value=''>
+        <input name='validationString' type='hidden' value='none'>
         <input name='action' type='hidden' value='dialog'>
         <button class='btn btn-outline-success' name='button' value='add'>Add {$type}</button>
         <input name='type' type='hidden' value='{$type}'>
-
     </form>
 </div>";
     }
@@ -342,6 +342,7 @@ class Table {
             return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-danger mx-2' name='button' value='unregister'>Unregister</button>
         <input name='type' type='hidden' value='{$type}'>
@@ -353,6 +354,7 @@ class Table {
             return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-success mx-2' name='button' value='register'>Register</button>
         <input name='type' type='hidden' value='{$type}'>
@@ -368,6 +370,7 @@ class Table {
         return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-danger mx-2' name='button' value='unregister'>Remove Attendee</button>
         <input name='type' type='hidden' value='{$type}'>
@@ -381,17 +384,14 @@ class Table {
         return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-danger mx-2' name='button' value='unregister'>Unregister</button>
         <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>
     </form>
 </td>";
-
     }
-
-
-
 
     /**
      * @return string

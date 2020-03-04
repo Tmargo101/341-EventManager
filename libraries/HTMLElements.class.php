@@ -136,7 +136,7 @@ END;
         if ($table != null) {
             $tableDiv .= $table;
         } else {
-            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><strong>No Data found:</strong><br>User '{$_SESSION['authPOST']['usernameInput']}' Has no data.  Perhaps you need to register for an event?</div></div>";
+            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><strong>No Data found:</strong><br>User '{$_SESSION['auth']['username']}' Has no data.  Perhaps you need to register for an event?</div></div>";
         }
 
         /*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
@@ -152,6 +152,7 @@ END;
             case "Attendee":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
+    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Attendee</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='validationString' value='string,string,int'>
@@ -187,8 +188,10 @@ END;
             case "Venue":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
+    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Venue</h2>
     <form action='admin.php' method='post'>
+        <!-- To be validated & sanitized: newVenueName, newVenueCapacity -->
         <input type='hidden' name='validationString' value='string,int'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
@@ -211,8 +214,11 @@ END;
             case "Event":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
+    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Event</h2>
     <form action='admin.php' method='post'>
+        <!-- To be validated & sanitized: newEventName, newEventStartDate, newEventEndDate, newEventNumberAllowed, newEventVenue -->
+        <input name='validationString' type='hidden' value='string,date,date,int,int'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
@@ -224,13 +230,13 @@ END;
         <div class='form-group row'>
             <label class='col-sm-3 col-form-label' for='newEventStartDate'><b>Start Date</b></label>
             <div class='col-sm-8'>
-                <input class='form-control' type='date' id='newEventStartDate' name='newEventStartDate' placeholder='Enter Event Start Date'>
+                <input class='form-control' type='date' id='newEventStartDate' name='newEventStartDate' placeholder='(YYYY-MM-DD)'>
             </div>    
         </div>
         <div class='form-group row'>
             <label class='col-sm-3 col-form-label' for='newEventEndDate'><b>End Date</b></label>
             <div class='col-sm-8'>
-                <input class='form-control' type='date' id='newEventEndDate' name='newEventEndDate' placeholder='Enter Event End Date'>
+                <input class='form-control' type='date' id='newEventEndDate' name='newEventEndDate' placeholder='(YYYY-MM-DD)'>
             </div>    
         </div>
         <div class='form-group row'>
@@ -253,8 +259,11 @@ END;
             case "Session":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
+    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Session</h2>
     <form action='admin.php' method='post'>
+        <!-- To be validated & sanitized: newSessionName, newSessionStartDate, newSessionEndDate, newSessionNumberAllowed, newSessionEvent -->
+        <input name='validationString' type='hidden' value='string,date,date,int,int'>
         <input type='hidden' name='action' value='submit'>
         <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
         <div class='form-group row'>
@@ -266,13 +275,13 @@ END;
         <div class='form-group row'>
             <label class='col-sm-3 col-form-label' for='newSessionStartDate'><b>Start Date</b></label>
             <div class='col-sm-8'>
-                <input class='form-control' type='date' id='newSessionStartDate' name='newSessionStartDate' placeholder='Enter Session Start Date'>
+                <input class='form-control' type='date' id='newSessionStartDate' name='newSessionStartDate' placeholder='(YYYY-MM-DD)'>
             </div>    
         </div>
         <div class='form-group row'>
             <label class='col-sm-3 col-form-label' for='newSessionEndDate'><b>End Date</b></label>
             <div class='col-sm-8'>
-                <input class='form-control' type='date' id='newSessionEndDate' name='newSessionEndDate' placeholder='Enter Session End Date'>
+                <input class='form-control' type='date' id='newSessionEndDate' name='newSessionEndDate' placeholder='(YYYY-MM-DD)'>
             </div>    
         </div>
         <div class='form-group row'>

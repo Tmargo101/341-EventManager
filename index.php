@@ -50,7 +50,7 @@ HTMLElements::nav();
                 <label class="col-sm-3 col-form-label" for="usernameInput"><b>Username</b></label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="usernameInput" name="usernameInput"
-                           placeholder="Enter Username" <?php if (isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "noUserFound") {
+                           placeholder="Enter Username" <?php if (isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "badPass" || isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "noUserFound" || isset($_SESSION['authPOST']['usernameInput']) && $_SESSION['auth']['authCorrect'] == "emptyPassword") {
                         echo 'value="' . $_SESSION['authPOST']['usernameInput'] . '"';
                     } ?> >
                 </div>
@@ -70,6 +70,16 @@ HTMLElements::nav();
             </div>
             <div class="form-group">
                 <?php
+                // TODO: Figure out how to stop these from displaying if I close the tab and re-open it.
+                if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "emptyForm") {
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Username and Password were left blank.<br>Please enter a Username and Password and try again.</div>";
+                }
+                if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "emptyUsername") {
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Username was left blank.<br>Please enter a Username and Password and try again.</div>";
+                }
+                if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "emptyPassword") {
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Password was left blank.<br>Please enter a Password and try again.</div>";
+                }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "noUserFound") {
                     echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>User '{$_SESSION['authPOST']['usernameInput']}' does not exist.<br><br>If you would like to create a new attendee account with these credentials, enter the new account's password in the password field and click the button below.<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";
                 }

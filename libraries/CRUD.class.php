@@ -28,7 +28,7 @@ class CRUD {
         $cleanPOSTArray = Sanitize::validatePostArray($inPOSTValues);
 
         if ($cleanPOSTArray['validationError'] != "") {
-            echo "<br><br>POST Not submitted.<br>{$cleanPOSTArray['validationError']}";
+            echo "<div class='container col-4 alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h4>Warning:</h4><h5>Action not complete.  Errors are:</h5><br>{$cleanPOSTArray['validationError']}</div>";
         } else {
 //        var_dump($inPOSTValues);
             if (isset($inPOSTValues['action']) && $inPOSTValues['action'] == "submit") {
