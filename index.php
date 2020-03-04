@@ -72,25 +72,25 @@ HTMLElements::nav();
                 <?php
                 // TODO: Figure out how to stop these from displaying if I close the tab and re-open it.
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "emptyForm") {
-                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Username and Password were left blank.<br>Please enter a Username and Password and try again.</div>";
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Error:</h5>Username and Password were left blank.<br>Please enter a Username and Password and try again.</div>";
                 }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "emptyUsername") {
-                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Username was left blank.<br>Please enter a Username and Password and try again.</div>";
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Error:</h5>Username was left blank.<br>Please enter a Username and Password and try again.</div>";
                 }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "emptyPassword") {
-                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Password was left blank.<br>Please enter a Password and try again.</div>";
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Error:</h5>Password was left blank.<br>Please enter a Password and try again.</div>";
                 }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "noUserFound") {
-                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>User '{$_SESSION['authPOST']['usernameInput']}' does not exist.<br><br>If you would like to create a new attendee account with these credentials, enter the new account's password in the password field and click the button below.<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Error:</h5>User '{$_SESSION['authPOST']['usernameInput']}' does not exist.<br><br>If you would like to create a new attendee account with these credentials, enter the new account's password in the password field and click the button below.<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";
                 }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "badPass") {
-                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong><br>Password for user '{$_SESSION['authPOST']['usernameInput']}' was incorrect. Please try again.</div>";
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Error:</h5>Password for user '{$_SESSION['authPOST']['usernameInput']}' was incorrect. Please try again.</div>";
                 }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "unauthorized") {
-                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Error:</strong>You need to login or register to access this page<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";
+                    echo "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Error:</h5>You need to login or register to access this page<div class='mt-3'><button type='submit' name='authButton' value='register' class='btn btn-primary'>Create a new attendee account</button></div></div>";
                 }
                 if (isset($_SESSION['auth']['authCorrect']) && $_SESSION['auth']['authCorrect'] == "newUserRegistered") {
-                    echo "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Created:</strong><br> Account '{$_SESSION['authPOST']['usernameInput']}' has been created.  Please login again with the same credentials.</div>";
+                    echo "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Created:</h5>Account '{$_SESSION['authPOST']['usernameInput']}' has been created.  Please login again with the same credentials.</div>";
                 }
                 ?></div>
         </form>

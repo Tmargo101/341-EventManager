@@ -60,7 +60,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         User '{$inPOSTValues['newUserName']}' has been created.
     </div>
 </div>";
@@ -72,7 +72,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Error:</strong><br>
+        <h5>Error:</h5><br>
         User '{$inPOSTValues['newUserName']}' was not created.
     </div>
 </div>";
@@ -89,7 +89,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         Venue '{$inPOSTValues['newVenueName']}' has been created.
     </div>
 </div>";
@@ -99,7 +99,7 @@ class AdminController {
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
         <span aria-hidden='true'>&times;</span>
     </button>
-    <strong>Error:</strong><br>
+    <h5>Error:</h5><br>
     Venue '{$inPOSTValues['newVenueName']}' was not created.
 </div>";
 
@@ -116,7 +116,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         Event '{$inPOSTValues['newEventName']}' has been created.
     </div>
 </div>";
@@ -127,7 +127,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Error:</strong><br>
+        <h5>Error:</h5><br>
         Event '{$inPOSTValues['newEventName']}' was not created.
     </div>
 </div>";
@@ -145,7 +145,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         Session '{$inPOSTValues['newSessionName']}' has been created.
     </div>
 </div>";

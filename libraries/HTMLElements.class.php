@@ -136,7 +136,7 @@ END;
         if ($table != null) {
             $tableDiv .= $table;
         } else {
-            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><strong>No Data found:</strong><br>User '{$_SESSION['auth']['username']}' Has no data.  Perhaps you need to register for an event?</div></div>";
+            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><h5>No Data found:</h5><br>User '{$_SESSION['auth']['username']}' is not registered for anything here.<br>  Go to the Registration Portal and sign up for an event or session.</div></div>";
         }
 
         /*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
