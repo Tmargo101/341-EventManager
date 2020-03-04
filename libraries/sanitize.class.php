@@ -38,13 +38,6 @@ class Sanitize {
             return null;
         }
     }
-//    static function validateDate($inDate) {
-//
-//        if (validateDate($inDate) == true || validateDate($inDate, 'Y-n-j') == true) {
-//            return $inDate;
-//        }
-//        return null;
-//    }
 
     public static function validatePostArray($inPOSTArray) {
         $goodPOSTArray = array();
@@ -54,12 +47,12 @@ class Sanitize {
             $goodPOSTArray['validationError'] = "";
             foreach($inPOSTArray as $key=>$value) {
                 if ($key != 'action' && $key != "button" && $key != "type" && $key != "validationString" && $key != "authButton") {
-                    echo "{$i}: Validating ($key => $value) as a {$inputTypes[$i]}<br>";
+//                    echo "{$i}: Validating ($key => $value) as a {$inputTypes[$i]}<br>";
                     switch ($inputTypes[$i]) {
                         case "string":
                             $string = self::validateGeneralString($value);
                             if ($string == null) {
-                                $goodPOSTArray['validationError'] .= "<h5>Error in {$key}</h5><br>";
+                                $goodPOSTArray['validationError'] .= "<strong>{$key}</strong><br>";
                             } else {
                                 $goodPOSTArray[$key] = $value;
                             }
@@ -67,7 +60,7 @@ class Sanitize {
                         case "int":
                             $int = self::validateGeneralInt($value);
                             if ($int == null) {
-                                $goodPOSTArray['validationError'] .= "<h5>Error in {$key}</h5><br>";
+                                $goodPOSTArray['validationError'] .= "<strong>{$key}</strong><br>";
                             } else {
                                 $goodPOSTArray[$key] = $value;
                             }
@@ -75,7 +68,7 @@ class Sanitize {
                         case "date":
                             $date = self::validateDate($value);
                             if ($date == null) {
-                                $goodPOSTArray['validationError'] .= "<h5>Error in {$key}</h5><br>";
+                                $goodPOSTArray['validationError'] .= "<strong>{$key}</strong><br>";
                             } else {
                                 $goodPOSTArray[$key] = $value;
                             }
@@ -85,7 +78,7 @@ class Sanitize {
                             break;
                         // If the value is not defined, the input cannot be sanitized.  Thus, an error is thrown.
                         default:
-                            $goodPOSTArray['validationError'] .= "<h5>Unknown Validation Type: $inputTypes[$i]</h5>";
+                            $goodPOSTArray['validationError'] .= "<strong>Unknown Data Type, Cannot Validate: $inputTypes[$i]</strong>";
                             break;
                     } // End switch ($inputTypes[$i])
 
@@ -94,7 +87,7 @@ class Sanitize {
                 }// End if (key is not these kinds of inputs)
             } // End foreach (value in post array)
         } else {
-            $goodPOSTArray['validationError'] = "<h5>No validation for this form is possible.</h5><br>";
+            $goodPOSTArray['validationError'] = "<strong>No validation for this form is possible.</strong><br>";
         }
         return $goodPOSTArray;
     } // End validatePostArray
