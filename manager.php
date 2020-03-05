@@ -17,13 +17,13 @@ if ($_POST != null) {
     CRUD::whatToDo($_POST, $currentUserLevelController);
 }
 
-echo HTMLElements::tableDiv("Your Events", $currentUserLevelController, "getYourEvents");
+echo HTMLElements::tableDiv("Your Events", $currentUserLevelController, "getYourEvents", "Event");
 
-echo HTMLElements::tableDiv("Your Event's Sessions", $currentUserLevelController, "getYourSessions");
+echo HTMLElements::tableDiv("Your Event's Sessions", $currentUserLevelController, "getYourSessions", "Session");
 
-echo HTMLElements::tableDiv("Your Event's Attendees", $currentUserLevelController, "getYourEventAttendees");
+echo HTMLElements::tableDiv("Your Event's Attendees", $currentUserLevelController, "getYourEventAttendees", "Attendee");
 
-echo HTMLElements::tableDiv("Your Session's Attendees", $currentUserLevelController, "getYourSessionAttendees");
+echo HTMLElements::tableDiv("Your Session's Attendees", $currentUserLevelController, "getYourSessionAttendees", "Attendee");
 
 ?>
 

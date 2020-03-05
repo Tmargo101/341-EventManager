@@ -143,7 +143,7 @@ END;
         echo $nav;
     }
 
-    static function tableDiv($title, $controller, $getSomething) {
+    static function tableDiv($title, $controller, $getSomething, $objectReturnType) {
         $tableDiv = <<<END
 <div class='container-fluid col-sm-12 col-md-11 col-lg-10 col-xl-9 my-5 py-3 bg-light'>
 	<div class=''>
@@ -152,8 +152,17 @@ END;
         $table = Table::createTable($controller, $getSomething);
         if ($table != null) {
             $tableDiv .= $table;
-        } else {
+        } else if ($table == null && $_SERVER['REQUEST_URI'] == BASE_URL.'events.php'){
             $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><h5>No Data found:</h5><br>User '{$_SESSION['auth']['username']}' is not registered for anything here.<br>  Go to the Registration Portal and sign up for an event or session.</div></div>";
+        } else if ($table == null && $_SERVER['REQUEST_URI'] == BASE_URL.'registration.php') {
+            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><h5>No Data found:</h5><br>There are currently no items scheduled here.<br></div></div>";
+        } else if ($table == null && $_SERVER['REQUEST_URI'] == BASE_URL.'admin.php' && $_SESSION['auth']['role'] == "admin") {
+            // TODO: Display add (itemType) button here
+            $tableDiv .= Table::addButton($objectReturnType);
+            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><h5>No Data found:</h5><br>There are currently no items here.  Add one!<br></div></div>";
+        } else if ($table == null && $_SERVER['REQUEST_URI'] == BASE_URL.'manager.php'  && $_SESSION['auth']['role'] == "manager") {
+            $tableDiv .= Table::addButton($objectReturnType);
+            $tableDiv .= "<div class='alert alert-info container-fluid col-md-6'><h5>No Data found:</h5><br>There are currently no items here.<br></div></div>";
         }
 
         /*		    $tableDiv .= "<?php".$controller::$tableMethod()."?>";*/
@@ -169,7 +178,7 @@ END;
             case "Attendee":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
-    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Attendee</h2>
     <form action='admin.php' method='post'>
         <input type='hidden' name='validationString' value='string,string,int'>
@@ -205,7 +214,7 @@ END;
             case "Venue":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
-    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Venue</h2>
     <form action='admin.php' method='post'>
         <!-- To be validated & sanitized: newVenueName, newVenueCapacity -->
@@ -231,7 +240,7 @@ END;
             case "Event":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
-    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Event</h2>
     <form action='admin.php' method='post'>
         <!-- To be validated & sanitized: newEventName, newEventStartDate, newEventEndDate, newEventNumberAllowed, newEventVenue -->
@@ -276,7 +285,7 @@ END;
             case "Session":
                 $crudDialog = "<!--suppress HtmlUnknownTarget -->
 <div class='container-fluid col-md-4 my-5 py-3 px-2 bg-light'>
-    <form action='admin.php' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
     <h2>Add Session</h2>
     <form action='admin.php' method='post'>
         <!-- To be validated & sanitized: newSessionName, newSessionStartDate, newSessionEndDate, newSessionNumberAllowed, newSessionEvent -->

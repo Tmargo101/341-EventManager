@@ -14,6 +14,7 @@ class Table {
     /**
      * @param $controller
      * @param $getSomething
+     * @param $type
      * @return string
      */
     public static function createTable($controller, $getSomething) {
@@ -319,7 +320,7 @@ class Table {
      * @param $type
      * @return string
      */
-    private static function addButton($type) {
+    public static function addButton($type) {
         return "
 <div class='pull-right my-2 pb-3'>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
