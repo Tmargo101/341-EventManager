@@ -8,9 +8,14 @@
  */
 
 
-// Change project-wide constants here
+// Change application-wide constants here
 $SET_APPLICATION_NAME = "Event Manager";
+$SET_BACKGROUND_IMAGE = "";
+
+// Set application base url
 $SET_BASE_URL = "";
+
+// Set MySQL Database credentials
 $SET_DB_SERVER = "";
 $SET_DB_USER = "";
 $SET_DB_PASSWORD = "";
@@ -18,6 +23,7 @@ $SET_DB_DATABASE = "";
 
 // Define system-wide constants for project use
 define("APPLICATION_NAME", $SET_APPLICATION_NAME);
+define("BG_IMAGE", $SET_BACKGROUND_IMAGE);
 define("BASE_URL", $SET_BASE_URL);
 define("DB_SERVER", $SET_DB_SERVER);
 define("DB_USERNAME", $SET_DB_USER);

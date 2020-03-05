@@ -11,6 +11,7 @@ class HTMLElements {
     // 	HTML Headers & Footers
 
     static function html_header($title = "Untitled") {
+        $bgImage = BG_IMAGE;
         $string = <<<END
 	<!DOCTYPE html>
 	
@@ -28,16 +29,32 @@ class HTMLElements {
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+END;
+        if ($bgImage != "none") {
+            $string .= <<<END
+	    <style>
+            body {
+                /*noinspection CssUnknownTarget*/
+                background: url('{$bgImage}') no-repeat center center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                background-size: cover;
+                -o-background-size: cover;
+            }
+        </style>
+END;
+        }
+        $string .= <<<END
 	</head>
 	<body class="text-center">\n
+    <div class="">
 END;
         echo $string;
     } // End html_header()
 
 
     static function html_footer($text = "") {
-        return "\n$text\n</body>\n</html>";
+        return "\n$text\n</div></body>\n</html>";
     }// End html_footer()
 
     static function notLoggedIn() {
