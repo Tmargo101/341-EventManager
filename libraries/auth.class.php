@@ -1,20 +1,28 @@
 <?php
-/*
-	All authentication functions are handled in this file
-	
-	Author: Thomas Margosian
-	Date created: 2/20/20
-*/
+/* Filename: auth.class.php
+ * Purpose: All authentication functions & authentication-related database access
+ * NOTE: Utilizes CONSTANTS defined in CONSTANTS.php
+ *
+ * Author: Tom Margosian
+ * Date: 2/20/20
+ */
 
 class AuthDBAccess {
     protected $dbholder;
 
     function __construct() {
         try {
-            $this->dbholder = new PDO("mysql:host={$_SERVER['DB_SERVER']};dbname={$_SERVER['DB']}", $_SERVER['DB_USER'], $_SERVER['DB_PASSWORD']);
+            // Set PDO access data from constants (Cannot call a constant within string interpolation)
+            $host = DB_SERVER;
+            $username = DB_USERNAME;
+            $password = DB_PASSWORD;
+            $database = DB_DATABASE;
+
+            $this->dbholder = new PDO("mysql:host={$host};dbname={$database}", $username, $password);
         } catch (PDOException $pdoException) {
-            echo $pdoException->getMessage();
-            die("<br>Bad Database");
+            echo "<div class=''></div><h1>Internal Server Error:</h1>";
+            echo "<h3>DB Error number: <i>".$pdoException->getCode()."</i></h3>";
+            die("</div><br>");
         }
     }
 
@@ -55,46 +63,56 @@ class AuthDBAccess {
 class Auth {
 
     static function login($inUsername, $inPassword) {
+        if ($inUsername == "" && $inPassword == "") {
+            $_SESSION['auth']['authCorrect'] = "emptyForm";
+            header("Location: index.php");
+        } else if ($inUsername == "") {
+            $_SESSION['auth']['authCorrect'] = "emptyUsername";
+            header("Location: index.php");
+        } else if ($inPassword == "") {
+            $_SESSION['auth']['authCorrect'] = "emptyPassword";
+            header("Location: index.php");
 
-        $db = new AuthDBAccess();
-        // Get user from the attendee table
-        $attendeeDataArray = $db->getUser($inUsername);
+        } else {
+            $db = new AuthDBAccess();
+            // Get user from the attendee table
+            $attendeeDataArray = $db->getUser($inUsername);
 
-        // Check if the attendeeDataArray has values.  If it is empty, the user does not exist.
-        if (isset($attendeeDataArray[0])) {
-            $_SESSION['auth']['username'] = $inUsername;
+            // Check if the attendeeDataArray has values.  If it is empty, the user does not exist.
+            if (isset($attendeeDataArray[0])) {
+                $_SESSION['auth']['username'] = $inUsername;
 
-            // Verify password hash.  If correct, determine user role and pass to events page.
-            if (password_verify($inPassword, $attendeeDataArray[0]['password'])) {
-                switch ($attendeeDataArray[0]['role']) {
-                    case 1:
-                        $_SESSION['auth']['authCorrect'] = "true";
-                        $_SESSION['auth']['role'] = "admin";
-                        $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
-                        break;
-                    case 2:
-                        $_SESSION['auth']['authCorrect'] = "true";
-                        $_SESSION['auth']['role'] = "manager";
-                        $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
-                        break;
-                    case 3:
-                        $_SESSION['auth']['authCorrect'] = "true";
-                        $_SESSION['auth']['role'] = "attendee";
-                        $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
-                        break;
+                // Verify password hash.  If correct, determine user role and pass to events page.
+                if (password_verify($inPassword, $attendeeDataArray[0]['password'])) {
+                    switch ($attendeeDataArray[0]['role']) {
+                        case 1:
+                            $_SESSION['auth']['authCorrect'] = "true";
+                            $_SESSION['auth']['role'] = "admin";
+                            $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
+                            break;
+                        case 2:
+                            $_SESSION['auth']['authCorrect'] = "true";
+                            $_SESSION['auth']['role'] = "manager";
+                            $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
+                            break;
+                        case 3:
+                            $_SESSION['auth']['authCorrect'] = "true";
+                            $_SESSION['auth']['role'] = "attendee";
+                            $_SESSION['auth']['id'] = $attendeeDataArray[0]['idattendee'];
+                            break;
+                    }
+                    header("Location: events.php");
+                } else {
+                    // If the password is incorrect, set authCorrect to badPass and send back to login
+                    $_SESSION['auth']['authCorrect'] = "badPass";
+                    header("Location: index.php");
                 }
-                header("Location: events.php");
             } else {
-                // If the password is incorrect, set authCorrect to badPass and send back to login
-                $_SESSION['auth']['authCorrect'] = "badPass";
+                // If the user was not found in DB, set authCorrect to badUser and send back to login
+                $_SESSION['auth']['authCorrect'] = "noUserFound";
                 header("Location: index.php");
             }
-        } else {
-            // If the user was not found in DB, set authCorrect to badUser and send back to login
-            $_SESSION['auth']['authCorrect'] = "noUserFound";
-            header("Location: index.php");
         }
-
     }
 
     static function logout() {

@@ -1,4 +1,12 @@
-<?php /** @noinspection PhpUndefinedMethodInspection */
+<?php
+/* Filename: Table.class.php
+ * Purpose: Creates all tables & table-adjacent HTML.
+ *
+ * Author: Tom Margosian
+ * Date: 2/26/20
+ */
+
+/** @noinspection PhpUndefinedMethodInspection */
 
 class Table {
 
@@ -6,6 +14,7 @@ class Table {
     /**
      * @param $controller
      * @param $getSomething
+     * @param $type
      * @return string
      */
     public static function createTable($controller, $getSomething) {
@@ -32,12 +41,13 @@ class Table {
      * @return string
      */
     public static function createHeader($data) {
-        $tableHeader = "<div class='pb-2'><table class='table table-striped'>\n<thead class='thead-dark'><tr>";
+        // TODO: 'table-responsive' option makes the table too small and shifted to the left on desktop.  Fix this.
+        $tableHeader = "<div class='pb-2 container-fluid col-sm-12 table-responsive'><table class='table table-striped'>\n<thead class='thead-dark'><tr>";
 
         // Creates the appropriate Table header based on the first returned object's getType method (String which is in all classes in the model).
         switch ($data->getType()) {
             case "Attendee_event":
-                if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                if ($_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                     $tableHeader .= "
                         <th>Attendee Name</th>
                         <th>Event Attending</th>
@@ -55,7 +65,7 @@ class Table {
                 }
                 break;
             case "Attendee_session":
-                if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                if ($_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                     $tableHeader .= "
                     <th>Attendee Name</th>
                     <th>Session Attending</th>
@@ -117,7 +127,7 @@ class Table {
         }
 
         // If the user is authenticated as an admin or a manager, draw the Add button.
-        if ($_SESSION['auth']['role'] == "admin" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+        if ($_SESSION['auth']['role'] == "admin" && $_SERVER['REQUEST_URI'] == BASE_URL.'admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
             $tableHeader .= Table::addButton($data->getType());
         }
         $tableHeader .= "</tr></thead>\n";
@@ -135,16 +145,16 @@ class Table {
         // Creates the appropriate Table row based on the passed object's ($data) getType method (String which is in all classes in the model).
         switch ($data->getType()) {
             case "Attendee_event":
-                if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                if ($_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                     $row = "<tr>
                         <td>" . $data->getAttendeeName() . "</td>
                         <td>" . $data->getEventName() . "</td>
                         <td>" . $data->getAttendeeID() . "</td>
                         <td>" . $data->getEventID() . "</td>
                         ";
-                    if ($_SESSION['auth']['role'] == 'manager' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                    if ($_SESSION['auth']['role'] == 'manager' && $_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                         $row .= Table::managerAttendeeControlButton("","");
-                    } else if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/events.php') {
+                    } else if ($_SERVER['REQUEST_URI'] == BASE_URL.'events.php') {
                         $row .= Table::eventsPageRemoveButton($data->getType(), $data->getEventID());
                     } else {
                         $row .= "<td></td>";
@@ -159,7 +169,7 @@ class Table {
                         <td>" . substr($data->getDateend(), 0, 10) . "</td>
 
                         ";
-                    if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/events.php') {
+                    if ($_SERVER['REQUEST_URI'] == BASE_URL.'events.php') {
                         $row .= Table::eventsPageRemoveButton($data->getType(), $data->getEventID());
                     } else {
                         $row .= "<td></td>";
@@ -170,16 +180,16 @@ class Table {
                 break;
 
             case "Attendee_session":
-                if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                if ($_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                     $row = "<tr>
                     <td>" . $data->getAttendeeName() . "</td>
                     <td>" . $data->getSessionName() . "</td>
                     <td>" . $data->getAttendeeID() . "</td>
                     <td>" . $data->getSessionID() . "</td>
                     ";
-                    if ($_SESSION['auth']['role'] == 'manager' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                    if ($_SESSION['auth']['role'] == 'manager' && $_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                         $row .= Table::managerAttendeeControlButton("", "");
-                    } else if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/events.php') {
+                    } else if ($_SERVER['REQUEST_URI'] == BASE_URL.'events.php') {
                         $row .= Table::eventsPageRemoveButton($data->getType(), $data->getSessionID());
                     } else {
                         $row .= "<td></td>";
@@ -193,7 +203,7 @@ class Table {
                         <td>" . substr($data->getStartdate(), 0, 10) . "</td>
                         <td>" . substr($data->getEnddate(), 0, 10) . "</td>
                     ";
-                    if ($_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/events.php') {
+                    if ($_SERVER['REQUEST_URI'] == BASE_URL.'events.php') {
                         $row .= Table::eventsPageRemoveButton($data->getType(), $data->getSessionID());
                     } else {
                         $row .= "<td></td>";
@@ -214,6 +224,8 @@ class Table {
                 // If the user is an admin and the attendee name is NOT admin, draw the edit and delete buttons (cannot edit or delete admin).
                 if ($_SESSION['auth']['role'] == 'admin' && $data->getName() != "admin") {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdattendee());
+                } else if ($data->getName() == 'admin') {
+                    $row .= "<td>Superadmin is not editable.</td>";
                 } else {
                     $row .= "<td></td>";
                 }
@@ -229,7 +241,7 @@ class Table {
 
                 // Draw the appropriate controls, based on the user level.
                 // If the user is an admin and is currently viewing the attendee page, draw the edit and delete buttons (cannot edit or delete on non-admin pages).
-                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php') {
+                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == BASE_URL.'admin.php') {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdvenue());
                 } else if ($data->getName() != "admin") {
                     $row .= "<td></td>";
@@ -250,7 +262,7 @@ class Table {
 
                 // Draw the appropriate controls, based on the user level.
                 // If the user is an admin and is currently viewing the attendee page, draw the edit and delete buttons (cannot edit or delete on non-admin pages).
-                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == BASE_URL.'admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdevent());
                     // TODO: change this elseif from (if getName is not admin) to (if you can register)
                 } else if ($data->getName() != "admin") {
@@ -271,7 +283,7 @@ class Table {
                     ";
 
                 // Draw the appropriate controls, based on the user level.
-                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == '/~txm5483/341/project1/manager.php') {
+                if ($_SESSION['auth']['role'] == 'admin' && $_SERVER['REQUEST_URI'] == BASE_URL.'admin.php' || $_SESSION['auth']['role'] == "manager" && $_SERVER['REQUEST_URI'] == BASE_URL.'manager.php') {
                     $row .= Table::editDeleteButtons($data->getType(), $data->getIdsession());
                 } else if ($data->getName() != "admin") {
                     $row .= Table::registerButton($data->getType(), $data->getIdsession(), $controller);
@@ -294,6 +306,7 @@ class Table {
         return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='dialog'>
         <button class='btn btn-primary mx-2' name='button' value='edit'>Edit</button>
         <button class='btn btn-danger' name='button' value='delete'>Delete</button>
@@ -307,14 +320,14 @@ class Table {
      * @param $type
      * @return string
      */
-    private static function addButton($type) {
+    public static function addButton($type) {
         return "
-<div class='pull-right my-2'>
+<div class='pull-right my-2 pb-3'>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='none'>
         <input name='action' type='hidden' value='dialog'>
         <button class='btn btn-outline-success' name='button' value='add'>Add {$type}</button>
         <input name='type' type='hidden' value='{$type}'>
-
     </form>
 </div>";
     }
@@ -330,6 +343,7 @@ class Table {
             return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-danger mx-2' name='button' value='unregister'>Unregister</button>
         <input name='type' type='hidden' value='{$type}'>
@@ -341,6 +355,7 @@ class Table {
             return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-success mx-2' name='button' value='register'>Register</button>
         <input name='type' type='hidden' value='{$type}'>
@@ -356,6 +371,7 @@ class Table {
         return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-danger mx-2' name='button' value='unregister'>Remove Attendee</button>
         <input name='type' type='hidden' value='{$type}'>
@@ -369,17 +385,14 @@ class Table {
         return "
 <td>
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
+        <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='submit'>
         <button class='btn btn-danger mx-2' name='button' value='unregister'>Unregister</button>
         <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>
     </form>
 </td>";
-
     }
-
-
-
 
     /**
      * @return string

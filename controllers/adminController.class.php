@@ -9,7 +9,7 @@ class AdminController {
     /** @noinspection PhpUnused */
     public static function getAllAttendees() {
         $db = new DBAccess_Admin();
-        $data = $db->getAllRowsFromTable("a.idattendee, a.name, r.name AS role", "attendee", "AS a LEFT JOIN role AS r ON a.role = r.idrole", "class");
+        $data = $db->getAllRowsFromTable("a.idattendee, a.name, r.name AS role", "attendee", "AS a LEFT JOIN role AS r ON a.role = r.idrole ORDER BY a.idattendee", "class");
         if (count($data) > 0) {
             return $data;
         } else {
@@ -20,7 +20,7 @@ class AdminController {
     /** @noinspection PhpUnused */
     public static function getAllEvents() {
         $db = new DBAccess_Admin();
-        $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue", "event", "AS e LEFT JOIN venue AS v ON v.idvenue = e.venue", "class");
+        $data = $db->getAllRowsFromTable("e.idevent, e.name, e.datestart, e.dateend, e.numberallowed, v.name AS venue", "event", "AS e LEFT JOIN venue AS v ON v.idvenue = e.venue ORDER BY e.idevent", "class");
         if (count($data) > 0) {
             return $data;
         } else {
@@ -31,7 +31,7 @@ class AdminController {
     /** @noinspection PhpUnused */
     public static function getAllSessions() {
         $db = new DBAccess_Admin();
-        $data = $db->getAllRowsFromTable("*", "session", "", "class");
+        $data = $db->getAllRowsFromTable("*", "session", "ORDER BY idsession", "class");
         if (count($data) > 0) {
             return $data;
         } else {
@@ -42,7 +42,7 @@ class AdminController {
     /** @noinspection PhpUnused */
     public static function getAllVenues() {
         $db = new DBAccess_Admin();
-        $data = $db->getAllRowsFromTable("*", "venue", "", "class");
+        $data = $db->getAllRowsFromTable("*", "venue", "ORDER BY idvenue", "class");
         if (count($data) > 0) {
             return $data;
         } else {
@@ -60,7 +60,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         User '{$inPOSTValues['newUserName']}' has been created.
     </div>
 </div>";
@@ -72,7 +72,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Error:</strong><br>
+        <h5>Error:</h5><br>
         User '{$inPOSTValues['newUserName']}' was not created.
     </div>
 </div>";
@@ -89,7 +89,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         Venue '{$inPOSTValues['newVenueName']}' has been created.
     </div>
 </div>";
@@ -99,7 +99,7 @@ class AdminController {
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
         <span aria-hidden='true'>&times;</span>
     </button>
-    <strong>Error:</strong><br>
+    <h5>Error:</h5><br>
     Venue '{$inPOSTValues['newVenueName']}' was not created.
 </div>";
 
@@ -116,7 +116,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         Event '{$inPOSTValues['newEventName']}' has been created.
     </div>
 </div>";
@@ -127,7 +127,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Error:</strong><br>
+        <h5>Error:</h5><br>
         Event '{$inPOSTValues['newEventName']}' was not created.
     </div>
 </div>";
@@ -145,7 +145,7 @@ class AdminController {
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
-        <strong>Created:</strong><br>
+        <h5>Created:</h5><br>
         Session '{$inPOSTValues['newSessionName']}' has been created.
     </div>
 </div>";
@@ -203,7 +203,7 @@ class AdminController {
 
     public static function getEventsAttending() {
         $db = new DBAccess_Admin();
-        $data = $db->getSomeRowsFromTable("Attendee_event","SELECT a_e.event AS eventID, e.name AS eventName, v.name AS venue, e.datestart AS datestart, e.dateend AS dateend FROM attendee_event AS a_e LEFT JOIN event AS e ON a_e.event = e.idevent LEFT JOIN venue AS v ON e.venue = v.idvenue LEFT JOIN attendee AS a ON a_e.attendee = a.idattendee LEFT JOIN manager_event AS m_e ON e.idevent = m_e.event", "a_e.attendee", $_SESSION['auth']['id'], "class");
+        $data = $db->getSomeRowsFromTable("Attendee_event","e.idevent","SELECT a_e.event AS eventID, e.name AS eventName, v.name AS venue, e.datestart AS datestart, e.dateend AS dateend FROM attendee_event AS a_e LEFT JOIN event AS e ON a_e.event = e.idevent LEFT JOIN venue AS v ON e.venue = v.idvenue LEFT JOIN attendee AS a ON a_e.attendee = a.idattendee LEFT JOIN manager_event AS m_e ON e.idevent = m_e.event", "a_e.attendee", $_SESSION['auth']['id'], "class");
         if (count($data) > 0) {
             return $data;
         } else {
@@ -213,7 +213,7 @@ class AdminController {
 
     public static function getSessionsAttending() {
         $db = new DBAccess_Admin();
-        $data = $db->getSomeRowsFromTable("Attendee_session","SELECT a_s.session AS sessionID, s.name AS sessionName, v.name AS venue, s.startdate AS startdate, s.enddate AS enddate FROM attendee_session AS a_s LEFT JOIN session AS s ON a_s.session = s.idsession LEFT JOIN event AS e ON s.event = e.idevent LEFT JOIN venue AS v ON e.venue = v.idvenue  LEFT JOIN attendee AS a ON a_s.attendee = a.idattendee LEFT JOIN manager_event AS m_e ON s.idsession = m_e.event", "a_s.attendee", $_SESSION['auth']['id'], "class");
+        $data = $db->getSomeRowsFromTable("Attendee_session","s.idsession","SELECT a_s.session AS sessionID, s.name AS sessionName, v.name AS venue, s.startdate AS startdate, s.enddate AS enddate FROM attendee_session AS a_s LEFT JOIN session AS s ON a_s.session = s.idsession LEFT JOIN event AS e ON s.event = e.idevent LEFT JOIN venue AS v ON e.venue = v.idvenue  LEFT JOIN attendee AS a ON a_s.attendee = a.idattendee LEFT JOIN manager_event AS m_e ON s.idsession = m_e.event", "a_s.attendee", $_SESSION['auth']['id'], "class");
         if (count($data) > 0) {
             return $data;
         } else {

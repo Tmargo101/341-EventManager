@@ -11,7 +11,13 @@ class DBAccess {
 
     function __construct() {
         try {
-            $this->dbholder = new PDO("mysql:host={$_SERVER['DB_SERVER']};dbname={$_SERVER['DB']}", $_SERVER['DB_USER'], $_SERVER['DB_PASSWORD']);
+            // Set PDO access data from constants (Cannot call a constant within string interpolation)
+            $host = DB_SERVER;
+            $username = DB_USERNAME;
+            $password = DB_PASSWORD;
+            $database = DB_DATABASE;
+
+            $this->dbholder = new PDO("mysql:host={$host};dbname={$database}", $username, $password);
         } catch (PDOException $pdoException) {
             echo $pdoException->getMessage();
             die("<br>Bad Database");
@@ -66,6 +72,45 @@ class DBAccess {
             return array();
         }
     }
+
+    /** @noinspection PhpInconsistentReturnPointsInspection */
+    function getSomeRowsFromTable($inObjectReturnType, $inSortBy, $inQuery, $inColumn, $id, $fetchType) {
+        try {
+            // Decide if I am going to use a fetch class or an associative array
+            switch ($fetchType) {
+                case "class":
+
+                    /** @noinspection PhpIncludeInspection */
+                    include_once "model/{$inObjectReturnType}.class.php";
+
+                    // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                    $query = "$inQuery WHERE $inColumn = :id ORDER BY :orderby";
+                    $statement = $this->dbholder->prepare($query);
+                    $statement->execute(array("id"=>$id, "orderby"=>$inSortBy));
+                    $statement->setFetchMode(PDO::FETCH_CLASS, $inObjectReturnType);
+                    return $statement->fetchAll();
+                    break;
+
+                case "array":
+                    // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
+                    $query = "$inQuery where m_e.manager = :id";
+                    $statement = $this->dbholder->prepare($query);
+                    var_dump($statement);
+                    $statement->execute(array("id"=>$id));
+                    $statement->setFetchMode(PDO::FETCH_ASSOC);
+                    return $statement->fetchAll();
+                    break;
+
+                    break;
+
+            }
+
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return array();
+        }
+    }
+
 
     //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
     function registerEvent($eventId, $attendeeId) {
@@ -145,47 +190,6 @@ class DBAccess {
         }
     }
     //////////////////////////////////////// END REGISTRATION FUNCTIONS ////////////////////////////////////////
-
-
-    /** @noinspection PhpInconsistentReturnPointsInspection */
-    function getSomeRowsFromTable($inObjectReturnType, $inQuery, $inColumn, $id, $fetchType) {
-        try {
-            // Decide if I am going to use a fetch class or an associative array
-            switch ($fetchType) {
-                case "class":
-                    // Convert the first char of $inTable to uppercase, since it's the same name but with a Capital letter (best class practice
-
-                    /** @noinspection PhpIncludeInspection */
-                    include_once "model/{$inObjectReturnType}.class.php";
-
-                    // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
-                    $query = "$inQuery WHERE $inColumn = :id";
-                    $statement = $this->dbholder->prepare($query);
-                    $statement->execute(array("id"=>$id));
-                    $statement->setFetchMode(PDO::FETCH_CLASS, $inObjectReturnType);
-                    return $statement->fetchAll();
-                    break;
-
-                case "array":
-                    // Build query outside of the PDO Prepare instead of binding the params in the PDO since Table and Column names CANNOT be replaced by parameters in PDO.
-                    $query = "$inQuery where m_e.manager = :id";
-                    $statement = $this->dbholder->prepare($query);
-                    var_dump($statement);
-                    $statement->execute(array("id"=>$id));
-                    $statement->setFetchMode(PDO::FETCH_ASSOC);
-                    return $statement->fetchAll();
-                    break;
-
-                    break;
-
-            }
-
-        } catch (PDOException $exception) {
-            echo $exception->getMessage();
-            return array();
-        }
-    }
-
 
 
 }

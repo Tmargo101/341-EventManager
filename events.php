@@ -18,9 +18,9 @@ if ($_POST != null) {
     CRUD::whatToDo($_POST, $currentUserLevelController);
 }
 
-echo HTMLElements::tableDiv("Events I am attending", $currentUserLevelController, "getEventsAttending");
+echo HTMLElements::tableDiv("Events I am attending", $currentUserLevelController, "getEventsAttending", "Event");
 
-echo HTMLElements::tableDiv("Sessions I am attending", $currentUserLevelController, "getSessionsAttending");
+echo HTMLElements::tableDiv("Sessions I am attending", $currentUserLevelController, "getSessionsAttending", "Session");
 
 ?>
 

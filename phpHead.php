@@ -1,6 +1,9 @@
 <?php
+
 session_name('EventManagerSession');
 session_start();
+
+include_once 'CONSTANTS.php';
 
 foreach (glob("libraries/*.class.php") as $filename) {
     /** @noinspection PhpIncludeInspection */
