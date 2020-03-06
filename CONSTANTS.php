@@ -7,6 +7,8 @@
  * Date: 3/3/20
  */
 
+// TODO: Create new page (Setup.php) which will import a blank database & set these CONSTANTS, for setup on new servers without CLI interface.  This page should be locked out after any attendees are created.
+
 
 // Change application-wide constants here
 $SET_APPLICATION_NAME = "Event Manager";
