@@ -50,109 +50,141 @@ class AdminController {
         }
     }
 
+    //////////////////////////////////////// START ADD FUNCTIONS ////////////////////////////////////////
+
     public static function createNewAttendee($inPOSTValues) {
         $db = new DBAccess_Admin();
         $success = $db->addAttendee($inPOSTValues['newUserName'], $inPOSTValues['newPassword'], $inPOSTValues['newRole']);
-        if ($success != -1) {
-            echo "
-<div class='container col-md-4'>
-    <div class='alert alert-success'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-        <h5>Created:</h5><br>
-        User '{$inPOSTValues['newUserName']}' has been created.
-    </div>
-</div>";
-
+        if ($success == 1) {
+            HTMLElements::dialogBox("success","Added: ","Added Attendee '{$inPOSTValues['newUserName']}'");
+        } else if ($success == 0) {
+            HTMLElements::dialogBox("error","Error: ","Added Attendee '{$inPOSTValues['newUserName']}'");
         } else {
-            echo "
-<div class='container col-md-4'>
-    <div class='alert alert-danger'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-        <h5>Error:</h5><br>
-        User '{$inPOSTValues['newUserName']}' was not created.
-    </div>
-</div>";
+            HTMLElements::dialogBox("error","Error: ","Added Attendee '{$inPOSTValues['newUserName']}'");
         }
     }
 
     public static function createNewVenue($inPOSTValues) {
         $db = new DBAccess_Admin();
         $success = $db->addVenue($inPOSTValues['newVenueName'], $inPOSTValues['newVenueCapacity']);
-        if ($success != -1) {
-            echo "
-<div class='container col-md-4'>
-    <div class='alert alert-success'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-        <h5>Created:</h5><br>
-        Venue '{$inPOSTValues['newVenueName']}' has been created.
-    </div>
-</div>";
+        if ($success == 1) {
+            HTMLElements::dialogBox("success","Added: ","Added Venue '{$inPOSTValues['newVenueName']}'");
+        } else if ($success == 0) {
+            HTMLElements::dialogBox("error","Error: ","Added Venue '{$inPOSTValues['newVenueName']}'");
         } else {
-            echo "
-<div class='alert alert-danger'>
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-        <span aria-hidden='true'>&times;</span>
-    </button>
-    <h5>Error:</h5><br>
-    Venue '{$inPOSTValues['newVenueName']}' was not created.
-</div>";
-
+            HTMLElements::dialogBox("error","Error: ","Added Venue '{$inPOSTValues['newVenueName']}'");
         }
     }
 
     public static function createNewEvent($inPOSTValues) {
         $db = new DBAccess_Admin();
         $success = $db->addEvent($inPOSTValues['newEventName'], $inPOSTValues['newEventStartDate'], $inPOSTValues['newEventEndDate'], $inPOSTValues['newEventNumberAllowed'], $inPOSTValues['newEventVenue']);
-        if ($success != -1) {
-            echo "
-<div class='container col-md-4'>
-    <div class='alert alert-success'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-        <h5>Created:</h5><br>
-        Event '{$inPOSTValues['newEventName']}' has been created.
-    </div>
-</div>";
+        if ($success == 1) {
+            HTMLElements::dialogBox("success","Added: ","Added Event '{$inPOSTValues['newEventName']}'");
+        } else if ($success == 0) {
+            HTMLElements::dialogBox("error","Error: ","Added Event '{$inPOSTValues['newEventName']}'");
         } else {
-            echo "
-<div class='container col-md-4'>
-    <div class='alert alert-danger'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-        <h5>Error:</h5><br>
-        Event '{$inPOSTValues['newEventName']}' was not created.
-    </div>
-</div>";
-
+            HTMLElements::dialogBox("error","Error: ","Added Event '{$inPOSTValues['newEventName']}'");
         }
     }
 
     public static function createNewSession($inPOSTValues) {
         $db = new DBAccess_Admin();
         $success = $db->addSession($inPOSTValues['newSessionName'], $inPOSTValues['newSessionStartDate'], $inPOSTValues['newSessionEndDate'], $inPOSTValues['newSessionNumberAllowed'], $inPOSTValues['newSessionEvent']);
-        if ($success != -1) {
-            echo "
-<div class='container col-md-4'>
-    <div class='alert alert-success'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-        <h5>Created:</h5><br>
-        Session '{$inPOSTValues['newSessionName']}' has been created.
-    </div>
-</div>";
+        if ($success == 1) {
+            HTMLElements::dialogBox("success","Added: ","Added Session '{$inPOSTValues['newSessionName']}'");
+        } else if ($success == 0) {
+            HTMLElements::dialogBox("error","Error: ","Added Session '{$inPOSTValues['newSessionName']}'");
         } else {
-            echo "<h1>User {$inPOSTValues['newUserName']} Was not created.</h1>";
+            HTMLElements::dialogBox("error","Error: ","Added Session '{$inPOSTValues['newSessionName']}'");
         }
     }
+    //////////////////////////////////////// END ADD FUNCTIONS ////////////////////////////////////////
+
+
+    //////////////////////////////////////// START DELETE FUNCTIONS ////////////////////////////////////////
+
+    public static function deleteAttendee($inPOSTValues) {
+        $type = "Attendee";
+        $db = new DBAccess_Admin();
+        $canDelete = $db->canDeleteAttendee($inPOSTValues['id']);
+        if ($canDelete == 0) {
+        $success = $db->deleteAttendee($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. Linked to $canDelete other objects.");
+        }
+    }
+
+    public static function deleteVenue($inPOSTValues) {
+        $type = "Venue";
+        $db = new DBAccess_Admin();
+        $canDelete = $db->canDeleteVenue($inPOSTValues['id']);
+        if ($canDelete == 0) {
+            $success = $db->deleteVenue($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. There are $canDelete events registered to this Venue");
+        }
+    }
+
+    public static function deleteEvent($inPOSTValues) {
+        $type = "Event";
+        $db = new DBAccess_Admin();
+        $canDelete = $db->canDeleteEvent($inPOSTValues['id']);
+        // TODO: this returns 0 when it should return more than 0.  Fix.
+        var_dump("CanDelete $type: ".$canDelete);
+
+//        if ($canDelete == 0) {
+//            $success = $db->deleteEvent($inPOSTValues['id']);
+//            if ($success == 1) {
+//                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+//            } else if ($success == 0) {
+//                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+//            } else {
+//                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+//            }
+//        } else {
+//            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. Linked to $canDelete other objects.");
+//        }
+    }
+
+    public static function deleteSession($inPOSTValues) {
+        $type = "Session";
+        $db = new DBAccess_Admin();
+        $canDelete = $db->canDeleteSession($inPOSTValues['id']);
+        // TODO: this returns 0 when it should return more than 0.  Fix.
+        var_dump("CanDelete $type: ".$canDelete);
+//        if ($canDelete == 0) {
+//            $success = $db->deleteSession($inPOSTValues['id']);
+//            if ($success == 1) {
+//                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+//            } else if ($success == 0) {
+//                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+//            } else {
+//                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+//            }
+//        } else {
+//            HTMLElements::dialogBox("error","Error","$type cannot be deleted. Linked to $canDelete other objects.");
+//        }
+    }
+
+    //////////////////////////////////////// END DELETE FUNCTIONS ////////////////////////////////////////
+
+
+
 
     //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
     public static function registerEvent($eventId, $attendeeId) {

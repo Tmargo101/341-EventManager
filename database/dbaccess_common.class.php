@@ -112,6 +112,50 @@ class DBAccess {
     }
 
 
+    function getCountOfRowsFromTable($inTable, $inColumn, $inId) {
+        try {
+            $statement = $this->dbholder->prepare("SELECT * FROM $inTable WHERE $inColumn = :id");
+            $statement->execute(array("id" => $inId));
+            return $statement->rowCount();
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return -1;
+        }
+    }
+
+    function canDeleteAttendee($inId) {
+        $managerOf = $this->getCountOfRowsFromTable("manager_event","manager",$inId);
+        $eventsAttending = $this->getCountOfRowsFromTable("attendee_event","attendee",$inId);
+        $sessionsAttending = $this->getCountOfRowsFromTable("attendee_session","attendee",$inId);
+        $total = $managerOf + $eventsAttending + $sessionsAttending;
+        return $total;
+    }
+
+    function canDeleteVenue($inId) {
+        $eventsInVenue = $this->getCountOfRowsFromTable("event","venue",$inId);
+        return $eventsInVenue;
+    }
+
+    function canDeleteEvent($inId) {
+        $sessionsInEvent = $this->getCountOfRowsFromTable("event","venue",$inId);
+        $eventManagers = $this->getCountOfRowsFromTable("manager_event","manager",$inId);
+        $attendeesRegisteredForEvent = $this->getCountOfRowsFromTable("attendee_event","attendee",$inId);
+        var_dump("Sessions in Event: ".$sessionsInEvent);
+        var_dump("Event Managers: ".$eventManagers);
+        var_dump("Attendees Registered for Event: ".$attendeesRegisteredForEvent);
+        $total = $sessionsInEvent + $attendeesRegisteredForEvent + $eventManagers;
+        return $total;
+
+    }
+
+    function canDeleteSession($inId) {
+        $attendeesRegisteredForSession = $this->getCountOfRowsFromTable("attendee_session","attendee",$inId);
+        var_dump("Attendees Registered for Session: ".$attendeesRegisteredForSession);
+        return $attendeesRegisteredForSession;
+
+    }
+
+
     //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
     function registerEvent($eventId, $attendeeId) {
         try {

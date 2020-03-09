@@ -173,6 +173,35 @@ END;
         return $tableDiv;
     } //END tableDiv();
 
+    static function dialogBox($inDialogBoxType, $inTitle, $inMessage) {
+        switch ($inDialogBoxType) {
+            case "success":
+                $alertType = "alert-success";
+                break;
+            case "warning":
+                $alertType = "alert-warning";
+                break;
+            case "error":
+                $alertType = "alert-danger";
+                break;
+            default:
+                $alertType = "alert-primary";
+                break;
+        }
+        echo "
+<div class='container col-md-4'>
+    <div class='alert $alertType'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+        <h5>$inTitle</h5><br>
+        <p>$inMessage.</p>
+    </div>
+</div>";
+
+    }
+
+
     static function addDialog($inPOSTValues) {
         switch ($inPOSTValues['type']) {
             case "Attendee":
@@ -371,31 +400,67 @@ END;
     }
 
     static function deleteDialog($inPOSTValues) {
-//        var_dump($inGETValues);
+        var_dump($inPOSTValues);
         switch ($inPOSTValues['type']) {
             case "Attendee":
-                $crudDialog = "<div class='container-fluid col-sm-8 my-5 py-5 bg-light'><h1>Delete Attendee '{$inPOSTValues['id']}'</h1>";
-                $crudDialog .= "<!--suppress HtmlUnknownTarget -->
-<form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
-                $crudDialog .= "</div>";
+                $crudDialog = "<!--suppress HtmlUnknownTarget -->
+<div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
+    <!-- Exit Button -->
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <h1>Delete {$inPOSTValues['type']} '{$inPOSTValues['id']}'</h1>
+    <form action='admin.php' method='post'>
+        <input type='hidden' name='validationString' value='int'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
+        <input type='hidden' name='id' value='{$inPOSTValues['id']}'>
+        <button type='submit' name='button' value='delete' class='btn btn-lg btn-primary'>Delete {$inPOSTValues['type']}</button>
+    </form>
+</div>";
                 break;
             case "Venue":
-                $crudDialog = "<div class=''><h1>Delete Venue '{$inPOSTValues['id']}'</h1>";
-                $crudDialog .= "<!--suppress HtmlUnknownTarget -->
-<form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
-                $crudDialog .= "</div>";
+                $crudDialog = "<!--suppress HtmlUnknownTarget -->
+<div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
+    <!-- Exit Button -->
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <h1>Delete {$inPOSTValues['type']} '{$inPOSTValues['id']}'</h1>
+    <form action='admin.php' method='post'>
+        <input type='hidden' name='validationString' value='int'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
+        <input type='hidden' name='id' value='{$inPOSTValues['id']}'>
+        <button type='submit' name='button' value='delete' class='btn btn-lg btn-primary'>Delete {$inPOSTValues['type']}</button>
+    </form>
+</div>";
                 break;
             case "Event":
-                $crudDialog = "<div class=''><h1>Delete Event '{$inPOSTValues['id']}'</h1>";
-                $crudDialog .= "<!--suppress HtmlUnknownTarget -->
-<form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
-                $crudDialog .= "</div>";
+                $crudDialog = "<!--suppress HtmlUnknownTarget -->
+<div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
+    <!-- Exit Button -->
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <h1>Delete {$inPOSTValues['type']} '{$inPOSTValues['id']}'</h1>
+    <form action='admin.php' method='post'>
+        <input type='hidden' name='validationString' value='int'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
+        <input type='hidden' name='id' value='{$inPOSTValues['id']}'>
+        <button type='submit' name='button' value='delete' class='btn btn-lg btn-primary'>Delete {$inPOSTValues['type']}</button>
+    </form>
+</div>";
                 break;
             case "Session":
-                $crudDialog = "<div class=''><h1>Delete Session '{$inPOSTValues['id']}'</h1>";
-                $crudDialog .= "<!--suppress HtmlUnknownTarget -->
-<form action='admin.php' method='post'><button type='submit' class='btn btn-lg btn-primary'>Go back to Admin Page</button></form>";
-                $crudDialog .= "</div>";
+                $crudDialog = "<!--suppress HtmlUnknownTarget -->
+<div class='container-fluid col-sm-auto col-md-8 col-xl-4 my-5 py-3 px-2 bg-light'>
+    <!-- Exit Button -->
+    <form action='{$_SERVER['REQUEST_URI']}' method='post'><button type='submit' class='close'><span aria-hidden='true'>&times;</span></button></form>
+    <h1>Delete {$inPOSTValues['type']} '{$inPOSTValues['id']}'</h1>
+    <form action='admin.php' method='post'>
+        <input type='hidden' name='validationString' value='int'>
+        <input type='hidden' name='action' value='submit'>
+        <input type='hidden' name='type' value='{$inPOSTValues['type']}'>
+        <input type='hidden' name='id' value='{$inPOSTValues['id']}'>
+        <button type='submit' name='button' value='delete' class='btn btn-lg btn-primary'>Delete {$inPOSTValues['type']}</button>
+    </form>
+</div>";
                 break;
 
             default:
