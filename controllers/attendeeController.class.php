@@ -26,6 +26,12 @@ class AttendeeController {
         }
     }
 
+    public static function getCountOfRowsFromTableStatic($inTable, $inColumn, $inId) {
+        $db = new DBAccess();
+        return $db->getCountOfRowsFromTable($inTable,$inColumn,$inId);
+    }
+
+
     //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
     public static function registerEvent($eventId, $attendeeId) {
         $db = new DBAccess();

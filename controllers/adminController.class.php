@@ -31,7 +31,7 @@ class AdminController {
     /** @noinspection PhpUnused */
     public static function getAllSessions() {
         $db = new DBAccess_Admin();
-        $data = $db->getAllRowsFromTable("*", "session", "ORDER BY idsession", "class");
+        $data = $db->getAllRowsFromTable("s.idsession, s.name, s.numberallowed, s.event, e.name AS eventName, s.startdate, s.enddate", "session", "AS s LEFT JOIN event AS e ON s.event = e.idevent ORDER BY idsession", "class");
         if (count($data) > 0) {
             return $data;
         } else {
@@ -146,19 +146,18 @@ class AdminController {
         $canDelete = $db->canDeleteEvent($inPOSTValues['id']);
         // TODO: this returns 0 when it should return more than 0.  Fix.
         var_dump("CanDelete $type: ".$canDelete);
-
-//        if ($canDelete == 0) {
-//            $success = $db->deleteEvent($inPOSTValues['id']);
-//            if ($success == 1) {
-//                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
-//            } else if ($success == 0) {
-//                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
-//            } else {
-//                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
-//            }
-//        } else {
-//            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. Linked to $canDelete other objects.");
-//        }
+        if ($canDelete == 0) {
+            $success = $db->deleteEvent($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. Linked to $canDelete other objects.");
+        }
     }
 
     public static function deleteSession($inPOSTValues) {
@@ -167,22 +166,26 @@ class AdminController {
         $canDelete = $db->canDeleteSession($inPOSTValues['id']);
         // TODO: this returns 0 when it should return more than 0.  Fix.
         var_dump("CanDelete $type: ".$canDelete);
-//        if ($canDelete == 0) {
-//            $success = $db->deleteSession($inPOSTValues['id']);
-//            if ($success == 1) {
-//                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
-//            } else if ($success == 0) {
-//                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
-//            } else {
-//                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
-//            }
-//        } else {
-//            HTMLElements::dialogBox("error","Error","$type cannot be deleted. Linked to $canDelete other objects.");
-//        }
+        if ($canDelete == 0) {
+            $success = $db->deleteSession($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error","$type cannot be deleted. There are $canDelete Attendees registered.");
+        }
     }
 
     //////////////////////////////////////// END DELETE FUNCTIONS ////////////////////////////////////////
 
+    public static function getCountOfRowsFromTableStatic($inTable, $inColumn, $inId) {
+        $db = new DBAccess_Admin();
+        return $db->getCountOfRowsFromTable($inTable,$inColumn,$inId);
+    }
 
 
 

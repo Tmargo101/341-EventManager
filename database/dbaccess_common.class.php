@@ -123,6 +123,7 @@ class DBAccess {
         }
     }
 
+
     function canDeleteAttendee($inId) {
         $managerOf = $this->getCountOfRowsFromTable("manager_event","manager",$inId);
         $eventsAttending = $this->getCountOfRowsFromTable("attendee_event","attendee",$inId);
@@ -137,9 +138,9 @@ class DBAccess {
     }
 
     function canDeleteEvent($inId) {
-        $sessionsInEvent = $this->getCountOfRowsFromTable("event","venue",$inId);
-        $eventManagers = $this->getCountOfRowsFromTable("manager_event","manager",$inId);
-        $attendeesRegisteredForEvent = $this->getCountOfRowsFromTable("attendee_event","attendee",$inId);
+        $sessionsInEvent = $this->getCountOfRowsFromTable("session","event",$inId);
+        $eventManagers = $this->getCountOfRowsFromTable("manager_event","event",$inId);
+        $attendeesRegisteredForEvent = $this->getCountOfRowsFromTable("attendee_event","event",$inId);
         var_dump("Sessions in Event: ".$sessionsInEvent);
         var_dump("Event Managers: ".$eventManagers);
         var_dump("Attendees Registered for Event: ".$attendeesRegisteredForEvent);
@@ -149,8 +150,8 @@ class DBAccess {
     }
 
     function canDeleteSession($inId) {
-        $attendeesRegisteredForSession = $this->getCountOfRowsFromTable("attendee_session","attendee",$inId);
-        var_dump("Attendees Registered for Session: ".$attendeesRegisteredForSession);
+        $attendeesRegisteredForSession = $this->getCountOfRowsFromTable("attendee_session","session",$inId);
+//        var_dump("Attendees Registered for Session: ".$attendeesRegisteredForSession);
         return $attendeesRegisteredForSession;
 
     }

@@ -146,6 +146,12 @@ class ManagerController {
         }
     }
 
+    public static function getCountOfRowsFromTableStatic($inTable, $inColumn, $inId) {
+        $db = new DBAccess_Manager();
+        return $db->getCountOfRowsFromTable($inTable,$inColumn,$inId);
+    }
+
+
     //////////////////////////////////////// END OVERRIDE FUNCTIONS FROM DBACCESS_COMMON ////////////////////////////////////////
 
 

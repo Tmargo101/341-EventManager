@@ -5,6 +5,7 @@
 class Session {
     private $idsession, $name, $numberallowed, $event, $startdate, $enddate;
     private $type = "Session";
+    private $eventName, $venueName;
 
     /**
      * @return string
@@ -18,6 +19,34 @@ class Session {
      */
     public function setType($type) {
         $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventName() {
+        return $this->eventName;
+    }
+
+    /**
+     * @param mixed $eventName
+     */
+    public function setEventName($eventName) {
+        $this->eventName = $eventName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVenueName() {
+        return $this->venueName;
+    }
+
+    /**
+     * @param mixed $venueName
+     */
+    public function setVenueName($venueName) {
+        $this->venueName = $venueName;
     }
 
     /**
