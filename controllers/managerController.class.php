@@ -124,6 +124,86 @@ class ManagerController {
     //////////////////////////////////////// END REGISTRATION FUNCTIONS ////////////////////////////////////////
 
 
+    //////////////////////////////////////// START DELETE FUNCTIONS ////////////////////////////////////////
+
+    public static function deleteAttendee($inPOSTValues) {
+        $type = "Attendee";
+        $db = new DBAccess_Manager();
+        $canDelete = $db->canDeleteAttendee($inPOSTValues['id']);
+        if ($canDelete == 0) {
+            $success = $db->deleteAttendee($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. Linked to $canDelete other objects.");
+        }
+    }
+
+    public static function deleteVenue($inPOSTValues) {
+        $type = "Venue";
+        $db = new DBAccess_Manager();
+        $canDelete = $db->canDeleteVenue($inPOSTValues['id']);
+        if ($canDelete == 0) {
+            $success = $db->deleteVenue($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. There are $canDelete events registered to this Venue");
+        }
+    }
+
+    public static function deleteEvent($inPOSTValues) {
+        $type = "Event";
+        $db = new DBAccess_Manager();
+        $canDelete = $db->canDeleteEvent($inPOSTValues['id']);
+//        var_dump("CanDelete $type: ".$canDelete);
+        if ($canDelete == 0) {
+            $success = $db->deleteEvent($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be deleted. Linked to $canDelete other objects.");
+        }
+    }
+
+    public static function deleteSession($inPOSTValues) {
+        $type = "Session";
+        $db = new DBAccess_Manager();
+        $canDelete = $db->canDeleteSession($inPOSTValues['id']);
+//        var_dump("CanDelete $type: ".$canDelete);
+        if ($canDelete == 0) {
+            $success = $db->deleteSession($inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Deleted:","$type with ID '{$inPOSTValues['id']}' deleted.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.  Maybe it has already been deleted?");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to delete $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error","$type cannot be deleted. There are $canDelete Attendees registered.");
+        }
+    }
+
+    //////////////////////////////////////// END DELETE FUNCTIONS ////////////////////////////////////////
+
+
+
     //////////////////////////////////////// START OVERRIDE FUNCTIONS FROM DBACCESS_COMMON ////////////////////////////////////////
 
     public static function getAllEvents() {

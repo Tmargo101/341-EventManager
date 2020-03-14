@@ -24,19 +24,6 @@ class DBAccess {
         }
     }
 
-//		function getItem($inColumns, $inTable, $inType, $inQuery) {
-//            try {
-//                include_once "model/Attendee.class.php";
-//                $statement = $this->dbholder->prepare("SELECT :columns FROM :tab WHERE :id = :query");
-//                $statement->execute(array("columns"=>$inColumns,"tab"=>$inTable,"id"=>$inType,"query"=>$inQuery));
-//                $statement->setFetchMode(PDO::FETCH_CLASS,"Attendee");
-//                return $statement->fetchAll();
-//            } catch (PDOException $exception) {
-//                echo $exception->getMessage();
-//                return array();
-//            }
-//        }
-
     /** @noinspection PhpInconsistentReturnPointsInspection
      * @noinspection PhpIncludeInspection
      * @param $inColumns
@@ -111,7 +98,6 @@ class DBAccess {
         }
     }
 
-
     function getCountOfRowsFromTable($inTable, $inColumn, $inId) {
         try {
             $statement = $this->dbholder->prepare("SELECT * FROM $inTable WHERE $inColumn = :id");
@@ -122,7 +108,6 @@ class DBAccess {
             return -1;
         }
     }
-
 
     function canDeleteAttendee($inId) {
         $managerOf = $this->getCountOfRowsFromTable("manager_event","manager",$inId);
@@ -141,9 +126,6 @@ class DBAccess {
         $sessionsInEvent = $this->getCountOfRowsFromTable("session","event",$inId);
         $eventManagers = $this->getCountOfRowsFromTable("manager_event","event",$inId);
         $attendeesRegisteredForEvent = $this->getCountOfRowsFromTable("attendee_event","event",$inId);
-        var_dump("Sessions in Event: ".$sessionsInEvent);
-        var_dump("Event Managers: ".$eventManagers);
-        var_dump("Attendees Registered for Event: ".$attendeesRegisteredForEvent);
         $total = $sessionsInEvent + $attendeesRegisteredForEvent + $eventManagers;
         return $total;
 
@@ -151,13 +133,12 @@ class DBAccess {
 
     function canDeleteSession($inId) {
         $attendeesRegisteredForSession = $this->getCountOfRowsFromTable("attendee_session","session",$inId);
-//        var_dump("Attendees Registered for Session: ".$attendeesRegisteredForSession);
         return $attendeesRegisteredForSession;
 
     }
 
-
     //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
+
     function registerEvent($eventId, $attendeeId) {
         try {
             $statement = $this->dbholder->prepare("INSERT into attendee_event (event,attendee) VALUES (:eventID,:attendeeID)");
@@ -202,7 +183,6 @@ class DBAccess {
         }
     }
 
-
     function checkIfRegisteredEvent($eventId, $attendeeId) {
         try {
             $statement = $this->dbholder->prepare("SELECT * from attendee_event WHERE event = :eventID AND attendee = :attendeeID");
@@ -235,6 +215,5 @@ class DBAccess {
         }
     }
     //////////////////////////////////////// END REGISTRATION FUNCTIONS ////////////////////////////////////////
-
 
 }

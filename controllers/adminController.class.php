@@ -50,6 +50,11 @@ class AdminController {
         }
     }
 
+    public static function getCountOfRowsFromTableStatic($inTable, $inColumn, $inId) {
+        $db = new DBAccess_Admin();
+        return $db->getCountOfRowsFromTable($inTable,$inColumn,$inId);
+    }
+
     //////////////////////////////////////// START ADD FUNCTIONS ////////////////////////////////////////
 
     public static function createNewAttendee($inPOSTValues) {
@@ -99,7 +104,89 @@ class AdminController {
             HTMLElements::dialogBox("error","Error: ","Added Session '{$inPOSTValues['newSessionName']}'");
         }
     }
+
     //////////////////////////////////////// END ADD FUNCTIONS ////////////////////////////////////////
+
+
+    //////////////////////////////////////// START EDIT FUNCTIONS ////////////////////////////////////////
+
+    public static function editAttendee($inPOSTValues) {
+        $type = "Attendee";
+        $db = new DBAccess_Admin();
+        $canDelete = 0;
+        if ($canDelete == 0) {
+            $success = $db->editAttendee($inPOSTValues['newUserName'],$inPOSTValues['newRole'],$inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Edited:","$type with ID '{$inPOSTValues['id']}' edited successfully.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to edit $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be edited. Linked to $canDelete other objects.");
+        }
+    }
+
+    public static function editVenue($inPOSTValues) {
+        $type = "Venue";
+        $db = new DBAccess_Admin();
+        $canDelete = 0;
+        if ($canDelete == 0) {
+            $success = $db->editVenue($inPOSTValues['newVenueName'],$inPOSTValues['newVenueCapacity'],$inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Edited:","$type with ID '{$inPOSTValues['id']}' edited successfully.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to edit $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be edited. Linked to $canDelete other objects.");
+        }
+    }
+
+    public static function editEvent($inPOSTValues) {
+//        var_dump($inPOSTValues);
+        $type = "Event";
+        $db = new DBAccess_Admin();
+        $canDelete = 0;
+        if ($canDelete == 0) {
+            $success = $db->editEvent($inPOSTValues['newEventName'], $inPOSTValues['newEventStartDate'], $inPOSTValues['newEventEndDate'], $inPOSTValues['newEventNumberAllowed'], $inPOSTValues['newEventVenue'],$inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Edited:","$type with ID '{$inPOSTValues['id']}' edited successfully.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to edit $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be edited. Linked to $canDelete other objects.");
+        }
+    }
+
+    public static function editSession($inPOSTValues) {
+//        var_dump($inPOSTValues);
+        $type = "Session";
+        $db = new DBAccess_Admin();
+        $canDelete = 0;
+        if ($canDelete == 0) {
+            $success = $db->editSession($inPOSTValues['newSessionName'], $inPOSTValues['newSessionStartDate'], $inPOSTValues['newSessionEndDate'], $inPOSTValues['newSessionNumberAllowed'], $inPOSTValues['newSessionEvent'],$inPOSTValues['id']);
+            if ($success == 1) {
+                HTMLElements::dialogBox("success","Edited:","$type with ID '{$inPOSTValues['id']}' edited successfully.");
+            } else if ($success == 0) {
+                HTMLElements::dialogBox("warning","Not Found:","$type with ID '{$inPOSTValues['id']}' was not found.");
+            } else {
+                HTMLElements::dialogBox("error","Error:","Failed to edit $type with ID '{$inPOSTValues['id']}'.");
+            }
+        } else {
+            HTMLElements::dialogBox("error","Error:","$type cannot be edited. Linked to $canDelete other objects.");
+        }
+    }
+
+
+
+    //////////////////////////////////////// END EDIT FUNCTIONS ////////////////////////////////////////
 
 
     //////////////////////////////////////// START DELETE FUNCTIONS ////////////////////////////////////////
@@ -144,8 +231,7 @@ class AdminController {
         $type = "Event";
         $db = new DBAccess_Admin();
         $canDelete = $db->canDeleteEvent($inPOSTValues['id']);
-        // TODO: this returns 0 when it should return more than 0.  Fix.
-        var_dump("CanDelete $type: ".$canDelete);
+//        var_dump("CanDelete $type: ".$canDelete);
         if ($canDelete == 0) {
             $success = $db->deleteEvent($inPOSTValues['id']);
             if ($success == 1) {
@@ -164,8 +250,7 @@ class AdminController {
         $type = "Session";
         $db = new DBAccess_Admin();
         $canDelete = $db->canDeleteSession($inPOSTValues['id']);
-        // TODO: this returns 0 when it should return more than 0.  Fix.
-        var_dump("CanDelete $type: ".$canDelete);
+//        var_dump("CanDelete $type: ".$canDelete);
         if ($canDelete == 0) {
             $success = $db->deleteSession($inPOSTValues['id']);
             if ($success == 1) {
@@ -182,18 +267,14 @@ class AdminController {
 
     //////////////////////////////////////// END DELETE FUNCTIONS ////////////////////////////////////////
 
-    public static function getCountOfRowsFromTableStatic($inTable, $inColumn, $inId) {
-        $db = new DBAccess_Admin();
-        return $db->getCountOfRowsFromTable($inTable,$inColumn,$inId);
-    }
-
-
 
     //////////////////////////////////////// START REGISTRATION FUNCTIONS ////////////////////////////////////////
+
     public static function registerEvent($eventId, $attendeeId) {
         $db = new DBAccess_Admin();
         return $db->registerEvent($eventId,$attendeeId);
     }
+
     public static function unregisterEvent($eventId, $attendeeId) {
         $db = new DBAccess_Admin();
         return $db->unregisterEvent($eventId,$attendeeId);
@@ -205,6 +286,7 @@ class AdminController {
         return $db->registerSession($sessionId,$attendeeId);
 
     }
+
     public static function unregisterSession($sessionId, $attendeeId) {
         $db = new DBAccess_Admin();
         return $db->unregisterSession($sessionId,$attendeeId);
@@ -258,79 +340,4 @@ class AdminController {
 
     //////////////////////////////////////// END EVENT PAGE FUNCTIONS ////////////////////////////////////////
 
-
-
-//        public static function getAllUsersTable() {
-//			$db = new DBAccess_Admin();
-//			$data = $db->getAllAttendees();
-//			$numRecords = count($data);
-//
-//			$userTableOutput = "<h5>There are {$numRecords} total users registered.</h5>";
-//			if (count($data) > 0) {
-//				// Create the table and the table header
-//				$userTableOutput .= "<div class='pb-2'><table class='table table-striped'>\n
-//								<thead class='thead-dark'>
-//								<tr>
-//									<th>Attendee ID</th>
-//									<th>Name</th>
-//									<th>Role</th>
-//									<th>Controls</th>
-//								</tr>\n
-//								</thead>\n";
-//
-//				// Create the table rows from the data input
-//				foreach ($data as $row) {
-//					$userTableOutput .= "<tr>";
-//					// Created method in person.class.php to return a string which is a row (THIS IS HOW TO GET DATA OUT OF A PDO
-//					$userTableOutput .= $row->returnColumns();
-//					$userTableOutput .= $row->returnActionColumn();
-//					$userTableOutput .= "</tr>";
-//				}
-//
-//				// Close the table
-//				$userTableOutput .= "</table></div>\n";
-//			} else {
-//				$userTableOutput = "<h2>No people exist.</h2>";
-//			}
-//
-//			return $userTableOutput;
-//		}
-//
-//		public static function getAllEventsTable() {
-//			$db = new DBAccess_Admin();
-//			$data = $db->getAllEvents();
-//			$numRecords = count($data);
-//
-//			$eventTableOutputString = "<h5>There are {$numRecords} total events registered.</h5>";
-//			if (count($data) > 0) {
-//				// Create the table and the table header
-//				$eventTableOutputString .= "<div class='pb-2'><table class='table table-striped'>\n
-//								<thead class='thead-dark'>
-//								<tr>
-//									<th>Event ID</th>
-//									<th>Event Name</th>
-//									<th>Start Date</th>
-//									<th>End Date</th>
-//									<th>Max Attendees</th>
-//									<th>Venue ID</th>
-//									<th>Controls</th>
-//								</tr>\n
-//								</thead>\n";
-//
-//				// Create the table rows from the data input
-//				foreach ($data as $row) {
-//					$eventTableOutputString .= "<tr>";
-//					$eventTableOutputString .= $row->returnColumns();
-//					$eventTableOutputString .= $row->returnActionColumn();
-//					$eventTableOutputString .= "</tr>";
-//				}
-//
-//				// Close the table
-//				$eventTableOutputString .= "</table></div>\n";
-//			} else {
-//				$eventTableOutputString = "<h2>No Events exist.</h2>";
-//			}
-//
-//			return $eventTableOutputString;
-//		}
 } // End adminDB

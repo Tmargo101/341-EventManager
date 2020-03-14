@@ -43,6 +43,7 @@ class Sanitize {
         $goodPOSTArray = array();
         if(isset($inPOSTArray['validationString'])) {
             $inputTypes = explode( ",", $inPOSTArray['validationString']);
+//            var_dump($inputTypes);
             $i = 0;
             $goodPOSTArray['validationError'] = "";
             foreach($inPOSTArray as $key=>$value) {
