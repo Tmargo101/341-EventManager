@@ -9,7 +9,7 @@ Auth::isManager();
 ?>
 
 <div class='container col-sm-4 my-5'>
-    <h1>Manager Portal</h1>
+    <h1 class="display-4">Manager Portal</h1>
 </div>
 
 <?php

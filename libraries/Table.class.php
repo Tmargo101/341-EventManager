@@ -100,7 +100,7 @@ class Table {
                     <th>Venue Name</th>
                     <th>Max Capacity</th>
                     <th>Events Scheduled</th>
-                    <th style='width: 15%'></th>";
+                    <th style='width: 20%'></th>";
                 break;
 
             case "Event":
@@ -114,7 +114,7 @@ class Table {
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Max Capacity</th>
-                    <th style='width: 15%'></th>";
+                    <th style='width: 20%'></th>";
                 break;
 
             case "Session":
@@ -127,7 +127,7 @@ class Table {
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Max Capacity</th>
-                    <th style='width: 15%'></th>";
+                    <th style='width: 20%'></th>";
                 break;
 
             default:
@@ -327,7 +327,7 @@ class Table {
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
         <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='dialog'>
-        <button class='btn btn-primary mx-2' name='button' value='edit'>Edit</button>
+        <button class='btn btn-primary mx-2 my-2 my-lg-0' name='button' value='edit'>Edit</button>
         <button class='btn btn-danger' name='button' value='delete'>Delete</button>
         <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>

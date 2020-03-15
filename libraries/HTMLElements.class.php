@@ -94,7 +94,7 @@ END;
     static function nav() {
         $APPLICATION_NAME = APPLICATION_NAME;
         $nav = <<<END
-				<div class='mb-5'>
+				<div class='mb-0'>
 					<nav class='navbar navbar-expand-xl bg-dark navbar-dark'>
 						<a class="navbar-brand" href="#">{$APPLICATION_NAME}</a>
 						    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -355,7 +355,6 @@ END;
                 $crudDialog = "<h1>Nothing to Add.</h1>";
         }
         return $crudDialog;
-
     }
 
     static function editDialog($inPOSTValues) {
@@ -523,7 +522,6 @@ END;
                 $crudDialog = "<h1>Nothing to Edit.</h1>";
         }
         return $crudDialog;
-
     }
 
     static function deleteDialog($inPOSTValues) {
@@ -598,12 +596,7 @@ END;
         }
         // TODO: Standardize dialog, move variables to the switch case.
         return $crudDialog;
-
     }
-
-
-
-
 
 } //End HTMLElements Class
 
