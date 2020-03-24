@@ -56,6 +56,39 @@ class CRUD {
                                 break;
                         }
                         break;
+                    case "edit":
+                        switch($inPOSTValues['type']) {
+                            case "Attendee":
+                                echo $controller::editAttendee($inPOSTValues);
+                                break;
+                            case "Venue":
+                                echo $controller::editVenue($inPOSTValues);
+                                break;
+                            case "Event":
+                                echo $controller::editEvent($inPOSTValues);
+                                break;
+                            case "Session":
+                                echo $controller::editSession($inPOSTValues);
+                                break;
+                        }
+                        break;
+                    case "delete":
+                        switch($inPOSTValues['type']) {
+                            case "Attendee":
+                                echo $controller::deleteAttendee($inPOSTValues);
+                                break;
+                            case "Venue":
+                                echo $controller::deleteVenue($inPOSTValues);
+                                break;
+                            case "Event":
+                                echo $controller::deleteEvent($inPOSTValues);
+                                break;
+                            case "Session":
+                                echo $controller::deleteSession($inPOSTValues);
+                                break;
+                        }
+                        break;
+
                     case "register":
                         if ($inPOSTValues['type'] == "Event") {
                             $controller::registerEvent($inPOSTValues['id'], $_SESSION['auth']['id']);

@@ -86,40 +86,48 @@ class Table {
 
             case "Attendee":
                 $tableHeader .= "
-                    <th>Attendee ID</th>
+                    <th style='width: 5%'>ID</th>
                     <th>Username</th>
                     <th>Role</th>
+                    <th style='width: 5%'>Events Registered</th>
+                    <th style='width: 5%'>Sessions Registered</th>
                     <th style='width: 20%'></th>";
                 break;
 
             case "Venue":
                 $tableHeader .= "
-                    <th>ID</th>
+                    <th style='width: 5%'>ID</th>
                     <th>Venue Name</th>
                     <th>Max Capacity</th>
-                    <th  style='width: 15%'></th>";
+                    <th>Events Scheduled</th>
+                    <th style='width: 20%'></th>";
                 break;
 
             case "Event":
+                // TODO: Make # OF attendees registered show up only on the admin or manager pages.
                 $tableHeader .= "
-                    <th>ID</th>
+                    <th style='width: 5%'>ID</th>
                     <th>Event Name</th>
+                    <th style='width: 5%'>Attendees Regsistered</th>
+                    <th style='width: 5%'>Sessions</th>
                     <th>Venue</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Max Capacity</th>
-                    <th style='width: 15%'></th>";
+                    <th style='width: 20%'></th>";
                 break;
 
             case "Session":
+                // TODO: Make # OF attendees registered show up only on the admin or manager pages.
                 $tableHeader .= "
-                    <th>ID</th>
+                    <th style='width: 5%'>ID</th>
                     <th>Session Name</th>
+                    <th style='width: 5%'>Attendees Regsistered</th>
+                    <th>Part of Event</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Max Capacity</th>
-                    <th>Venue</th>
-                    <th style='width: 15%'></th>";
+                    <th style='width: 20%'></th>";
                 break;
 
             default:
@@ -218,6 +226,10 @@ class Table {
                     <td>" . $data->getIdattendee() . "</td>
                     <td>" . $data->getName() . "</td>
                     <td>" . $data->getRole() . "</td>
+                    <td>" . $controller::getCountOfRowsFromTableStatic("attendee_event","attendee",$data->getIdattendee()) . "</td>
+                    <td>" . $controller::getCountOfRowsFromTableStatic("attendee_session","attendee",$data->getIdattendee()) . "</td>
+
+
                     ";
 
                 // Draw the appropriate controls, based on the user level.
@@ -237,6 +249,8 @@ class Table {
                     <td>" . $data->getIdvenue() . "</td>
                     <td>" . $data->getName() . "</td>
                     <td>" . $data->getCapacity() . "</td>
+                    <td>" . $controller::getCountOfRowsFromTableStatic("event","venue",$data->getIdvenue()) . "</td>
+
                     ";
 
                 // Draw the appropriate controls, based on the user level.
@@ -254,10 +268,14 @@ class Table {
                 $row = "<tr>
                     <td>" . $data->getIdevent() . "</td>
                     <td>" . $data->getName() . "</td>
+                    <td>" . $controller::getCountOfRowsFromTableStatic("attendee_event","event",$data->getIdevent()) . "</td>
+                    <td>" . $controller::getCountOfRowsFromTableStatic("session","event",$data->getIdevent()) . "</td>
                     <td>" . $data->getVenue() . "</td>
                     <td>" . substr($data->getDatestart(), 0, 10) . "</td>
                     <td>" . substr($data->getDateend(), 0, 10) . "</td>
                     <td>" . $data->getNumberallowed() . "</td>
+
+
                     ";
 
                 // Draw the appropriate controls, based on the user level.
@@ -276,10 +294,11 @@ class Table {
                 $row = "<tr>
                     <td>" . $data->getIdsession() . "</td>
                     <td>" . $data->getName() . "</td>
+                    <td>" . $controller::getCountOfRowsFromTableStatic("attendee_session","session",$data->getIdsession()) . "</td>
+                    <td>" . $data->getEventName() . "</td>
                     <td>" . substr($data->getStartdate(), 0, 10) . "</td>
                     <td>" . substr($data->getEnddate(), 0, 10) . "</td>
                     <td>" . $data->getNumberallowed() . "</td>
-                    <td>" . $data->getEvent() . "</td>
                     ";
 
                 // Draw the appropriate controls, based on the user level.
@@ -308,7 +327,7 @@ class Table {
     <form action='{$_SERVER['REQUEST_URI']}' method='post'>
         <input name='validationString' type='hidden' value='int'>
         <input name='action' type='hidden' value='dialog'>
-        <button class='btn btn-primary mx-2' name='button' value='edit'>Edit</button>
+        <button class='btn btn-primary mx-2 my-2 my-lg-0' name='button' value='edit'>Edit</button>
         <button class='btn btn-danger' name='button' value='delete'>Delete</button>
         <input name='type' type='hidden' value='{$type}'>
         <input name='id' type='hidden' value='{$id}'>
